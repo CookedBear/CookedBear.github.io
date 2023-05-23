@@ -1,0 +1,257 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>BUAA-OS-Probe-Lab5-Part3 | sin</title><meta name="author" content="CookedBear"><meta name="copyright" content="CookedBear"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Lab5 实验报告思考题Thinking 5.1 如果通过kseg0 读写设备，那么对于设备的写入会缓存到Cache 中。这是一种错误的行为，在实际编写代码的时候这么做会引发不可预知的问题。请思考：这么做这会引发什么问题？对于不同种类的设备（如我们提到的串口设备和IDE 磁盘）的操作会有差异吗？可以从缓存的性质和缓存更新的策略来考虑。  如果使用 kseg0 段读写设备，那么对于外设而言，在系统读">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BUAA-OS-Probe-Lab5-Part3">
+<meta property="og:url" content="https://cookedbear.github.io/2023/05/buaa-os-2023-lab5-report/index.html">
+<meta property="og:site_name" content="sin">
+<meta property="og:description" content="Lab5 实验报告思考题Thinking 5.1 如果通过kseg0 读写设备，那么对于设备的写入会缓存到Cache 中。这是一种错误的行为，在实际编写代码的时候这么做会引发不可预知的问题。请思考：这么做这会引发什么问题？对于不同种类的设备（如我们提到的串口设备和IDE 磁盘）的操作会有差异吗？可以从缓存的性质和缓存更新的策略来考虑。  如果使用 kseg0 段读写设备，那么对于外设而言，在系统读">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305231504109.jpg?imageMogr2/format/webp">
+<meta property="article:published_time" content="2023-05-23T07:07:15.000Z">
+<meta property="article:modified_time" content="2023-05-23T07:05:19.412Z">
+<meta property="article:author" content="CookedBear">
+<meta property="article:tag" content="BUAA">
+<meta property="article:tag" content="Elevate">
+<meta property="article:tag" content="OS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305231504109.jpg?imageMogr2/format/webp"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://cookedbear.github.io/2023/05/buaa-os-2023-lab5-report/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":150},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'BUAA-OS-Probe-Lab5-Part3',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-05-23 15:05:19'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/center-atom.css" ><meta name="generator" content="Hexo 5.4.2"></head><body>
+    <div id='loader'>
+        
+        <div class="loading-left-bg"></div>
+        <div class="loading-right-bg"></div>
+        <div class="spinner-box">
+            <div class="configure-border-1">
+                <div class="configure-core"></div>
+            </div>
+            <div class="configure-border-2">
+                <div class="configure-core"></div>
+            </div>
+            <div class="loading-word">加载中...</div>
+        </div>
+        
+    </div>
+        
+    <script>
+        var endLoading = function () {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+        }
+        window.addEventListener('load',endLoading);
+    </script>
+    <div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305132152908.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">29</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305231504109.jpg?imageMogr2/format/webp')"><nav id="nav"><span id="blog-info"><a href="/" title="sin"><span class="site-name">sin</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">BUAA-OS-Probe-Lab5-Part3</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-05-23T07:07:15.000Z" title="发表于 2023-05-23 15:07:15">2023-05-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-05-23T07:05:19.412Z" title="更新于 2023-05-23 15:05:19">2023-05-23</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Elevate/">Elevate()</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Operating-System/">Operating System</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="BUAA-OS-Probe-Lab5-Part3"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Lab5-实验报告"><a href="#Lab5-实验报告" class="headerlink" title="Lab5 实验报告"></a>Lab5 实验报告</h1><h1 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h1><h2 id="Thinking-5-1"><a href="#Thinking-5-1" class="headerlink" title="Thinking 5.1"></a>Thinking 5.1</h2><ul>
+<li>如果通过kseg0 读写设备，那么对于设备的写入会缓存到Cache 中。这是一种错误的行为，在实际编写代码的时候这么做会引发不可预知的问题。请思考：这么做这会引发什么问题？对于不同种类的设备（如我们提到的串口设备和IDE 磁盘）的操作会有差异吗？可以从缓存的性质和缓存更新的策略来考虑。</li>
+</ul>
+<p>如果使用 kseg0 段读写设备，那么对于外设而言，在系统读取外设时就会不可避免地先在 Cache 中查找设备对应的地址，如果查询到就会返回缓存的值。但如果在上一次缓存过后，设备的值已经发生了改变，这时我们从 Cache 中读取到的就是过时的错误信息。</p>
+<p>对于写入也是同理，我们会优先写入到 Cache 中对应的地址处，那么下一次写就会覆盖上一次写的结果，导致外设并不能及时、正确地读取到我们写入的值。</p>
+<p>对于不同的外设种类而言，这个现象会有些微差异。串口设备由于其即时性与高使用频率，会更容易出现这样的错误，对于磁盘而言则不太容易。</p>
+<h2 id="Thinking-5-2"><a href="#Thinking-5-2" class="headerlink" title="Thinking 5.2"></a>Thinking 5.2</h2><ul>
+<li>查找代码中的相关定义，试回答一个磁盘块中最多能存储多少个文件控制块？一个目录下最多能有多少个文件？我们的文件系统支持的单个文件最大为多大？</li>
+</ul>
+<p>首先根据定义 <code>BY2BLK</code> 可知一个磁盘块大小为 4096 Byte。同时一个文件控制块 <code>File</code> 大小为 256 Byte。则一个磁盘块中最多能存储 $4096 / 256 = 16$ 个文件控制块。</p>
+<p>一个目录可以通过 <code>f_indirect</code> 字段指向 1024 个指向其内包含的<strong>磁盘块</strong>的指针，那么一个目录下最多有 $1024 * 16 = 16384$ 个文件。</p>
+<p>对于单个文件也是同理，<code>f_indirect</code> 字段会指向 1024 个包含其内容的磁盘块指针，这样一个文件最大大小就是 $1024 * 4KB = 4MB$</p>
+<h2 id="Thinking-5-3"><a href="#Thinking-5-3" class="headerlink" title="Thinking 5.3"></a>Thinking 5.3</h2><ul>
+<li>请思考，在满足磁盘块缓存的设计的前提下，我们实验使用的内核支持的最大磁盘大小是多少？</li>
+</ul>
+<p>由于 MOS 中一个进程可以拥有 4 GB 的虚拟内存空间，并且对于文件管理进程而言， <code>DISKMAP</code> 到 <code>DISKMAP + DISKMAX</code> 这一段虚存地址空间 (0x10000000-0x4fffffff) 会作为作为磁盘块的缓冲区。那么最大的磁盘大小就是 <code>DISKMAP</code>，即 1 GB。</p>
+<h2 id="Thinking-5-4"><a href="#Thinking-5-4" class="headerlink" title="Thinking 5.4"></a>Thinking 5.4</h2><ul>
+<li>在本实验中，fs/serv.h、user/include/fs.h 等文件中出现了许多宏定义，试列举你认为较为重要的宏定义，同时进行解释，并描述其主要应用之处。</li>
+</ul>
+<p>其实文件控制块和超级块都比较好理解</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">File</span> &#123;</span>		<span class="comment">//文件控制块，是文件系统用于管理文件的数据结构</span></span><br><span class="line">    u_char f_name[MAXNAMELEN];  <span class="comment">// filename</span></span><br><span class="line">    u_int f_size;           <span class="comment">// file size in bytes</span></span><br><span class="line">    u_int f_type;           <span class="comment">// file type</span></span><br><span class="line">    u_int f_direct[NDIRECT];</span><br><span class="line">    u_int f_indirect;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">File</span> *<span class="title">f_dir</span>;</span>     <span class="comment">// the pointer to the dir where this file is in, valid only in memory.</span></span><br><span class="line">	u_char f_pad[BY2FILE - MAXNAMELEN - <span class="number">4</span> - <span class="number">4</span> - NDIRECT * <span class="number">4</span> - <span class="number">4</span> - <span class="number">4</span>];</span><br><span class="line">&#125;;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> FS_MAGIC    0x68286097  <span class="comment">// Everyone&#x27;s favorite OS class	</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Super</span> &#123;</span> <span class="comment">// 根目录块</span></span><br><span class="line">    u_int s_magic;      <span class="comment">// Magic number: FS_MAGIC	</span></span><br><span class="line">    u_int s_nblocks;    <span class="comment">// Total number of blocks on disk</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">File</span> <span class="title">s_root</span>;</span> <span class="comment">// Root directory</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// fsreq 的请求分类</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> FSREQ_OPEN  1</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> FSREQ_MAP   2</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> FSREQ_SET_SIZE  3</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> FSREQ_CLOSE 4</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> FSREQ_DIRTY 5</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> FSREQ_REMOVE    6</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> FSREQ_SYNC  7</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Fsreq_open</span> &#123;</span></span><br><span class="line">    <span class="type">char</span> req_path[MAXPATHLEN];</span><br><span class="line">    u_int req_omode;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Fsreq_map</span> &#123;</span></span><br><span class="line">    <span class="type">int</span> req_fileid;</span><br><span class="line">    u_int req_offset;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Fsreq_set_size</span> &#123;</span></span><br><span class="line">    <span class="type">int</span> req_fileid;</span><br><span class="line">    u_int req_size;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// continue</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//fs/serv.c</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">serve</span><span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line">  u_int req, whom, perm;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">    perm = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    req = ipc_recv(&amp;whom, (<span class="type">void</span> *)REQVA, &amp;perm);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// All requests must contain an argument page</span></span><br><span class="line">    <span class="keyword">if</span> (!(perm &amp; PTE_V)) &#123;</span><br><span class="line">      debugf(<span class="string">&quot;Invalid request from %08x: no argument page\n&quot;</span>, whom);</span><br><span class="line">      <span class="keyword">continue</span>; <span class="comment">// just leave it hanging, waiting for the next request.</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">switch</span> (req) &#123;</span><br><span class="line">    <span class="keyword">case</span> FSREQ_OPEN:</span><br><span class="line">      serve_open(whom, (<span class="keyword">struct</span> Fsreq_open *)REQVA);</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">case</span> FSREQ_MAP:</span><br><span class="line">      serve_map(whom, (<span class="keyword">struct</span> Fsreq_map *)REQVA);</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">case</span> FSREQ_SET_SIZE:</span><br><span class="line">      serve_set_size(whom, (<span class="keyword">struct</span> Fsreq_set_size *)REQVA);</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">case</span> FSREQ_CLOSE:</span><br><span class="line">      serve_close(whom, (<span class="keyword">struct</span> Fsreq_close *)REQVA);</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">case</span> FSREQ_DIRTY:</span><br><span class="line">      serve_dirty(whom, (<span class="keyword">struct</span> Fsreq_dirty *)REQVA);</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">case</span> FSREQ_REMOVE:</span><br><span class="line">      serve_remove(whom, (<span class="keyword">struct</span> Fsreq_remove *)REQVA);</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">case</span> FSREQ_SYNC:</span><br><span class="line">      serve_sync(whom);</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">case</span> FSREQ_OPENAT:</span><br><span class="line">      serve_openat(whom, (<span class="keyword">struct</span> Fsreq_openat *)REQVA);</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">      debugf(<span class="string">&quot;Invalid request code %d from %08x\n&quot;</span>, whom, req);</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    syscall_mem_unmap(<span class="number">0</span>, (<span class="type">void</span> *)REQVA);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>这里就是我们进行ipc通讯后，对数据进行分发的场所，我们会根据收获到的req的不同，将用于接受信息（文件系统接受，由用户发来）的REQVA解读为不同的结构体，并传入不同的服务函数进行实现。</p>
+<p>整个分发实现是文件系统与外界的接口，文件系统内部的实现是相对自由的（你可以进行系统调用、使用用户态函数、操作磁盘等等），只要反馈给用户进程的结果对就行</p>
+<h2 id="Thinking-5-5"><a href="#Thinking-5-5" class="headerlink" title="Thinking 5.5"></a>Thinking 5.5</h2><ul>
+<li>在 Lab4 “系统调用与 fork” 的实验中我们实现了极为重要的 fork 函数。那么 fork 前后的父子进程是否会共享文件描述符和定位指针呢？请在完成上述练习的基础上编写一个程序进行验证。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// code here</span></span><br><span class="line"><span class="type">int</span> r, fdnum, n; </span><br><span class="line"><span class="type">char</span> buf[<span class="number">200</span>]; </span><br><span class="line"></span><br><span class="line">fdnum = open(<span class="string">&quot;/newmotd&quot;</span>, O_RDWR); </span><br><span class="line"><span class="keyword">if</span> ((r = fork()) == <span class="number">0</span>) &#123; </span><br><span class="line">    n = read(fdnum, buf, <span class="number">4</span>); </span><br><span class="line">    debugf(<span class="string">&quot;[child] buffer is \&#x27;%s\&#x27;\n&quot;</span>, buf); </span><br><span class="line">&#125; <span class="keyword">else</span> &#123; </span><br><span class="line">    n = read(fdnum, buf, <span class="number">4</span>); </span><br><span class="line">    debugf(<span class="string">&quot;[father] buffer is \&#x27;%s\&#x27;\n&quot;</span>, buf); </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// file here</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">welcome to MOS with a file system.</span><br><span class="line"></span><br><span class="line"><span class="comment">// output here</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">[father] buffer is <span class="string">&#x27;welc&#x27;</span></span><br><span class="line">[child] buffer is <span class="string">&#x27;ome &#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>显然，父子进程也会同样共享相同的文件描述符和定位指针。其原因在于页面是 <code>PTE_LIBRARY</code> 的而非 <code>PTE_COW</code> 的。</p>
+<h2 id="Thinking-5-6"><a href="#Thinking-5-6" class="headerlink" title="Thinking 5.6"></a>Thinking 5.6</h2><ul>
+<li>请解释 File, Fd, Filefd 结构体及其各个域的作用。比如各个结构体会在哪些过程中被使用，是否对应磁盘上的物理实体还是单纯的内存数据等。说明形式自定，要求简洁明了，可大致勾勒出文件系统数据结构与物理实体的对应关系与设计框架。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Fd</span> &#123;</span> <span class="comment">//文件描述符；用户用于描述该文件，单纯的内存数据，关机就消失；</span></span><br><span class="line">    u_int fd_dev_id; <span class="comment">//该文件对应的设备id</span></span><br><span class="line">    u_int fd_offset; <span class="comment">//读写偏移量</span></span><br><span class="line">    u_int fd_omode; <span class="comment">//允许用户进程对文件的操作权限</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Filefd</span> &#123;</span> <span class="comment">//单纯的内存数据，关机就消失，是便于文件系统查看的结构；</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">Fd</span> <span class="title">f_fd</span>;</span> <span class="comment">//文件描述符</span></span><br><span class="line">    u_int f_fileid; <span class="comment">//文件系统为打开的文件进行的编号</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">File</span> <span class="title">f_file</span>;</span> <span class="comment">//对应文件的文件控制块</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Open</span> &#123;</span> <span class="comment">// 文件系统用来保存已打开的文件信息</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">File</span> *<span class="title">o_file</span>;</span> <span class="comment">// 指向文件控制块的指针</span></span><br><span class="line">    u_int o_fileid; <span class="comment">// 文件打开后的编号</span></span><br><span class="line">    <span class="type">int</span> o_mode; <span class="comment">// 允许用户进程对文件的操作权限</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">Filefd</span> *<span class="title">o_ff</span>;</span> <span class="comment">// 指向该文件描述符的指针</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>这部分的部分内容借鉴了学长的报告</li>
+</ul>
+<h2 id="Thinking-5-7"><a href="#Thinking-5-7" class="headerlink" title="Thinking 5.7"></a>Thinking 5.7</h2><ul>
+<li>图 5.7 中有多种不同形式的箭头，请解释这些不同箭头的差别，并思考我们的操作系统是如何实现对应类型的进程间通信的。</li>
+</ul>
+<ol>
+<li>同步消息，用黑三角箭头搭配黑实线表示：</li>
+</ol>
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305111105489.png" alt="image-20230511110441745"></p>
+<p>同步意义：消息的发送者把进程控制传递给消息的接收者，然后<strong>暂停活动</strong>，<strong>等待</strong>消息接收者的回应消息。</p>
+<ol>
+<li><p>返回消息，用开三角箭头搭配黑色虚线表示：</p>
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305111105896.png" alt="image-20230511110455875"></p>
+</li>
+</ol>
+<p>返回消息和同步消息结合使用，因为异步消息不进行等待，所以不需要知道返回值。</p>
+<p>对于文件系统，通过特定调用号使得文件系统知道请求者有何种需求，然后文件系统进入相应处理函数中处理，将结果通过ipc_send传回用户进程。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>纵观 Lab5，MOS 在其中为我们构造了一个通配的文件系统。</p>
+<p>它通过统一的结构体 <code>Fd</code> <strong>层次化地</strong>管理所用可用的设备。<strong>向上</strong>，在 <code>fd.c</code> 中为用户提供统一的操作函数；<strong>向下</strong>，不同设备通过 <strong>implements 实现</strong> <code>Dev</code> 的功能函数，达到同一调用的效果。</p>
+<p>在此之下，<code>file.c</code>、<code>console.c</code>、<code>pipe.c</code> 三文件实现了 <code>Dev</code> 中的”抽象函数“。为了优化函数实现的效果，我们建立了一个为所有进程管理纯文件 file 的文件服务进程 <code>serv.c</code>，并通过 <code>fsipc.c</code> 借助 进程间 IPC 通信机制实现数据传输。</p>
+<p>对文件服务进程而言，它通过 IPC 通信与用户进程（请求方）通信，利用文件级、磁盘块级的交互函数 <code>fs.c</code> 与磁盘进行交互，并利用块缓存的机制对磁盘块进行管理，以满足请求者<strong>对指定文件的特定文件块</strong>的访问。</p>
+<p>再细化到最后一步，所有的磁盘交互函数都是利用<strong>系统调用</strong>访问 <code>KSEG1</code> 段实现与外设的直接交互，并在最底层的函数中实现了以块、甚至扇区为单位的读写，即 <code>ide.c</code>。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://cookedbear.github.io">CookedBear</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://cookedbear.github.io/2023/05/buaa-os-2023-lab5-report/">https://cookedbear.github.io/2023/05/buaa-os-2023-lab5-report/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://cookedbear.github.io" target="_blank">sin</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/BUAA/">BUAA</a><a class="post-meta__tags" href="/tags/Elevate/">Elevate</a><a class="post-meta__tags" href="/tags/OS/">OS</a></div><div class="post_share"><div class="social-share" data-image="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305231504109.jpg?imageMogr2/format/webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/05/buaa-os-2023-lab5-2-exam/" title="BUAA-OS-Probe-Lab5-Part3"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305231505897.png?imageMogr2/format/webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">BUAA-OS-Probe-Lab5-Part3</div></div></a></div><div class="next-post pull-right"><a href="/2023/05/buaa-os-probe-lab5-part3/" title="BUAA-OS-Probe-Lab5-Part3"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305111956044.png?imageMogr2/format/webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">BUAA-OS-Probe-Lab5-Part3</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/03/buaa-os-2023-lab0-report/" title="BUAA-OS-2023-Lab0-Report"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305171229777.png?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-09</div><div class="title">BUAA-OS-2023-Lab0-Report</div></div></a></div><div><a href="/2023/03/buaa-os-2023-lab1-exam/" title="BUAA-OS-2023-Lab1-Exam"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305171229827.png?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-20</div><div class="title">BUAA-OS-2023-Lab1-Exam</div></div></a></div><div><a href="/2023/03/buaa-os-2023-lab2-report/" title="BUAA-OS-2023-Lab2-Report"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305171231619.png?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-26</div><div class="title">BUAA-OS-2023-Lab2-Report</div></div></a></div><div><a href="/2023/03/buaa-os-2023-lab1-report/" title="BUAA-OS-2023-Lab1-Report"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305171230060.png?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-17</div><div class="title">BUAA-OS-2023-Lab1-Report</div></div></a></div><div><a href="/2023/04/buaa-os-2023-lab3-exam/" title="BUAA-OS-2023-Lab3-Exam"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305171231921.png?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-18</div><div class="title">BUAA-OS-2023-Lab3-Exam</div></div></a></div><div><a href="/2023/04/buaa-os-2023-lab4-1-exam/" title="BUAA-OS-2023-Lab4-1-Exam"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305171233017.png?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-25</div><div class="title">BUAA-OS-2023-Lab4-1-Exam</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305132152908.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">CookedBear</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">29</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/CookedBear"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/CookedBear" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">ReStart</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Lab5-%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A"><span class="toc-number">1.</span> <span class="toc-text">Lab5 实验报告</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E9%A2%98"><span class="toc-number">2.</span> <span class="toc-text">思考题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Thinking-5-1"><span class="toc-number">2.1.</span> <span class="toc-text">Thinking 5.1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Thinking-5-2"><span class="toc-number">2.2.</span> <span class="toc-text">Thinking 5.2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Thinking-5-3"><span class="toc-number">2.3.</span> <span class="toc-text">Thinking 5.3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Thinking-5-4"><span class="toc-number">2.4.</span> <span class="toc-text">Thinking 5.4</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Thinking-5-5"><span class="toc-number">2.5.</span> <span class="toc-text">Thinking 5.5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Thinking-5-6"><span class="toc-number">2.6.</span> <span class="toc-text">Thinking 5.6</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Thinking-5-7"><span class="toc-number">2.7.</span> <span class="toc-text">Thinking 5.7</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/05/buaa-os-2023-lab5-2-exam/" title="BUAA-OS-Probe-Lab5-Part3"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305231505897.png?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BUAA-OS-Probe-Lab5-Part3"/></a><div class="content"><a class="title" href="/2023/05/buaa-os-2023-lab5-2-exam/" title="BUAA-OS-Probe-Lab5-Part3">BUAA-OS-Probe-Lab5-Part3</a><time datetime="2023-05-23T14:27:45.000Z" title="发表于 2023-05-23 22:27:45">2023-05-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/05/buaa-os-2023-lab5-report/" title="BUAA-OS-Probe-Lab5-Part3"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305231504109.jpg?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BUAA-OS-Probe-Lab5-Part3"/></a><div class="content"><a class="title" href="/2023/05/buaa-os-2023-lab5-report/" title="BUAA-OS-Probe-Lab5-Part3">BUAA-OS-Probe-Lab5-Part3</a><time datetime="2023-05-23T07:07:15.000Z" title="发表于 2023-05-23 15:07:15">2023-05-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/05/buaa-os-probe-lab5-part3/" title="BUAA-OS-Probe-Lab5-Part3"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305111956044.png?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BUAA-OS-Probe-Lab5-Part3"/></a><div class="content"><a class="title" href="/2023/05/buaa-os-probe-lab5-part3/" title="BUAA-OS-Probe-Lab5-Part3">BUAA-OS-Probe-Lab5-Part3</a><time datetime="2023-05-19T14:27:45.000Z" title="发表于 2023-05-19 22:27:45">2023-05-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/05/buaa-os-probe-lab5-part1/" title="BUAA-OS-Probe-Lab5-Part1"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305111956044.png?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BUAA-OS-Probe-Lab5-Part1"/></a><div class="content"><a class="title" href="/2023/05/buaa-os-probe-lab5-part1/" title="BUAA-OS-Probe-Lab5-Part1">BUAA-OS-Probe-Lab5-Part1</a><time datetime="2023-05-19T14:27:43.000Z" title="发表于 2023-05-19 22:27:43">2023-05-19</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By CookedBear</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script defer src="https://gcore.jsdelivr.net/combine/npm/jquery@latest/dist/jquery.min.js,gh/weilining/jsdelivr/jquery/circlemagic/circlemagic.min.js,gh/weilining/jsdelivr@latest/jquery/circlemagic/butterflycirclemagic.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
