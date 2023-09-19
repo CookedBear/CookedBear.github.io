@@ -1,0 +1,305 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>BUAA-Algorithms-Chapter1 | sin</title><meta name="author" content="CookedBear"><meta name="copyright" content="CookedBear"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="第 01 讲 渐进记号表示时间、空间复杂度时会采用一系列符号来表示其对应的数量级  $O$：渐进上界，表示算法复杂度的上限，算法执行时复杂度不会超过这个值（实际上也是估算，常数级不予考虑） $\Omega$：渐进下界，表示算法复杂度的下限，通常表示最优情况下的复杂度 $\Theta$：渐进紧确界，当 $O$ 和 $\Omega$ 相等时，对应的值就被记为 $\Theta$，表示算法的性能浮动">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BUAA-Algorithms-Chapter1">
+<meta property="og:url" content="https://cookedbear.github.io/p/b220a2af.html">
+<meta property="og:site_name" content="sin">
+<meta property="og:description" content="第 01 讲 渐进记号表示时间、空间复杂度时会采用一系列符号来表示其对应的数量级  $O$：渐进上界，表示算法复杂度的上限，算法执行时复杂度不会超过这个值（实际上也是估算，常数级不予考虑） $\Omega$：渐进下界，表示算法复杂度的下限，通常表示最优情况下的复杂度 $\Theta$：渐进紧确界，当 $O$ 和 $\Omega$ 相等时，对应的值就被记为 $\Theta$，表示算法的性能浮动">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp">
+<meta property="article:published_time" content="2023-09-14T11:20:03.000Z">
+<meta property="article:modified_time" content="2023-09-19T03:09:35.901Z">
+<meta property="article:author" content="CookedBear">
+<meta property="article:tag" content="BUAA">
+<meta property="article:tag" content="Elevate">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://cookedbear.github.io/p/b220a2af.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":150},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'BUAA-Algorithms-Chapter1',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-09-19 11:09:35'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/center-atom.css" ><meta name="generator" content="Hexo 5.4.2"></head><body>
+    <div id='loader'>
+        
+        <div class="loading-left-bg"></div>
+        <div class="loading-right-bg"></div>
+        <div class="spinner-box">
+            <div class="configure-border-1">
+                <div class="configure-core"></div>
+            </div>
+            <div class="configure-border-2">
+                <div class="configure-core"></div>
+            </div>
+            <div class="loading-word">加载中...</div>
+        </div>
+        
+    </div>
+        
+    <script>
+        var endLoading = function () {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+        }
+        window.addEventListener('load',endLoading);
+    </script>
+    <div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305132152908.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">49</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp')"><nav id="nav"><span id="blog-info"><a href="/" title="sin"><span class="site-name">sin</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">BUAA-Algorithms-Chapter1</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-09-14T11:20:03.000Z" title="发表于 2023-09-14 19:20:03">2023-09-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-09-19T03:09:35.901Z" title="更新于 2023-09-19 11:09:35">2023-09-19</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Elevate/">Elevate()</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="BUAA-Algorithms-Chapter1"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="第-01-讲-渐进记号"><a href="#第-01-讲-渐进记号" class="headerlink" title="第 01 讲 渐进记号"></a>第 01 讲 渐进记号</h1><p>表示时间、空间复杂度时会采用一系列符号来表示其对应的数量级</p>
+<ul>
+<li>$O$：渐进上界，表示算法复杂度的上限，算法执行时复杂度不会超过这个值（实际上也是估算，常数级不予考虑）</li>
+<li>$\Omega$：渐进下界，表示算法复杂度的下限，通常表示最优情况下的复杂度</li>
+<li>$\Theta$：渐进紧确界，当 $O$ 和 $\Omega$ 相等时，对应的值就被记为 $\Theta$，表示算法的性能浮动</li>
+</ul>
+<img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309161447615.webp" alt="img" style="zoom:80%;" />
+
+<p>这张图中 $f(n)$ 代表算法的实际运算，可以看到当自变量 $n$ 足够大时，$O&gt;f&gt;\Omega$  的关系相对明确，也间接说明了渐进上下界的概念</p>
+<br>
+
+<h1 id="第-02-讲-复杂度分析"><a href="#第-02-讲-复杂度分析" class="headerlink" title="第 02 讲 复杂度分析"></a>第 02 讲 复杂度分析</h1><p>分析递归的时间复杂度可以使用三种方式：递归树法、代入法、主定理法</p>
+<h3 id="递归树法"><a href="#递归树法" class="headerlink" title="递归树法"></a>递归树法</h3><p>递归树法主要计算的是树的深度，最终的时间复杂度是深度乘以每层的复杂度得到的积。</p>
+<img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309161522861.png" alt="image-20230916152237825" style="zoom:67%;" />
+
+<p>如上图中每层的复杂度都是 $O(n)$，同时每一个分支进入每一层都要变为一半，选取随意一支，计算 $1 = n*(\frac 1 2)^{k}$，得到 $k=log_2n$，最终换底提出系数，算出深度为 $log\ n$ 层。当各个分支分得的复杂度不同时，要选取下降最慢（复杂度最高）的一条分支进行计算，保证覆盖度。</p>
+<h3 id="代入法"><a href="#代入法" class="headerlink" title="代入法"></a>代入法</h3><p>代入法从数学方向证明复杂度，过程中先进行猜测，再找出对应复杂度的系数，利用数学归纳法证明复杂度的猜测成立。但当猜测解不容易得到时比较困难</p>
+<img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309162028283.png" alt="image-20230916202852221" style="zoom:55%;" />
+
+<h3 id="主定理法"><a href="#主定理法" class="headerlink" title="主定理法"></a>主定理法</h3><p>主定理法能够将常用的公式对应的递归式分析得出通解，形式简洁，但其使用范围有限，需要递归式满足特定情况才可以使用。<br>$$<br>T(n)=aT(\frac n b)+f(n)\<br>T(n)=\begin{cases}<br>\Theta(f(n)) &amp; if\ f(n)=\Omega(n^{log_ba+\epsilon})\<br>\Theta(n^{log_ba·logn}) &amp; if\ f(n)=\Theta(n^{log_ba})\<br>\Theta(n^{lob_ba}) &amp; if\ f(n)=O(n^{log_ba-\epsilon})<br>\end{cases}<br>$$<br>简单来说，如果 $f(n)$ 的数量级要比 $n^{log_ba}$ 大，那么时间复杂度就取决于更大的 $f(n)$；若同数量级则是乘以 $log\ n$；若 $f(n)$ 更小，则体现为 $n^{log_ba}$ 的数量级。当 $f(n)=n^k$ 时，可以进一步简化：<br>$$<br>T(n)=\begin{cases}<br>\Theta(n^k) &amp; if\ k &gt; log_ba\<br>\Theta(n^·klogn) &amp; if\ k = log_ba\<br>\Theta(n^{lob_ba}) &amp; if\ k &lt; log_ba<br>\end{cases}<br>$$<br>当主定理中 $f(n)$ 的部分处于 $[n^{log_ba-\epsilon},n^{log_ba+\epsilon}]$ 之间，同时不等于 $n^{log_ba}$ 时（也就是比 $n^{log_ba}$ 大，但是又不大出一个 $n$ 的数量级，比如 $nlogn$），不能应用主定理的任意一项，这时需要使用拓展形式：<br>$$<br>T(n)=\Theta(n^{log_ba·log^{k+1}n})\<br>if\ f(n)-\Theta(n^{log_ba·log^kn})<br>$$</p>
+<br>
+
+<h1 id="第-03-讲-分治思想"><a href="#第-03-讲-分治思想" class="headerlink" title="第 03 讲 分治思想"></a>第 03 讲 分治思想</h1><h2 id="分治（Divide-and-Conquer）"><a href="#分治（Divide-and-Conquer）" class="headerlink" title="分治（Divide-and-Conquer）"></a>分治（Divide-and-Conquer）</h2><p>分治思想（D&amp;C）是计算机中一种重要的处理问题的思想，它首先将给定的问题进行分割，划分出多个子问题（通常是近似规模的），再对各个问题逐个解答（考虑递归处理），最终把子问题的解整合为所给问题的解</p>
+<h2 id="归并排序（Merge-Sort）"><a href="#归并排序（Merge-Sort）" class="headerlink" title="归并排序（Merge Sort）"></a>归并排序（Merge Sort）</h2><ul>
+<li>合并策略：当输入为多组有序数组时，对其进行两两合并，并在过程中保持其有序性，最终合并得到所有元素的有序序列，完成排序流程；<ul>
+<li>当输入完全无序时，将数组的长度降低为 $1$，此时每个数组（单个元素）都必定有序，由此开始进行合并的排序方式，这就是归并排序</li>
+</ul>
+</li>
+<li>归并排序将整个无序数组进行拆分，划分为局部有序的数组（单一元素），再进行数组间两两的排序，最终实现对整体元素的排序；划分这一过程是分治思想的重要体现</li>
+</ul>
+<h3 id="归并排序流程"><a href="#归并排序流程" class="headerlink" title="归并排序流程"></a>归并排序流程</h3><ul>
+<li>将数组 $A[1, n]$ 排序的问题分解为数组 $$A[1, |\frac n 2|]$$ 和 $A[|\frac n 2|, n]$ 的排序问题</li>
+<li>递归解决分解后的子数组排序问题，并得到有序的子数组<ul>
+<li>递归边界为数组长度为 $1$ ，此时单元素数组天然有序</li>
+</ul>
+</li>
+<li>最终将子数组反向合并为有序数组</li>
+<li>伪代码实现：</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 主函数调用：MergeSort(A, left, right)</span></span><br><span class="line"><span class="comment">// 终止递归的边界条件</span></span><br><span class="line"><span class="keyword">if</span> (left &gt;= right) &#123;</span><br><span class="line">    <span class="keyword">return</span> A[left, right]</span><br><span class="line">&#125;</span><br><span class="line">mid = (left + right) / <span class="number">2</span></span><br><span class="line"><span class="comment">// 排序左侧数组</span></span><br><span class="line">MergeSort(A, left, mid)</span><br><span class="line"><span class="comment">// 排序右侧数组</span></span><br><span class="line">MergeSort(A, mid + <span class="number">1</span>, right)</span><br><span class="line"><span class="comment">// 将两数组排为一个有序数组</span></span><br><span class="line">Merge(A, left, mid, right)</span><br><span class="line"><span class="keyword">return</span> A[left, right]</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 具体排序函数：Merge(A, left, mid, right)</span></span><br><span class="line"><span class="comment">// Input: A[1, n]</span></span><br><span class="line"><span class="comment">// Output: A[left, right] ( sorted array )</span></span><br><span class="line">B[left, right] &lt;- A[left, right]</span><br><span class="line">    </span><br><span class="line"><span class="comment">// 初始化指针</span></span><br><span class="line">i = left, j = mid, k = <span class="number">0</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">// 数组 1：0~mid，数组 2：mid+1~right （均分别有序）</span></span><br><span class="line"><span class="keyword">while</span> (i &lt;= mid &amp;&amp; j &lt;= right) &#123;</span><br><span class="line">    <span class="comment">// 比较 i &amp; j，谁小就在 A 的后面放下</span></span><br><span class="line">    <span class="keyword">if</span> (B[i] &lt;= B[j]) &#123;</span><br><span class="line">        A[left + k] = B[i]</span><br><span class="line">        i++, k++</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        A[left + k] = B[j]</span><br><span class="line">        j++, k++</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 其中一个数组输入完了，把剩下的大数全插入</span></span><br><span class="line"><span class="keyword">if</span> (i &lt;= mid) &#123;</span><br><span class="line">    <span class="comment">// i 没完，j 完了，把数组 1 剩余的元素插在后面</span></span><br><span class="line">    A[left+k, right] = B[i, mid]</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// j 没完，i 完了，把数组 2 剩余的元素插在后面</span></span><br><span class="line">    A[left+k, right] = B[j, right]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 排序完毕，返回结果</span></span><br><span class="line"><span class="keyword">return</span> A[left, right]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>子过程由于相当于只遍历了一遍 $A$ 数组，故单轮排序的时间复杂度为 $O(n)$</li>
+</ul>
+<h3 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><p>设 $n$ 个元素的 <code>MergeSort</code> 函数的运行句数为 $T(n)$，则有<br>$$<br>T(n)=\begin{cases}<br>2*T(n/2) + O(n)\<br>O(1)<br>\end{cases}<br>$$<br>对整个过程画出<strong>递归树</strong>，分别计算每个节点的时间复杂度：</p>
+<img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309161522861.png" alt="image-20230916152237825" style="zoom: 67%;" />
+
+<p>观察可以得到，每一层的复杂度都为 $O(n)$，同时纵向共有 $log\ n + 1$ 层（计算<strong>深度</strong>为 $log\ n$），相乘则可得到总时间复杂度：<br>$$<br>T(n)=O(nlog\ n)<br>$$</p>
+<h2 id="最大子数组（Maxinum-Contiguous-Subarray）"><a href="#最大子数组（Maxinum-Contiguous-Subarray）" class="headerlink" title="最大子数组（Maxinum Contiguous Subarray）"></a>最大子数组（Maxinum Contiguous Subarray）</h2><ul>
+<li>最大子数组问题给定一个实数数组 $A[n]$，其中任意元素不限制其正负，我们需要寻找保持连续的子数组 $A[i, j]$，要求其元素和在所有的子数组中最大</li>
+</ul>
+<h3 id="暴力（Brute-Force）流程"><a href="#暴力（Brute-Force）流程" class="headerlink" title="暴力（Brute Force）流程"></a>暴力（Brute Force）流程</h3><ul>
+<li>求出每个合法的 $i$ 和 $j$ 的组合，并更新维护子数组和的最大值</li>
+<li>遍历 $i$、$j$  和子数列的每一项，易知其为 $O(n^3)$ 的算法</li>
+</ul>
+<h3 id="数据重用（Data-Reuse）流程"><a href="#数据重用（Data-Reuse）流程" class="headerlink" title="数据重用（Data Reuse）流程"></a>数据重用（Data Reuse）流程</h3><ul>
+<li>发现每次计算子数组和时并不需要每次都从第一个元素开始加起，因为有：</li>
+</ul>
+<p>$$<br>A[i, j]=A[i,j-1]+A[j]<br>$$</p>
+<ul>
+<li>也就是说保存每次计算的 $A[i,j-1]$ 再加上一个新元素就能够实现子数组和的计算，易知其为 $O(n^2)$ 的算法</li>
+</ul>
+<h2 id="归并算法"><a href="#归并算法" class="headerlink" title="归并算法"></a>归并算法</h2><p>在数组中部划线将其分割为两部分，则最大子数组必定从以下三部分之中取得：线左侧的数组、线右侧的数组、跨越线的数组</p>
+<ul>
+<li>跨线的数组由于必定包括线左右的元素，可以以此分别向两侧遍历，获得最大的跨线数组</li>
+<li>左右单侧的数组可以通过递归主过程来寻找，直至数组变为单个元素返回结果</li>
+<li>算法复杂度为 $O(n·logn)$</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://cookedbear.github.io">CookedBear</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://cookedbear.github.io/p/b220a2af.html">https://cookedbear.github.io/p/b220a2af.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://cookedbear.github.io" target="_blank">sin</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/BUAA/">BUAA</a><a class="post-meta__tags" href="/tags/Elevate/">Elevate</a></div><div class="post_share"><div class="social-share" data-image="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/p/b02dc89e.html" title="BUAA-DataBase-Chapter1"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">BUAA-DataBase-Chapter1</div></div></a></div><div class="next-post pull-right"><a href="/p/d4de58c7.html" title="BUAA-OO-TOP"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112056684.jpg?imageMogr2/format/webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">BUAA-OO-TOP</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/p/d4de58c7.html" title="BUAA-OO-TOP"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112056684.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-14</div><div class="title">BUAA-OO-TOP</div></div></a></div><div><a href="/p/1727.html" title="BUAA-OS-TOP"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202306132108192.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-22</div><div class="title">BUAA-OS-TOP</div></div></a></div><div><a href="/p/b02dc89e.html" title="BUAA-DataBase-Chapter1"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-19</div><div class="title">BUAA-DataBase-Chapter1</div></div></a></div><div><a href="/p/43299.html" title="BUAA-CompilePrincipal-Chapter1"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-04</div><div class="title">BUAA-CompilePrincipal-Chapter1</div></div></a></div><div><a href="/p/56591.html" title="BUAA-OO-UNIT4-Summary"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202306132108192.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-13</div><div class="title">BUAA-OO-UNIT4-Summary</div></div></a></div><div><a href="/p/28193.html" title="BUAA-OS-2023-Lab6-Challenge"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202306101220252.png?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-10</div><div class="title">BUAA-OS-2023-Lab6-Challenge</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305132152908.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">CookedBear</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">49</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/CookedBear"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/CookedBear" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">ReStart</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC-01-%E8%AE%B2-%E6%B8%90%E8%BF%9B%E8%AE%B0%E5%8F%B7"><span class="toc-number">1.</span> <span class="toc-text">第 01 讲 渐进记号</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC-02-%E8%AE%B2-%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90"><span class="toc-number">2.</span> <span class="toc-text">第 02 讲 复杂度分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%92%E5%BD%92%E6%A0%91%E6%B3%95"><span class="toc-number">2.0.1.</span> <span class="toc-text">递归树法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E5%85%A5%E6%B3%95"><span class="toc-number">2.0.2.</span> <span class="toc-text">代入法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E5%AE%9A%E7%90%86%E6%B3%95"><span class="toc-number">2.0.3.</span> <span class="toc-text">主定理法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC-03-%E8%AE%B2-%E5%88%86%E6%B2%BB%E6%80%9D%E6%83%B3"><span class="toc-number">3.</span> <span class="toc-text">第 03 讲 分治思想</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%B2%BB%EF%BC%88Divide-and-Conquer%EF%BC%89"><span class="toc-number">3.1.</span> <span class="toc-text">分治（Divide-and-Conquer）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F%EF%BC%88Merge-Sort%EF%BC%89"><span class="toc-number">3.2.</span> <span class="toc-text">归并排序（Merge Sort）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F%E6%B5%81%E7%A8%8B"><span class="toc-number">3.2.1.</span> <span class="toc-text">归并排序流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90"><span class="toc-number">3.2.2.</span> <span class="toc-text">复杂度分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84%EF%BC%88Maxinum-Contiguous-Subarray%EF%BC%89"><span class="toc-number">3.3.</span> <span class="toc-text">最大子数组（Maxinum Contiguous Subarray）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9A%B4%E5%8A%9B%EF%BC%88Brute-Force%EF%BC%89%E6%B5%81%E7%A8%8B"><span class="toc-number">3.3.1.</span> <span class="toc-text">暴力（Brute Force）流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%87%8D%E7%94%A8%EF%BC%88Data-Reuse%EF%BC%89%E6%B5%81%E7%A8%8B"><span class="toc-number">3.3.2.</span> <span class="toc-text">数据重用（Data Reuse）流程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BD%92%E5%B9%B6%E7%AE%97%E6%B3%95"><span class="toc-number">3.4.</span> <span class="toc-text">归并算法</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/p/b02dc89e.html" title="BUAA-DataBase-Chapter1"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BUAA-DataBase-Chapter1"/></a><div class="content"><a class="title" href="/p/b02dc89e.html" title="BUAA-DataBase-Chapter1">BUAA-DataBase-Chapter1</a><time datetime="2023-09-19T00:05:03.000Z" title="发表于 2023-09-19 08:05:03">2023-09-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/b220a2af.html" title="BUAA-Algorithms-Chapter1"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BUAA-Algorithms-Chapter1"/></a><div class="content"><a class="title" href="/p/b220a2af.html" title="BUAA-Algorithms-Chapter1">BUAA-Algorithms-Chapter1</a><time datetime="2023-09-14T11:20:03.000Z" title="发表于 2023-09-14 19:20:03">2023-09-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/d4de58c7.html" title="BUAA-OO-TOP"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112056684.jpg?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BUAA-OO-TOP"/></a><div class="content"><a class="title" href="/p/d4de58c7.html" title="BUAA-OO-TOP">BUAA-OO-TOP</a><time datetime="2023-09-14T07:54:44.000Z" title="发表于 2023-09-14 15:54:44">2023-09-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/43299.html" title="BUAA-CompilePrincipal-Chapter1"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BUAA-CompilePrincipal-Chapter1"/></a><div class="content"><a class="title" href="/p/43299.html" title="BUAA-CompilePrincipal-Chapter1">BUAA-CompilePrincipal-Chapter1</a><time datetime="2023-09-04T08:59:03.000Z" title="发表于 2023-09-04 16:59:03">2023-09-04</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By CookedBear</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container').forEach(node => {
+            if (node.hasAttribute('display')) {
+              btf.wrap(node, 'div', { class: 'mathjax-overflow' })
+            } else {
+              btf.wrap(node, 'span', { class: 'mathjax-overflow' })
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script defer src="https://gcore.jsdelivr.net/combine/npm/jquery@latest/dist/jquery.min.js,gh/weilining/jsdelivr/jquery/circlemagic/circlemagic.min.js,gh/weilining/jsdelivr@latest/jquery/circlemagic/butterflycirclemagic.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>BUAA-OS-2023-Lab4-1-Exam | sin</title><meta name="author" content="CookedBear"><meta name="copyright" content="CookedBear"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="中途脑梗了好几次，差点寄了，不过好在这次把题留下来了（ Exam - 进程组 ipc 通信题干 在 Linux 中，进程理论上所拥有的权限与执行它的用户的权限相同。进程运行时能够访问哪些资源或文件，不取决于进程文件的属主属组，而是取决于运行该命令的用户身份的 uid&#x2F;gid，以该身份获取各种系统资源。  所以我们需要完成同一个进程组ID的不同进程的通信。具体而言，需要做到：   在 Env 结构体">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BUAA-OS-2023-Lab4-1-Exam">
+<meta property="og:url" content="https://cookedbear.github.io/p/17374.html">
+<meta property="og:site_name" content="sin">
+<meta property="og:description" content="中途脑梗了好几次，差点寄了，不过好在这次把题留下来了（ Exam - 进程组 ipc 通信题干 在 Linux 中，进程理论上所拥有的权限与执行它的用户的权限相同。进程运行时能够访问哪些资源或文件，不取决于进程文件的属主属组，而是取决于运行该命令的用户身份的 uid&#x2F;gid，以该身份获取各种系统资源。  所以我们需要完成同一个进程组ID的不同进程的通信。具体而言，需要做到：   在 Env 结构体">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305171233017.png?imageMogr2/format/webp">
+<meta property="article:published_time" content="2023-04-24T17:50:30.000Z">
+<meta property="article:modified_time" content="2023-09-14T07:12:40.336Z">
+<meta property="article:author" content="CookedBear">
+<meta property="article:tag" content="BUAA">
+<meta property="article:tag" content="Elevate">
+<meta property="article:tag" content="OS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305171233017.png?imageMogr2/format/webp"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://cookedbear.github.io/p/17374.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":150},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'BUAA-OS-2023-Lab4-1-Exam',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-09-14 15:12:40'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/center-atom.css" ><meta name="generator" content="Hexo 5.4.2"></head><body>
+    <div id='loader'>
+        
+        <div class="loading-left-bg"></div>
+        <div class="loading-right-bg"></div>
+        <div class="spinner-box">
+            <div class="configure-border-1">
+                <div class="configure-core"></div>
+            </div>
+            <div class="configure-border-2">
+                <div class="configure-core"></div>
+            </div>
+            <div class="loading-word">加载中...</div>
+        </div>
+        
+    </div>
+        
+    <script>
+        var endLoading = function () {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+        }
+        window.addEventListener('load',endLoading);
+    </script>
+    <div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305132152908.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">49</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305171233017.png?imageMogr2/format/webp')"><nav id="nav"><span id="blog-info"><a href="/" title="sin"><span class="site-name">sin</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">BUAA-OS-2023-Lab4-1-Exam</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-04-24T17:50:30.000Z" title="发表于 2023-04-25 01:50:30">2023-04-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-09-14T07:12:40.336Z" title="更新于 2023-09-14 15:12:40">2023-09-14</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Elevate/">Elevate()</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Operating-System/">Operating System</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="BUAA-OS-2023-Lab4-1-Exam"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>中途脑梗了好几次，差点寄了，不过好在这次把题留下来了（</p>
+<h1 id="Exam-进程组-ipc-通信"><a href="#Exam-进程组-ipc-通信" class="headerlink" title="Exam - 进程组 ipc 通信"></a>Exam - 进程组 ipc 通信</h1><h2 id="题干"><a href="#题干" class="headerlink" title="题干"></a>题干</h2><blockquote>
+<p>在 Linux 中，进程理论上所拥有的权限与执行它的用户的权限相同。进程运行时能够访问哪些资源或文件，不取决于进程文件的属主属组，而是取决于<strong>运行该命令的用户身份的 uid/gid</strong>，以该身份获取各种系统资源。</p>
+</blockquote>
+<p>所以我们需要完成同一个进程组ID的不同进程的通信。具体而言，需要做到：</p>
+<ol>
+<li> 在 Env 结构体中添加 <code>u_int env_gid</code> 字段代表进程所在的进程组，初始值为 0。</li>
+<li> 实现一个修改 <code>gid</code> 字段的<strong>用户态函数</strong>：<code>void set_gid(u_int gid);</code></li>
+<li> 实现一个<strong>仅能</strong>向同组块发送消息的<strong>用户态函数</strong>：<code>int ipc_group_send(u_int whom, u_int val, const void *srcva, u_int perm);</code></li>
+<li> 实现 2、3 两点中对应的<strong>系统调用函数</strong>和调用接口</li>
+</ol>
+<p>教程组已经把两个用户态函数实现了，我们只需要考虑系统调用函数 <code>syscall_set_gid</code> 和 <code>syscall_ipc_try_group</code> 即可</p>
+<h3 id="具体要求"><a href="#具体要求" class="headerlink" title="具体要求"></a>具体要求</h3><ol>
+<li>在内核中为每个进程维护<strong>进程组ID</strong>，并保证每个进程<strong>创建时的的组ID为0</strong>。</li>
+<li>在 <code>user/include/lib.h</code> 中：<ul>
+<li>  添加以下两个用户函数的声明：</li>
+</ul>
+ <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">set_gid</span><span class="params">(u_int gid)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">ipc_group_send</span><span class="params">(u_int whom, u_int val, <span class="type">const</span> <span class="type">void</span> *srcva, u_int perm)</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>  添加以下两个系统调用函数的声明：</li>
+</ul>
+ <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">syscall_set_gid</span><span class="params">(u_int gid)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">syscall_ipc_try_group_send</span><span class="params">(u_int whom, u_int val, <span class="type">const</span> <span class="type">void</span> *srcva, u_int perm)</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li>在 <code>include/error.h</code> 中，增加以下新错误码 <code>E_IPC_NOT_GROUP</code> ，表示组间通信时通信双方进程的组ID不匹配。 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> E_IPC_NOT_GROUP 14</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li>两个用户态函数的<strong>实现已经给出（请参看实验提供代码部分），你需要将其复制到 <code>user/lib/ipc.c</code> *_，具体代码的解释在*_提示</strong>部分给出。</li>
+<li>在 <code>include/syscall.h</code> 中：定义两个新的系统调用号。请注意新增系统调用号的位置，应当位于 <code>MAX_SYSNO</code> 之前。</li>
+<li>在 <code>user/lib/syscall_lib.c</code> 中：实现上述两个系统调用函数，发起系统调用。</li>
+<li>在 <code>kern/syscall_all.c</code> 中：添加两个系统调用在内核中的实现函数。请保证两个函数的定义位于系统调用函数表 <code>void *syscall_table[MAX_SYSNO]</code> 之前。</li>
+<li>在 <code>kern/syscall_all.c</code> 中的 <code>void *syscall_table[MAX_SYSNO]</code> 系统调用函数表中，为你定义的系统调用号添加对应的内核函数指针。</li>
+<li>编写 <code>syscall_ipc_try_group_send</code> 系统调用<strong>在内核中的实现函数</strong>时，判断 <code>-E_IPC_NOT_RECV</code> 错误的<strong>优先级</strong>高于 <code>-E_IPC_NOT_GROUP</code></li>
+</ol>
+<h2 id="实验提供代码"><a href="#实验提供代码" class="headerlink" title="实验提供代码"></a>实验提供代码</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* copy to user/lib/ipc.c */</span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">set_gid</span><span class="params">(u_int gid)</span> &#123;</span><br><span class="line">    <span class="comment">// 你需要实现此 syscall_set_gid 系统调用</span></span><br><span class="line">    syscall_set_gid(gid);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">ipc_group_send</span><span class="params">(u_int whom, u_int val, <span class="type">const</span> <span class="type">void</span> *srcva, u_int perm)</span> &#123;</span><br><span class="line">    <span class="type">int</span> r;</span><br><span class="line">    <span class="comment">// 你需要实现此 syscall_ipc_try_group_send 系统调用</span></span><br><span class="line">    <span class="keyword">while</span> ((r = syscall_ipc_try_group_send(whom, val, srcva, perm)) != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">// 接受方进程尚未准备好接受消息，进程切换，后续继续轮询尝试发送请求</span></span><br><span class="line">        <span class="keyword">if</span> (r == -E_IPC_NOT_RECV) syscall_yield();</span><br><span class="line">        <span class="comment">// 接收方进程准备好接收消息，但非同组通信，消息发送失败，停止轮询，返回错误码 -E_IPC_NOT_GROUP</span></span><br><span class="line">        <span class="keyword">if</span> (r == -E_IPC_NOT_GROUP) <span class="keyword">return</span> -E_IPC_NOT_GROUP;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 函数返回0，告知用户成功发送消息</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="一种可行的做法"><a href="#一种可行的做法" class="headerlink" title="一种可行的做法"></a>一种可行的做法</h2><p>课上写了半天总是说函数名找不到，仔细一看写了一半的 <code>group_send</code>，写了一半的 <code>send_group</code>，难绷</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">sys_ipc_try_group_send</span><span class="params">(u_int whom, u_int val, <span class="type">const</span> <span class="type">void</span> *srcva,</span></span><br><span class="line"><span class="params">                           u_int perm)</span> &#123;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">Env</span> *<span class="title">e</span>;</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">Page</span> *<span class="title">p</span>;</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (srcva != <span class="number">0</span> &amp;&amp; is_illegal_va((u_int)srcva)) &#123;</span><br><span class="line">    <span class="keyword">return</span> -E_INVAL;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (<span class="number">0</span> != envid2env(whom, &amp;e, <span class="number">0</span>)) &#123;</span><br><span class="line">    <span class="keyword">return</span> -E_BAD_ENV;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (e-&gt;env_ipc_recving == <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> -E_BAD_ENV;</span><br><span class="line">  &#125;</span><br><span class="line">    </span><br><span class="line">  <span class="keyword">if</span> (e-&gt;env_ipc_recving == <span class="number">0</span>  e-&gt;env_status != ENV_NOT_RUNNABLE) &#123;</span><br><span class="line">    <span class="keyword">return</span> -E_IPC_NOT_RECV;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (e-&gt;env_gid != curenv-&gt;env_gid) &#123; <span class="comment">// 唯一与 ipc_send 不同的地方就在这了</span></span><br><span class="line">    <span class="keyword">return</span> -E_IPC_NOT_GROUP;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  e-&gt;env_ipc_value = val;</span><br><span class="line">  e-&gt;env_ipc_from = curenv-&gt;env_id;</span><br><span class="line">  e-&gt;env_ipc_perm = PTE_V  perm;</span><br><span class="line">  e-&gt;env_ipc_recving = <span class="number">0</span>;</span><br><span class="line">  e-&gt;env_status = ENV_RUNNABLE;</span><br><span class="line">  TAILQ_INSERT_TAIL(&amp;env_sched_list, e, env_sched_link);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (srcva != <span class="number">0</span>) &#123;</span><br><span class="line">    p = page_lookup(curenv-&gt;env_pgdir, (u_int)srcva, <span class="literal">NULL</span>);</span><br><span class="line">    <span class="keyword">if</span> (<span class="literal">NULL</span> == p) &#123;</span><br><span class="line">      <span class="keyword">return</span> -E_INVAL;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      try(page_insert(e-&gt;env_pgdir, e-&gt;env_asid, p, e-&gt;env_ipc_dstva, perm));</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">sys_set_gid</span><span class="params">(u_int gid)</span> &#123; <span class="comment">// 简单赋值</span></span><br><span class="line">  curenv-&gt;env_gid = gid;</span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>按照题目给的思路顺下来其实很容易就能写完，顺便也可以用这个题回顾一下系统调用：怎样添加一个新的、可用的系统调用？</p>
+<ul>
+<li>  首先从内核态出发，编写一个能够完成功能的函数，看一下它都需要什么参数 - <code>kern/syscall_all.c</code></li>
+<li>  然后在 <code>void *syscall_table[MAX_SYSNO]</code> 把函数添加进去，使得 <code>do_syscall</code> 函数能跳到这个新函数里：这需要随便写一个字符串当成<strong>系统调用号</strong>，无所谓了 - <code>kern/syscall_all.c</code></li>
+<li>  找到刚才那个系统调用号的枚举类，把定义加上 - <code>include/syscall.h</code></li>
+<li>  <code>do_syscall</code> 不需要变化，然后再上一层是 <code>msyscall</code>，它需要一个 <code>syscall_</code> 开头的函数进行调用。到这里我们就完成了内核态中所需要做的所有改动</li>
+<li>  回到用户态，编写一个用户态的 <code>syscall_new</code> 函数调用 <code>msyscall</code>，同时需要注意参数的第一个参数需要是刚才加进去的调用号 - <code>users/lib/syscall_lib.c</code></li>
+<li>  最后编写顶层的用户态函数，其中调用 <code>syscall_new</code> 函数，用户态工作也就完成了 - <code>users/某个文件</code></li>
+<li>  最最后别忘了<strong>加上函数声明</strong>：内核态不需要，用户态加在 <code>users/include/lib.h</code> 即可</li>
+</ul>
+<h1 id="Extra-家族-ipc-广播"><a href="#Extra-家族-ipc-广播" class="headerlink" title="Extra - 家族 ipc 广播"></a>Extra - 家族 ipc 广播</h1><h2 id="题干-1"><a href="#题干-1" class="headerlink" title="题干"></a>题干</h2><p>课下我们在 MOS 系统中实现了进程间通信。</p>
+<p>现在你需要仿照 <code>ipc_send</code> 函数在 <code>user/lib/ipc.c</code> 中实现 <code>ipc_broadcast</code> 函数，使得调用 <code>ipc_broadcast</code> 可以使当前进程向其后代进程（也即当前广播进程的子进程、子进程的子进程、子进程的子进程的子进程…以此类推）发起广播消息，当后代进程进入 recv 后进行发送。</p>
+<h3 id="具体要求-1"><a href="#具体要求-1" class="headerlink" title="具体要求"></a>具体要求</h3><p><strong><code>ipc_broadcast</code></strong></p>
+<p>需要在 <code>user/lib/ipc.c</code> 新增：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">ipc_broadcast</span><span class="params">(u_int val, <span class="type">void</span> * srcva, u_int perm)</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>参数</strong>：</p>
+<ul>
+<li>  <code>val</code> ：进程广播传递的具体数值, 与 <code>ipc_send</code> 函数中的定义相同。</li>
+<li>  <code>srcva</code> ：进程广播发送页的对应用户虚地址，与 <code>ipc_send</code> 函数中的定义相同。</li>
+<li>  <code>perm</code> : 传递的页面的权限位设置，与 <code>ipc_send</code> 函数中的定义相同。</li>
+</ul>
+<h3 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h3><ul>
+<li>  你可以实现 <code>syscall_ipc_try_broadcast</code> 系统调用，使其行为类似于 <code>syscall_ipc_try_send</code>，但尝试发送给当前进程的所有后代进程。</li>
+<li>  你也可以尝试在用户空间利用 <code>envs</code> 实现相关行为。</li>
+<li>  发送广播消息时，你可以先等待所有后代进程进入接受状态，再统一进行实际传输，也可以依次等待每个后代进程，一旦其处于接受状态，当即对其进行实际传输。</li>
+</ul>
+<p>也就是说可以在用户态使用这些已有的调用函数完成目标，也可以像 Exam 中添加一种新的系统调用处理这种请求。</p>
+<p>如果注意到原来提供的 <code>ipc_send</code> 函数能使用 bfs 操作进程块数组，那实际上难度就会降低很多。无所谓，我没看出来</p>
+<h2 id="两种可行的做法"><a href="#两种可行的做法" class="headerlink" title="两种可行的做法"></a>两种可行的做法</h2><h3 id="新建系统调用-sys-ipc-broadcast"><a href="#新建系统调用-sys-ipc-broadcast" class="headerlink" title="新建系统调用 - sys_ipc_broadcast"></a>新建系统调用 - <code>sys_ipc_broadcast</code></h3><p>类似在刚才 Exam 中提到的思路，加一个新的系统调用</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">sys_ipc_broadcast</span><span class="params">(u_int val, <span class="type">void</span> *srcva, u_int perm)</span> &#123;</span><br><span class="line">  u_int childs[<span class="number">20</span>];</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">20</span>; i++) &#123;</span><br><span class="line">    childs[i] = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">Env</span> *<span class="title">e</span>;</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">Page</span> *<span class="title">p</span>;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// printk(&quot;childs ready!\n&quot;);</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (srcva != <span class="number">0</span> &amp;&amp; is_illegal_va((u_int)srcva)) &#123;</span><br><span class="line">    <span class="keyword">return</span> -E_INVAL;</span><br><span class="line">  &#125;</span><br><span class="line">    </span><br><span class="line">  <span class="comment">/* Step1: 找到直系的子进程 */</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; NENV; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (envs[i].env_parent_id == curenv-&gt;env_id) &#123;</span><br><span class="line">      <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; <span class="number">20</span>; j++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (childs[j] == <span class="number">0</span>) &#123;</span><br><span class="line">          childs[j] = envs[i].env_id;</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Step2: 通过 bfs 找到所有子进程的子进程 */</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; childs[i] != <span class="number">0</span>; i++) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; NENV; j++) &#123;</span><br><span class="line">      <span class="keyword">if</span> (envs[j].env_parent_id == childs[i]) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> k = <span class="number">0</span>; k &lt; <span class="number">20</span>; k++) &#123;</span><br><span class="line">          <span class="keyword">if</span> (childs[k] == envs[j].env_id) &#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">if</span> (childs[k] == <span class="number">0</span>) &#123;</span><br><span class="line">            childs[k] = envs[j].env_id;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">    </span><br><span class="line">  <span class="comment">/* Step3: 对所有待发送的进程进行发送 */</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; childs[i] != <span class="number">0</span>; i++) &#123;</span><br><span class="line">    <span class="comment">// printk(&quot;%d: %x\n&quot;, i, childs[i]);</span></span><br><span class="line">      sys_ipc_try_send(childs[i], val, srcva, perm);</span><br><span class="line">  &#125;</span><br><span class="line">    </span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="用户态通过已有函数处理"><a href="#用户态通过已有函数处理" class="headerlink" title="用户态通过已有函数处理"></a>用户态通过已有函数处理</h3><p>因为代码不是我的，所以我就不贴了，说一说思路吧</p>
+<p>首先和第一种做法一样，需要用循环和队列 bfs 出所有满足条件的进程 <code>env_id</code>，最后实际上可以直接用 <code>ipc_send</code> 解决，太快了。</p>
+<h2 id="一点废话"><a href="#一点废话" class="headerlink" title="一点废话"></a>一点废话</h2><p>其实一开始读这个题我理解成调用 <code>env_alloc</code> 函数来创建进程了，然后就在 Env 里面加了一个数组字段保存自己的孩子，同时在 <code>env_alloc</code> 里通过 <code>env_parent_id</code> 更新<strong>所有</strong>祖宗进程的字段，最后在系统调用进行 send 的时候直接查一下自己的字段就能跑了</p>
+<p>结果这个题它创建进程最后用的是宏 <code>ENV_CREATE_PRIORITY</code>，也就是调用了 <code>env_create</code> 函数。甚至 <code>parent_id</code> 是下面这么加进去的！看起来两个函数好像没啥差别，但是 <code>env_create</code> 函数只能产生 <code>parent_id = 0</code> 的新进程，我这一套直接寄了</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Env</span> *<span class="title">ppa1</span> =</span> ENV_CREATE_PRIORITY(test_ppa, <span class="number">5</span>);</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Env</span> *<span class="title">ppa2</span> =</span> ENV_CREATE_PRIORITY(test_ppa, <span class="number">5</span>);</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Env</span> *<span class="title">ppa3</span> =</span> ENV_CREATE_PRIORITY(test_ppa, <span class="number">5</span>);</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Env</span> *<span class="title">ppa4</span> =</span> ENV_CREATE_PRIORITY(test_ppa, <span class="number">5</span>);</span><br><span class="line"></span><br><span class="line">ppa2-&gt;env_parent_id = ppa1-&gt;env_id;</span><br><span class="line">ppa3-&gt;env_parent_id = ppa1-&gt;env_id;</span><br><span class="line">ppa4-&gt;env_parent_id = ppa3-&gt;env_id;</span><br></pre></td></tr></table></figure>
+
+<p>幸亏看了一眼测试代码，要不寄大发了。不过反正写完这一版才发现写的不对，实际上已经寄了。</p>
+<p>不然我觉得我那个做法将能算得上是绝杀（可能吧）</p>
+<p>总之 lab4 这样就算结束一半了，之后再看吧。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://cookedbear.github.io">CookedBear</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://cookedbear.github.io/p/17374.html">https://cookedbear.github.io/p/17374.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://cookedbear.github.io" target="_blank">sin</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/BUAA/">BUAA</a><a class="post-meta__tags" href="/tags/Elevate/">Elevate</a><a class="post-meta__tags" href="/tags/OS/">OS</a></div><div class="post_share"><div class="social-share" data-image="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305171233017.png?imageMogr2/format/webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/p/29129.html" title="BUAA-OS-Probe-Lab4"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305171224880.png?imageMogr2/format/webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">BUAA-OS-Probe-Lab4</div></div></a></div><div class="next-post pull-right"><a href="/p/20326.html" title="BUAA-OS-2023-Lab3-Exam"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305171231921.png?imageMogr2/format/webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">BUAA-OS-2023-Lab3-Exam</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/p/1727.html" title="BUAA-OS-TOP"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202306132108192.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-22</div><div class="title">BUAA-OS-TOP</div></div></a></div><div><a href="/p/28193.html" title="BUAA-OS-2023-Lab6-Challenge"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202306101220252.png?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-10</div><div class="title">BUAA-OS-2023-Lab6-Challenge</div></div></a></div><div><a href="/p/13765.html" title="BUAA-OS-2023-Lab6-Report"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112055861.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-04</div><div class="title">BUAA-OS-2023-Lab6-Report</div></div></a></div><div><a href="/p/2190.html" title="BUAA-OS-Theory-Chapter7"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112056684.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-30</div><div class="title">BUAA-OS-Theory-Chapter7</div></div></a></div><div><a href="/p/51279.html" title="BUAA-OS-Theory-Chapter6"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112056684.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-30</div><div class="title">BUAA-OS-Theory-Chapter6</div></div></a></div><div><a href="/p/51471.html" title="BUAA-OS-Theory-Chapter5"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112056684.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-30</div><div class="title">BUAA-OS-Theory-Chapter5</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305132152908.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">CookedBear</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">49</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/CookedBear"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/CookedBear" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">ReStart</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Exam-%E8%BF%9B%E7%A8%8B%E7%BB%84-ipc-%E9%80%9A%E4%BF%A1"><span class="toc-number">1.</span> <span class="toc-text">Exam - 进程组 ipc 通信</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E5%B9%B2"><span class="toc-number">1.1.</span> <span class="toc-text">题干</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B7%E4%BD%93%E8%A6%81%E6%B1%82"><span class="toc-number">1.1.1.</span> <span class="toc-text">具体要求</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E6%8F%90%E4%BE%9B%E4%BB%A3%E7%A0%81"><span class="toc-number">1.2.</span> <span class="toc-text">实验提供代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E7%A7%8D%E5%8F%AF%E8%A1%8C%E7%9A%84%E5%81%9A%E6%B3%95"><span class="toc-number">1.3.</span> <span class="toc-text">一种可行的做法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%B7%AF"><span class="toc-number">1.3.1.</span> <span class="toc-text">思路</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Extra-%E5%AE%B6%E6%97%8F-ipc-%E5%B9%BF%E6%92%AD"><span class="toc-number">2.</span> <span class="toc-text">Extra - 家族 ipc 广播</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E5%B9%B2-1"><span class="toc-number">2.1.</span> <span class="toc-text">题干</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B7%E4%BD%93%E8%A6%81%E6%B1%82-1"><span class="toc-number">2.1.1.</span> <span class="toc-text">具体要求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E7%82%B9"><span class="toc-number">2.1.2.</span> <span class="toc-text">注意点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%A4%E7%A7%8D%E5%8F%AF%E8%A1%8C%E7%9A%84%E5%81%9A%E6%B3%95"><span class="toc-number">2.2.</span> <span class="toc-text">两种可行的做法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8-sys-ipc-broadcast"><span class="toc-number">2.2.1.</span> <span class="toc-text">新建系统调用 - sys_ipc_broadcast</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E6%80%81%E9%80%9A%E8%BF%87%E5%B7%B2%E6%9C%89%E5%87%BD%E6%95%B0%E5%A4%84%E7%90%86"><span class="toc-number">2.2.2.</span> <span class="toc-text">用户态通过已有函数处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E7%82%B9%E5%BA%9F%E8%AF%9D"><span class="toc-number">2.3.</span> <span class="toc-text">一点废话</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/p/b02dc89e.html" title="BUAA-DataBase-Chapter1"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BUAA-DataBase-Chapter1"/></a><div class="content"><a class="title" href="/p/b02dc89e.html" title="BUAA-DataBase-Chapter1">BUAA-DataBase-Chapter1</a><time datetime="2023-09-19T00:05:03.000Z" title="发表于 2023-09-19 08:05:03">2023-09-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/b220a2af.html" title="BUAA-Algorithms-Chapter1"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BUAA-Algorithms-Chapter1"/></a><div class="content"><a class="title" href="/p/b220a2af.html" title="BUAA-Algorithms-Chapter1">BUAA-Algorithms-Chapter1</a><time datetime="2023-09-14T11:20:03.000Z" title="发表于 2023-09-14 19:20:03">2023-09-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/d4de58c7.html" title="BUAA-OO-TOP"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112056684.jpg?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BUAA-OO-TOP"/></a><div class="content"><a class="title" href="/p/d4de58c7.html" title="BUAA-OO-TOP">BUAA-OO-TOP</a><time datetime="2023-09-14T07:54:44.000Z" title="发表于 2023-09-14 15:54:44">2023-09-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/43299.html" title="BUAA-CompilePrincipal-Chapter1"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BUAA-CompilePrincipal-Chapter1"/></a><div class="content"><a class="title" href="/p/43299.html" title="BUAA-CompilePrincipal-Chapter1">BUAA-CompilePrincipal-Chapter1</a><time datetime="2023-09-04T08:59:03.000Z" title="发表于 2023-09-04 16:59:03">2023-09-04</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By CookedBear</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script defer src="https://gcore.jsdelivr.net/combine/npm/jquery@latest/dist/jquery.min.js,gh/weilining/jsdelivr/jquery/circlemagic/circlemagic.min.js,gh/weilining/jsdelivr@latest/jquery/circlemagic/butterflycirclemagic.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

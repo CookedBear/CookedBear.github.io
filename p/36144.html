@@ -1,0 +1,350 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>BUAA-OO-UNIT1-Summary | sin</title><meta name="author" content="CookedBear"><meta name="copyright" content="CookedBear"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="UNIT1-递归下降 因为想把作业比较完整地记录下来，而不仅仅是提交一份作业、交差完事，所以会写的相对多一点（ 可能刚敲完报告的同学 or 已经看了 n 份报告的助教看这篇答辩会觉得很臃肿，但这就不关我事了（？） 博客作业要求部分 包含在 作业完成情况 标题下  作业内容及完成情况作业要求 指导书总结搬运，回顾用  三次作业任务描述   第一次作业任务：读入一个包含加、减、乘、乘方以及括号（其中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BUAA-OO-UNIT1-Summary">
+<meta property="og:url" content="https://cookedbear.github.io/p/36144.html">
+<meta property="og:site_name" content="sin">
+<meta property="og:description" content="UNIT1-递归下降 因为想把作业比较完整地记录下来，而不仅仅是提交一份作业、交差完事，所以会写的相对多一点（ 可能刚敲完报告的同学 or 已经看了 n 份报告的助教看这篇答辩会觉得很臃肿，但这就不关我事了（？） 博客作业要求部分 包含在 作业完成情况 标题下  作业内容及完成情况作业要求 指导书总结搬运，回顾用  三次作业任务描述   第一次作业任务：读入一个包含加、减、乘、乘方以及括号（其中">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305171217643.png?imageMogr2/format/webp">
+<meta property="article:published_time" content="2023-03-17T03:30:21.000Z">
+<meta property="article:modified_time" content="2023-09-14T07:12:40.412Z">
+<meta property="article:author" content="CookedBear">
+<meta property="article:tag" content="BUAA">
+<meta property="article:tag" content="Elevate">
+<meta property="article:tag" content="OO">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305171217643.png?imageMogr2/format/webp"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://cookedbear.github.io/p/36144.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":150},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'BUAA-OO-UNIT1-Summary',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-09-14 15:12:40'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/center-atom.css" ><meta name="generator" content="Hexo 5.4.2"></head><body>
+    <div id='loader'>
+        
+        <div class="loading-left-bg"></div>
+        <div class="loading-right-bg"></div>
+        <div class="spinner-box">
+            <div class="configure-border-1">
+                <div class="configure-core"></div>
+            </div>
+            <div class="configure-border-2">
+                <div class="configure-core"></div>
+            </div>
+            <div class="loading-word">加载中...</div>
+        </div>
+        
+    </div>
+        
+    <script>
+        var endLoading = function () {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+        }
+        window.addEventListener('load',endLoading);
+    </script>
+    <div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305132152908.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">49</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305171217643.png?imageMogr2/format/webp')"><nav id="nav"><span id="blog-info"><a href="/" title="sin"><span class="site-name">sin</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">BUAA-OO-UNIT1-Summary</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-03-17T03:30:21.000Z" title="发表于 2023-03-17 11:30:21">2023-03-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-09-14T07:12:40.412Z" title="更新于 2023-09-14 15:12:40">2023-09-14</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Elevate/">Elevate()</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Object-Oriented/">Object Oriented</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">4.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>14分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="BUAA-OO-UNIT1-Summary"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<p>UNIT1-递归下降 因为想把作业比较完整地记录下来，而不仅仅是提交一份作业、交差完事，所以会写的相对多一点（ 可能刚敲完报告的同学 or 已经看了 n 份报告的助教看这篇答辩会觉得很臃肿，但这就不关我事了（？） <strong>博客作业要求部分</strong> 包含在 <strong>作业完成情况</strong> 标题下</p>
+</blockquote>
+<h1 id="作业内容及完成情况"><a href="#作业内容及完成情况" class="headerlink" title="作业内容及完成情况"></a>作业内容及完成情况</h1><h2 id="作业要求"><a href="#作业要求" class="headerlink" title="作业要求"></a>作业要求</h2><blockquote>
+<p>指导书总结搬运，回顾用</p>
+</blockquote>
+<h3 id="三次作业任务描述"><a href="#三次作业任务描述" class="headerlink" title="三次作业任务描述"></a>三次作业任务描述</h3><ul>
+<li>  第一次作业任务：读入一个包含加、减、乘、乘方以及括号（其中括号的深度<strong>至多为 1 层</strong>）的<strong>多变量</strong>表达式，输出<strong>恒等变形展开所有括号后</strong>的表达式。 在本次作业中，<strong>展开所有括号</strong>的定义是：对原输入表达式E做<strong>恒等变形</strong>，得到新表达式E，且E中不含有字符 <code>(</code> 和 <code>)</code> 。</li>
+<li>  第二次作业任务：读入<strong>一系列自定义函数的定义</strong>以及一个包含幂函数、三角函数、自定义函数调用的<strong>表达式</strong>，输出<strong>恒等变形展开所有括号后</strong>的表达式。 本次作业起，不再限制表达式内的括号层数</li>
+<li>  第三次作业任务：读入<strong>一系列自定义函数的定义</strong>以及一个包含幂函数、三角函数、自定义函数调用、求导算子的<strong>表达式</strong>，输出<strong>恒等变形展开所有括号后</strong>的表达式。</li>
+</ul>
+<h3 id="设定的形式化表述"><a href="#设定的形式化表述" class="headerlink" title="设定的形式化表述"></a>设定的形式化表述</h3><blockquote>
+<p>本节按不同作业中课程组的条目标定进行整合； 其中，条目前标定**[2]<strong>的是第二次作业的新增项目，</strong>[3]**同理</p>
+</blockquote>
+<ul>
+<li>  表达式 → 空白项 [加减 空白项] 项 空白项 表达式 加减 空白项 项 空白项</li>
+<li>  项 → [加减 空白项] 因子 项 空白项 ‘*‘ 空白项 因子</li>
+<li>  因子 → 变量因子 常数因子 表达式因子｜[3]求导因子</li>
+<li>  变量因子 → 幂函数 **[2]**三角函数 <strong>[2]<strong>自定义函数</strong>调用</strong></li>
+<li>  常数因子 → 带符号的整数</li>
+<li>  表达式因子 → ‘(‘ 表达式 ‘)’ [空白项 指数]</li>
+<li>  幂函数 → 自变量 [空白项 指数]</li>
+<li>  自变量 → ‘x’ ‘y’ ‘z’</li>
+<li>**[2]**三角函数 → ‘sin’ 空白项 ‘(‘ 空白项 因子 空白项 ‘)’ [空白项 指数] ‘cos’ 空白项 ‘(‘ 空白项 因子 空白项 ‘)’ [空白项 指数]<ul>
+<li>  <strong>请注意输出三角函数时需要满足的形式化表述：内部元素为因子</strong></li>
+</ul>
+</li>
+<li>指数 → ‘**‘ 空白项 [‘+’] 允许前导零的整数<ul>
+<li>  <strong>指数一定不是负数，且输入的指数不得超过8</strong></li>
+</ul>
+</li>
+<li>  带符号的整数 → [加减] 允许前导零的整数</li>
+<li>  允许前导零的整数 → (‘0’’1’’2’…’9’){‘0’’1’’2’…’9’}</li>
+<li>  空白项 → {空白字符}</li>
+<li>  空白字符 → （空格） <code>\t</code></li>
+<li>  加减 → ‘+’ ‘-‘</li>
+<li><strong>[2]<strong>自定义函数</strong>定义</strong> →→ 自定义函数名 空白项 ‘(‘ 空白项 自变量 空白项 [‘,’ 空白项 自变量 空白项 [‘,’ 空白项 自变量 空白项]] ‘)’ 空白项 ‘=’ 空白项 函数表达式<ul>
+<li>  <strong>规定自定义函数在表达式输入前进行输入，需要预先输入自定义函数数量，且0\le num\le3</strong></li>
+</ul>
+</li>
+<li>  <strong>[2]<strong>自定义函数</strong>调用</strong> →→ 自定义函数名 空白项 ‘(‘ 空白项 因子 空白项 [‘,’ 空白项 因子 空白项 [‘,’ 空白项 因子 空白项]] ‘)’</li>
+<li>  **[2]**自定义函数名 →→ ‘f’ ‘g’ ‘h’</li>
+<li>**[2]**函数表达式 →→ 表达式<ul>
+<li>  <strong>第三次作业函数表达式中可以调用其他自定义函数，但保证不会出现递归调用的情况；同时调用自变量为常数的自身也不被允许)</strong></li>
+</ul>
+</li>
+<li>  **[3]**求导因子 →→ 求导算子 空白项 ‘(‘ 空白项 表达式 空白项 ‘)’</li>
+<li>  **[3]**求导算子 →→ ‘dx’ ｜’dy’ ｜’dz’</li>
+</ul>
+<h2 id="作业完成情况"><a href="#作业完成情况" class="headerlink" title="作业完成情况"></a>作业完成情况</h2><blockquote>
+<p>虽然笨人很喜欢写东西，但耐不住笨人就是<strong>菜</strong>，三次作业全有bug（寄）</p>
+</blockquote>
+<h3 id="第一次作业"><a href="#第一次作业" class="headerlink" title="第一次作业"></a>第一次作业</h3><h4 id="架构设计"><a href="#架构设计" class="headerlink" title="架构设计"></a>架构设计</h4><p>简单分析过题面之后，可以分析出一个初步的构造顺序： 表达式项因子表达式\to项\to因子 再进行进一步分析后，可以发现题目中最基础的<strong>单元</strong>就是一个形如a*x^b*y^c*z^d形式的<strong>单项式</strong>，而无论是题干中出现的任何一种构成成分，都由<strong>一个或多个</strong>这样的单项式构成：</p>
+<ul>
+<li>  常数因子\to带符号整数：b=c=d=0</li>
+<li>  变量因子\to幂函数：a\ne0\ \&amp;\&amp;\ bcd中仅存在一个值\ne0</li>
+<li>  表达式：<strong>若干</strong>单项式相加</li>
+<li>  <strong>因子</strong>：<strong>若干</strong>单项式相加</li>
+<li>  <strong>项</strong>：<strong>若干</strong>单项式相加 前三个条目的安排相对直观，<strong>那为什么因子也需要用若干单项式相加来表示呢？</strong>原因在于这里没有写下的一条构成路线：</li>
+</ul>
+<p>因子表达式因子表达式</p>
+<p>也就是说，表达式的组成也可以成为因子的一种，也容易理解： (2x+y+1)按照形式化表述显然属于因子，然而很明显其无法用<strong>一个单项式</strong>表示 而对于<strong>项</strong>，则由组合规则同理可知，不再赘述 于是第一次设计采用了：</p>
+<ul>
+<li>数据结构：统一的<code>HashSet&amp;lt;Values&amp;gt; values</code>字段存储对应条目的值，每一个<code>Values</code>都表达一个单项式；<ul>
+<li>  使用<code>HashSet</code>这种不能便利取值的容器是第二次的罪魁祸首</li>
+</ul>
+</li>
+<li>  计算方法：<code>HashSet.add()</code>方法表示相加，创建一个两重遍历容器的方法表示相乘</li>
+<li>  类与方法： <img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202303192152189.png" alt="name"></li>
+</ul>
+<h4 id="实现过程-难点"><a href="#实现过程-难点" class="headerlink" title="实现过程/难点"></a>实现过程/难点</h4><ul>
+<li>  词法分析器<code>Lexer</code>：构建思路来自单元训练栏目，根据当前字符判断元素种类，再决定<code>Paser</code>的解析逻辑，考虑各种可能出现的字符才能避免解析时出现<code>Runtime Error</code>（换句话说，一般<code>RE</code>的话就是解析错了，或者是爆递归栈、爆堆等，结构不是很怪的话比较少见）</li>
+<li>  <strong>符号与减法</strong>：直到很靠后的时候才想出去解析<strong>可能出现</strong>负号位置（共三个）的解决方案：先查询一下是不是负号，然后给一个标记位，控制到最后返回的表达式/项/因子的系数正负</li>
+<li>  乘法实现：开始直接把两项<code>add</code>到一个容器了，后来才意识到需要<strong>按照分配律</strong>一项一项的加指数再<code>add</code></li>
+<li>指数与 **0：n次方就把前面的元素乘个n次<ul>
+<li>  特判0**0=1（三角函数特判，易锅）</li>
+</ul>
+</li>
+<li>  化简-合并同类项：每次<code>add</code>时，遍历所有容器内已有元素，如指数完全一致则进行系数运算并放弃<code>add</code>操作；否则直接<code>add</code></li>
+<li>  输出：为<code>Values</code>类配置了<code>ttoString()</code>方法，不重写原有的<code>toString</code>方法（出过锅），输出最终表达式中所有<code>Values</code>的<code>ttoString()</code>字符串</li>
+<li>  复杂度图： <img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202303192156742.jpg" alt="img"></li>
+</ul>
+<h4 id="debug与测试"><a href="#debug与测试" class="headerlink" title="debug与测试"></a>debug与测试</h4><ul>
+<li>  强测得分/互测失分/互测得分：100/1(1bug)/0.75(1bug)</li>
+<li>互测锅是后导空白字符，会一直解析直到<code>OutofIndex</code>报<code>RE</code>，挑战最短hack数据之：<code>x&amp;lt;space&amp;gt;</code><ul>
+<li>  解决方案是预处理所有空白字符，忍痛在递归下降里用<strong>字符串处理</strong>，写了<code>replaceAll</code></li>
+</ul>
+</li>
+<li>  互测刀到的是如果有形如factor*a，且a.length\ge2时，会只乘以贴近乘号的值</li>
+<li>性能方面：x*x要比x**2短一个字符，x-1要比-1+x短一个字符，处理好这个优化点就能强测100了（确信<ul>
+<li>  不要随便对输出用正则：</li>
+<li>  消去1*x的无用系数，导致21*x\to 2x</li>
+<li>  替换长的x**2为等价描述，导致x**21\to x*x1</li>
+</ul>
+</li>
+</ul>
+<h3 id="第二次作业"><a href="#第二次作业" class="headerlink" title="第二次作业"></a>第二次作业</h3><h4 id="架构设计-1"><a href="#架构设计-1" class="headerlink" title="架构设计"></a>架构设计</h4><p><strong>TLE，遂重构。</strong> 很遗憾，对于上一次的遍历查询值的操作来说，2s的CPU时间很明显不够祸祸的，所以只能换成<code>Map</code>类型便于查询 <code>Map</code>类型就要考虑采用什么作为<code>key/value</code>进行匹配，我采用了<code>&amp;lt;String, Values&amp;gt;</code>的键值对进行适配，为每一个项创建一个独特的字符串，且<strong>能够合并</strong>的项需要保证字符串相同（合并同类项时使用） 于是增添了一个新的<code>hashString()</code>方法，为每个<code>Values</code>创建字符串（生成<code>key</code>），这样其中的键值对都是<code>&amp;lt;Values.hashString(), Values&amp;gt;</code>形式的了；具体而言需要输出除了系数外的所有信息（xyz指数，<strong>三角函数</strong>的种类、指数、内部表达式、数量）。这也是这次重构中<strong>我遇到的的主要难点</strong> 其次是三角函数引入对<code>Values</code>类造成的改变，为了保证项中仅含单个三角函数时也能进行合并，故也采用类似<code>Values</code>的结构构建，键值对类型相同，此处的<code>String</code>则指三角内<code>expr</code>的<code>hashStringInValues()</code>（必须保证系数也一并输出，否则sin(x)和sin(2*x)将能合并） 最终结构为</p>
+<h4 id="实现过程-难点-1"><a href="#实现过程-难点-1" class="headerlink" title="实现过程/难点"></a>实现过程/难点</h4><ul>
+<li>  <code>hashString()</code>方法：由于采用字符串比较，所以需要严格保证<strong>能够合并的项需要保证字符串相同</strong>这一要求，否则无法合并。那么就需要避免出现2*cos(x-1)和-3*cos(-1+x)不能合并的惨案。最简单有效的办法就是保证<code>expr</code>有序，这也是为什么最后架构采用了<code>TreeMap&lt;String, Values&gt;</code>（其实这里同时做了诱导公式，保证三角内<code>expr</code>第一项恒为正，避免了上述无法合并的情况）</li>
+<li>  三角函数化简 - 特殊值：对于特殊值，也就是cos(0)=1、sin(0)=0；务必注意(sin(0))**0=1，不过我是在创建三角函数时就进行了其中<code>expr</code>特判，如果<code>expr.values = 0</code>就会返回0/1，而不是<code>sincos</code>，转化计算的优先度要高于乘方</li>
+<li>  三角函数化简 - 诱导公式：已在<code>hashString()</code>方法中进行了解释</li>
+<li>  三角函数化简 - 二倍角：对于二倍角优化比较复杂，简化下只处理了指数为1的sin二倍角和指数为2的cos二倍角/平方和</li>
+<li>自定义函数与调用：创建类<code>ArtiFunc</code>用于存储函数相关数据，在自定义函数<strong>调用时解析</strong>对应函数名、因子，同时使用字符串替换原公式形参后直接进行完整公式的解析，并返回<code>TreeMap &lt;String, Values&gt;</code><ul>
+<li>  在调用时才进行解析的做法可以有效避免被<strong>根本不调用</strong>的超高cost自定义函数刀掉</li>
+</ul>
+</li>
+<li>  复杂度图： <img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202303192158265.jpg" alt="img"></li>
+</ul>
+<h4 id="debug与测试-1"><a href="#debug与测试-1" class="headerlink" title="debug与测试"></a>debug与测试</h4><ul>
+<li>bug点：<ul>
+<li>  自定义函数实参因子替换后，需要给因子加一层括号，否则可能会出现sin(f(x))\to sin(x*y)这样不符合形式表达的bug</li>
+<li>  三角函数优化太容易出锅了，尤其是引入了新的机制<code>hashString()</code>，即使二倍角优化更改的是三角函数中某一个<code>expr</code>的值，但最后需要把整个<code>Values</code>的<code>hashString()</code>再存一遍（更新），经常在运算忘记更新导致合并出锅，反向优化甚至错误输出</li>
+<li>  在优化过程中需要不断把合并掉的三角函数从容器中取出、运算、装入，这个过程需对元素进行深克隆，出锅后细化了<code>Calculator</code>类，支持了各种元素的深克隆方法（尽可能同名以减轻记忆压力）</li>
+<li>  输出时，三角函数套括号的层数判断出了问题，具体为编写的<code>hasOneFactor()</code>判断不严谨，没有考虑到a*sin(a^{‘})的情况，仍然会输出一层括号，导致格式不合法</li>
+</ul>
+</li>
+<li>  强测得分/互测失分/互测得分：88.7/1(1bug)/4.75(4bug)</li>
+<li>  强测（20测试点）2×0分，4×性能非满分</li>
+<li>  互测则全是优化的问题，bug修复就注释了四行优化函数摆了烂，下来还是好好修了修；</li>
+<li>  刀到的是自己写了随机数据的测评姬，同时<code>SymPy</code>房里所有人的输出，谁不一样就拎出来批（×），bug还算比较多的</li>
+<li>  小提示：<strong>别卷优化</strong> <img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202303181203783.png" alt="《你在强测中得到了 88.7702 分。》"></li>
+</ul>
+<p>《你在强测中得到了 88.7702 分。》 <strong>架构设计</strong> 第三次作业的实现在上一次作业的合理基础上反而更加简单，只需要实现求导功能和自定义函数相互调用两点即可 求导方法函数增添在原有的计算类<code>Caluculator</code>中，接受<code>TreeMap&lt;String, Values&gt;</code>，对每个单项的<code>Values</code>求导后返回一个盛放导数的新容器 自定义函数由于支持了声明时嵌套，所以为了使用简洁，改成了在声明时<strong>预解析</strong>的方式处理，但这样虽然方便处理函数，但没法解决第二次作业提到的高cost互测数据，有<code>TLE/MLE</code>风险 类与方法： <img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202303192214859.png" alt="name"> <strong>实现过程/难点</strong></p>
+<ul>
+<li>求导功能：修改<code>Lexer</code>支持解析求导文法，并在<code>Calculator</code>类中创建求导方法，返回输入<code>TreeMap&lt;String, Values&gt;</code>的导数；<ul>
+<li>  为便于实现，我将求导功能分类，分别实现基础项a、a*x^b、sincos(expr)和可递归项的求导(sincos(expr))**e、sincos(expr1)*sincos(expr2)、x^b*sincos(expr1)[*sincos(expr)]?</li>
+</ul>
+</li>
+<li>  自定义函数：只需提前解析自定义函数内容即可，注意替换调用时的因子对应</li>
+<li>  复杂度图： <img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202303192215413.jpg" alt="img"></li>
+</ul>
+<p><strong>debug与测试</strong></p>
+<ul>
+<li>bug点：<ul>
+<li>  递归部分的求导函数，复杂的判断条件以及繁琐的操作（取出、运算、更新、放回等）使得方法复杂度远超其他方法，回想起来，编写的时候实际上也很头疼，出错其实也不出意外</li>
+<li>  三角函数因子内含有自定义函数调用，这种组合可能会出现仅用一层括号就包住一个表达式的情况，然后在解析过程中就会因为文法问题出锅；解决方案是在输出自定义函数调用结果时也用一层括号包起来，表达式\to表达式因子，使其符合三角函数形式化表述</li>
+</ul>
+</li>
+<li>  强测得分/互测失分/互测得分：85.7/3(2bug)/1(1bug)</li>
+<li>  强测（15测试点）2×0分，1×性能非满分</li>
+<li>  小提示：<strong>别卷优化</strong> <img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202303181202787.png" alt="image-20230318120226762"></li>
+</ul>
+<p>《你在强测中得到了 85.72 分。》</p>
+<h2 id="作业总结"><a href="#作业总结" class="headerlink" title="作业总结"></a><strong>作业总结</strong></h2><p>首先要感谢上学期的先导课，有先导课做Java语言的基础极大地便利了我对基础语法的理解与运用，尤其是在第一次作业上，没有犹豫太多就选择了相对能够满足当前要求的架构（虽然后续需要重构，但完成了当时任务的要求）。其次，本单元作业通过构造一系列类间关系进行表达式的解析，使用了部分接口、继承、重写等Java语言特性。再其次，这次作业为<strong>递归下降</strong>的原理做了引入和解释，对之后的编译原理也许有一定助力作用</p>
+<h3 id="设计模式思考"><a href="#设计模式思考" class="headerlink" title="设计模式思考"></a>设计模式思考</h3><p>在第一次作业中因为实现的功能比较简单，就没有涉及到深/浅克隆的处理；但是随着计算功能复杂化、容器深度变深（<code>Values</code>内又存放了<code>Map</code>类），深克隆逐渐重要了起来。虽然应该写序列化深克隆方法，但是当时完全忘记了<code>clone</code>方法能重写（），然后又造了轮子 功能类（计算类）与数据类（表达式组件类）要进行明确划分，避免一个类同时运行多种复杂函数。从第二次作业重构起，创建了一个单独的运算类<code>Calculator</code>，用于执行乘法、乘方功能，并在第三次作业中把求导功能也一并集成，反思这个设定应该为每一种运算创建一个类，避免<code>Calculator</code>类过于复杂。同时写的东西实际上没有写成<strong>静态方法</strong>（知识储备不足），导致每次计算都要<code>new</code>一个对象，虽然没有字段但也对运行时间、空间有一定的影响。</p>
+<h3 id="代码复杂度分析"><a href="#代码复杂度分析" class="headerlink" title="代码复杂度分析"></a>代码复杂度分析</h3><p>肉眼可见的，复杂度飘红的方法都是功能复杂的方法，如[1]中的<code>toString</code>、<code>pow</code>方法；[2]中的<code>doubleSin</code>、<code>mergeInduction</code>方法、[3]中的<code>qiuDao</code>方法。同时，出锅的实际上也正是这几个方法，几乎无一幸免。 所以在编写代码的过程中要尤其注意行数多、判断循环条件复杂、功能复杂的方法，尽量将其功能<strong>分散</strong>、模块化，或者说可以方法多，别让方法难，否则单个复杂方法debug过于折磨，而多设方法、接口处还能进行调试检测，方便缩小错误范围。</p>
+<h3 id="互测总结"><a href="#互测总结" class="headerlink" title="互测总结"></a>互测总结</h3><p>各次作业中强测出现的bug已在各自的<strong>debug与测试</strong>栏目中进行分析。对于互测部分，<code>hack</code>他人代码主要依靠自己随机递归思路生成数据+借助<code>SymPy</code>库实现的校对测评姬。</p>
+<ul>
+<li>  纯多项式使用<code>expand</code>进行比对、含三角函数则输出式相减与0比较，如遇合并项则选择人工核对（这里其实可以代入变量值进行比对，不过没写.jpg） 只能说自己写的逻辑确实不容易<code>hack</code>到自己，第一次作业的测评姬甚至<strong>不支持生成</strong>末尾空格，所以根本测不出来自己的bug；</li>
+</ul>
+<p>前期的数据空有一番大体量，但是覆盖度并不好，总有组合测试不到；后面改良版本则更多侧重0、±1等<strong>边界</strong>小数据是否会出现错误。 对于三角函数合并、求导，以及求导后再进行的合并化简，我设计了一个占比不同的导数内表达式生成机制，能够较充分地覆盖各类情况进行测试（能出现含<strong>0</strong>层三角函数的项，同时也按照等比的概率考虑到了多重三角函数嵌套的可能性和概率的合理性） 对于导数，应该生成：</p>
+<ul>
+<li>  5\% a</li>
+<li>  5\% a*x^b</li>
+<li>  10\% a*x^b*y^c</li>
+<li>  15\% a*sincos(expr)</li>
+<li>  15\% a*x^b*sincos(expr)</li>
+<li>  25\% a*sincos(expr1)*sincos(expr2)</li>
+<li>  25\% a*x^b*y^c*sincos(expr1)*sincos(expr2)\ expr1 =? expr2</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://cookedbear.github.io">CookedBear</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://cookedbear.github.io/p/36144.html">https://cookedbear.github.io/p/36144.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://cookedbear.github.io" target="_blank">sin</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/BUAA/">BUAA</a><a class="post-meta__tags" href="/tags/Elevate/">Elevate</a><a class="post-meta__tags" href="/tags/OO/">OO</a></div><div class="post_share"><div class="social-share" data-image="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305171217643.png?imageMogr2/format/webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/p/44391.html" title="BUAA-OS-2023-Lab1-Exam"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305171229827.png?imageMogr2/format/webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">BUAA-OS-2023-Lab1-Exam</div></div></a></div><div class="next-post pull-right"><a href="/p/54148.html" title="BUAA-OS-2023-Lab1-Report"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305171230060.png?imageMogr2/format/webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">BUAA-OS-2023-Lab1-Report</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/p/d4de58c7.html" title="BUAA-OO-TOP"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112056684.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-14</div><div class="title">BUAA-OO-TOP</div></div></a></div><div><a href="/p/56591.html" title="BUAA-OO-UNIT4-Summary"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202306132108192.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-13</div><div class="title">BUAA-OO-UNIT4-Summary</div></div></a></div><div><a href="/p/60713.html" title="BUAA-OO-UNIT3-Summary"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305171548792.png?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-17</div><div class="title">BUAA-OO-UNIT3-Summary</div></div></a></div><div><a href="/p/32036.html" title="BUAA-OO-UNIT2-Summary"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305171228427.png?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-14</div><div class="title">BUAA-OO-UNIT2-Summary</div></div></a></div><div><a href="/p/1727.html" title="BUAA-OS-TOP"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202306132108192.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-22</div><div class="title">BUAA-OS-TOP</div></div></a></div><div><a href="/p/b02dc89e.html" title="BUAA-DataBase-Chapter1"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-19</div><div class="title">BUAA-DataBase-Chapter1</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305132152908.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">CookedBear</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">49</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/CookedBear"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/CookedBear" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">ReStart</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%9C%E4%B8%9A%E5%86%85%E5%AE%B9%E5%8F%8A%E5%AE%8C%E6%88%90%E6%83%85%E5%86%B5"><span class="toc-number">1.</span> <span class="toc-text">作业内容及完成情况</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%9C%E4%B8%9A%E8%A6%81%E6%B1%82"><span class="toc-number">1.1.</span> <span class="toc-text">作业要求</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E6%AC%A1%E4%BD%9C%E4%B8%9A%E4%BB%BB%E5%8A%A1%E6%8F%8F%E8%BF%B0"><span class="toc-number">1.1.1.</span> <span class="toc-text">三次作业任务描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E5%AE%9A%E7%9A%84%E5%BD%A2%E5%BC%8F%E5%8C%96%E8%A1%A8%E8%BF%B0"><span class="toc-number">1.1.2.</span> <span class="toc-text">设定的形式化表述</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%9C%E4%B8%9A%E5%AE%8C%E6%88%90%E6%83%85%E5%86%B5"><span class="toc-number">1.2.</span> <span class="toc-text">作业完成情况</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%BD%9C%E4%B8%9A"><span class="toc-number">1.2.1.</span> <span class="toc-text">第一次作业</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">架构设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E8%BF%87%E7%A8%8B-%E9%9A%BE%E7%82%B9"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">实现过程&#x2F;难点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#debug%E4%B8%8E%E6%B5%8B%E8%AF%95"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">debug与测试</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AC%A1%E4%BD%9C%E4%B8%9A"><span class="toc-number">1.2.2.</span> <span class="toc-text">第二次作业</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1-1"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">架构设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E8%BF%87%E7%A8%8B-%E9%9A%BE%E7%82%B9-1"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">实现过程&#x2F;难点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#debug%E4%B8%8E%E6%B5%8B%E8%AF%95-1"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">debug与测试</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93"><span class="toc-number">1.3.</span> <span class="toc-text">作业总结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%80%9D%E8%80%83"><span class="toc-number">1.3.1.</span> <span class="toc-text">设计模式思考</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90"><span class="toc-number">1.3.2.</span> <span class="toc-text">代码复杂度分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%92%E6%B5%8B%E6%80%BB%E7%BB%93"><span class="toc-number">1.3.3.</span> <span class="toc-text">互测总结</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/p/b02dc89e.html" title="BUAA-DataBase-Chapter1"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BUAA-DataBase-Chapter1"/></a><div class="content"><a class="title" href="/p/b02dc89e.html" title="BUAA-DataBase-Chapter1">BUAA-DataBase-Chapter1</a><time datetime="2023-09-19T00:05:03.000Z" title="发表于 2023-09-19 08:05:03">2023-09-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/b220a2af.html" title="BUAA-Algorithms-Chapter1"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BUAA-Algorithms-Chapter1"/></a><div class="content"><a class="title" href="/p/b220a2af.html" title="BUAA-Algorithms-Chapter1">BUAA-Algorithms-Chapter1</a><time datetime="2023-09-14T11:20:03.000Z" title="发表于 2023-09-14 19:20:03">2023-09-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/d4de58c7.html" title="BUAA-OO-TOP"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112056684.jpg?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BUAA-OO-TOP"/></a><div class="content"><a class="title" href="/p/d4de58c7.html" title="BUAA-OO-TOP">BUAA-OO-TOP</a><time datetime="2023-09-14T07:54:44.000Z" title="发表于 2023-09-14 15:54:44">2023-09-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/43299.html" title="BUAA-CompilePrincipal-Chapter1"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BUAA-CompilePrincipal-Chapter1"/></a><div class="content"><a class="title" href="/p/43299.html" title="BUAA-CompilePrincipal-Chapter1">BUAA-CompilePrincipal-Chapter1</a><time datetime="2023-09-04T08:59:03.000Z" title="发表于 2023-09-04 16:59:03">2023-09-04</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By CookedBear</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script defer src="https://gcore.jsdelivr.net/combine/npm/jquery@latest/dist/jquery.min.js,gh/weilining/jsdelivr/jquery/circlemagic/circlemagic.min.js,gh/weilining/jsdelivr@latest/jquery/circlemagic/butterflycirclemagic.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
