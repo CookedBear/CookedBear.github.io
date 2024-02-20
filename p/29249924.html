@@ -1,0 +1,594 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>BUAA-DataBase-Chapter2 | sin</title><meta name="author" content="CookedBear"><meta name="copyright" content="CookedBear"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="第 3 章 SQL 概述数据定义支持 SQL 的关系数据库管理系统同样支持关系数据库的三级模式结构。存储结构如图所示：   外模式：若干视图、部分基本表 模式：若干基本表 内模式：存储文件  基本表和视图一致，都属于关系。视图是从一个或多个基本表导出的表，属于虚表，用户可以查看视图，但视图并不实际存放数据。通常一个关系数据库管理系统可以包含多个数据库，一个数据库可以建立多个模式，一个模式可以包含多">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BUAA-DataBase-Chapter2">
+<meta property="og:url" content="https://cookedbear.github.io/p/29249924.html">
+<meta property="og:site_name" content="sin">
+<meta property="og:description" content="第 3 章 SQL 概述数据定义支持 SQL 的关系数据库管理系统同样支持关系数据库的三级模式结构。存储结构如图所示：   外模式：若干视图、部分基本表 模式：若干基本表 内模式：存储文件  基本表和视图一致，都属于关系。视图是从一个或多个基本表导出的表，属于虚表，用户可以查看视图，但视图并不实际存放数据。通常一个关系数据库管理系统可以包含多个数据库，一个数据库可以建立多个模式，一个模式可以包含多">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp">
+<meta property="article:published_time" content="2023-10-10T12:34:06.000Z">
+<meta property="article:modified_time" content="2023-10-24T13:54:04.064Z">
+<meta property="article:author" content="CookedBear">
+<meta property="article:tag" content="BUAA">
+<meta property="article:tag" content="Elevate">
+<meta property="article:tag" content="DataBase">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://cookedbear.github.io/p/29249924.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":150},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'BUAA-DataBase-Chapter2',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-10-24 21:54:04'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/center-atom.css" ><meta name="generator" content="Hexo 5.4.2"></head><body>
+    <div id='loader'>
+        
+        <div class="loading-left-bg"></div>
+        <div class="loading-right-bg"></div>
+        <div class="spinner-box">
+            <div class="configure-border-1">
+                <div class="configure-core"></div>
+            </div>
+            <div class="configure-border-2">
+                <div class="configure-core"></div>
+            </div>
+            <div class="loading-word">加载中...</div>
+        </div>
+        
+    </div>
+        
+    <script>
+        var endLoading = function () {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+        }
+        window.addEventListener('load',endLoading);
+    </script>
+    <div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305132152908.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">59</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp')"><nav id="nav"><span id="blog-info"><a href="/" title="sin"><span class="site-name">sin</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">BUAA-DataBase-Chapter2</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-10-10T12:34:06.000Z" title="发表于 2023-10-10 20:34:06">2023-10-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-10-24T13:54:04.064Z" title="更新于 2023-10-24 21:54:04">2023-10-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Elevate/">Elevate()</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/DataBase/">DataBase</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">4.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>16分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="BUAA-DataBase-Chapter2"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="第-3-章-SQL-概述"><a href="#第-3-章-SQL-概述" class="headerlink" title="第 3 章 SQL 概述"></a>第 3 章 SQL 概述</h1><h2 id="数据定义"><a href="#数据定义" class="headerlink" title="数据定义"></a>数据定义</h2><p>支持 SQL 的关系数据库管理系统同样支持关系数据库的三级模式结构。存储结构如图所示：</p>
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202310102151012.png" alt="image-20231010214329495"></p>
+<ul>
+<li>外模式：若干视图、部分基本表</li>
+<li>模式：若干基本表</li>
+<li>内模式：存储文件</li>
+</ul>
+<p>基本表和视图一致，都属于关系。视图是从一个或多个基本表导出的表，属于<strong>虚表</strong>，用户可以查看视图，但视图并不实际存放数据。通常一个关系数据库管理系统可以包含多个数据库，一个数据库可以建立多个模式，一个模式可以包含多个表、视图、索引等数据库对象</p>
+<p>数据定义语句如下：创建（CREATE）、删除（DROP）、修改（ALTER），对象包含模式（SCHEMA）、视图（VIEW）、表（TABLE）、索引（INDEX）</p>
+<p>具体使用时采用 $&lt;操作&gt;+&lt;对象&gt;$ 的语句即可。其中只有表和索引可以执行修改操作</p>
+<h3 id="模式的定义与删除"><a href="#模式的定义与删除" class="headerlink" title="模式的定义与删除"></a>模式的定义与删除</h3><p>定义模式实际上定义了一个命名空间。在模式中可以进一步定义数据库对象。模式定义语句如下：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> SCHEMA <span class="operator">&lt;</span>NAME<span class="operator">&gt;</span> <span class="keyword">AUTHORIZATION</span> <span class="operator">&lt;</span>USERNAME<span class="operator">&gt;</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>如果没有指定模式名 <code>NAME</code> 则默认为用户名称 <code>USERNAME</code></li>
+</ul>
+<p>在定义了模式后，可以继续追加定义该模式中的对象：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> SCHEMA <span class="operator">&lt;</span>NAME<span class="operator">&gt;</span> <span class="keyword">AUTHORIZATION</span> <span class="operator">&lt;</span>USERNAME<span class="operator">&gt;</span> [<span class="operator">&lt;</span><span class="keyword">TABLE</span><span class="operator">&gt;</span> <span class="operator">|</span> <span class="operator">&lt;</span><span class="keyword">VIEW</span><span class="operator">&gt;</span> <span class="operator">|</span> <span class="operator">&lt;</span>AUTHORIZE<span class="operator">&gt;</span>];</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>这里的可选项是完整的定义子句，直接追加在模式定义的同一句中即可</li>
+</ul>
+<p>模式在删除时有两类操作，第一类（CASCADE）会连带删除模式下的所有对象；第二类（RESTRICT）只允许删除空的模式，语句如下：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">DROP</span> SCHEMA <span class="operator">&lt;</span>NAME<span class="operator">&gt;</span> <span class="operator">&lt;</span>CASCADE <span class="operator">|</span> RESTRICT<span class="operator">&gt;</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="基本表的定义、删除与修改"><a href="#基本表的定义、删除与修改" class="headerlink" title="基本表的定义、删除与修改"></a>基本表的定义、删除与修改</h3><p>基本表的定义语句如下：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* Create Table */</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="operator">&lt;</span>NAME<span class="operator">&gt;</span> (<span class="operator">&lt;</span>列名<span class="operator">&gt;</span><span class="operator">&lt;</span>数据类型<span class="operator">&gt;</span> [完整性约束条件][, <span class="operator">&lt;</span>列名<span class="operator">&gt;</span><span class="operator">&lt;</span>数据类型<span class="operator">&gt;</span> [完整性约束条件]]);</span><br><span class="line"><span class="comment">/* Delete Table */</span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="operator">&lt;</span>NAME<span class="operator">&gt;</span> [CASCADE <span class="operator">|</span> RESTRICT]</span><br></pre></td></tr></table></figure>
+
+<p>要注意删除表时，RESTRICT 要求表不能存在引用、视图、触发器、存储过程/函数，CASCADE 会连带删除</p>
+<p>创建整个表时，需要设置其所属的模式，设置有三种方法：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* 1. 创建表时显式给出模式名 */</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> Schema1.Student();</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 2. 创建模式时直接创建表 */</span></span><br><span class="line"><span class="keyword">CREATE</span> SCHEMA Schema1 <span class="keyword">AUTHORIZATION</span> CookedBear</span><br><span class="line">	<span class="keyword">CREATE</span> <span class="keyword">TABLE</span> Student();</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 3. 不显式声明，搜索路径：使用搜索到的第一个模式，如果找不到模式则报错 */</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>在创建列时定义的完整性约束条件会被存储在数据字典中，当用户操作数据时会自动检查是否满足约束条件；如果一个约束条件需要跨多个属性列，就必须定义在表上，如下例：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> Course</span><br><span class="line">(Cno <span class="type">CHAR</span>(<span class="number">4</span>) <span class="keyword">PRIMARY</span> KEY,   <span class="comment">/* Cno = 主码 */</span></span><br><span class="line"> Cname <span class="type">CHAR</span>(<span class="number">40</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,   <span class="comment">/* Cname != null*/</span></span><br><span class="line"> Cpno <span class="type">CHAR</span>(<span class="number">4</span>),</span><br><span class="line"> Ccredit <span class="type">SMALLINT</span>,</span><br><span class="line"> <span class="keyword">FOREIGN</span> KEY (Cpno) <span class="keyword">REFERENCES</span> Course(Cno)</span><br><span class="line"> <span class="comment">/* Cpno 是外码，被参照属性是 Course 的 Cno 列 */</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>基本表中列的数据类型有以下几种常用的数据类型：</p>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CHAR(n), CHARACTER(n)</td>
+<td>长度为 n 的定长字符串</td>
+</tr>
+<tr>
+<td>VARCHAR(n), CHARACTERVARYING(n)</td>
+<td>最大长度为 n 的变长字符串</td>
+</tr>
+<tr>
+<td>CLOB</td>
+<td>字符串大对象</td>
+</tr>
+<tr>
+<td>BLOB</td>
+<td>二进制大对象</td>
+</tr>
+<tr>
+<td>INT, INTEGER</td>
+<td>4 bit 长整数</td>
+</tr>
+<tr>
+<td>SMALLINT</td>
+<td>2 bit 短整数</td>
+</tr>
+<tr>
+<td>BIGINT</td>
+<td>8 bit 大整数</td>
+</tr>
+<tr>
+<td>NUMERIC(p, d)</td>
+<td>定点数，总长 p 位，小数点后有 d 位</td>
+</tr>
+<tr>
+<td>DECIMAL(p, d), DEC(p, d)</td>
+<td>同 NUMERIC</td>
+</tr>
+<tr>
+<td>REAL</td>
+<td>单精度浮点数</td>
+</tr>
+<tr>
+<td>DOUBLE PRECISION</td>
+<td>双精度浮点数</td>
+</tr>
+<tr>
+<td>FLOAT(n)</td>
+<td>可选精度浮点数，精度大于等于 n</td>
+</tr>
+<tr>
+<td>BOOLEAN</td>
+<td>布尔量</td>
+</tr>
+<tr>
+<td>DATE</td>
+<td>日期，YYYY-MM-DD</td>
+</tr>
+<tr>
+<td>TIME</td>
+<td>时间，HH:MM:SS</td>
+</tr>
+<tr>
+<td>TIMESTAMP</td>
+<td>时间戳</td>
+</tr>
+<tr>
+<td>INTERVAL</td>
+<td>时间间隔</td>
+</tr>
+</tbody></table>
+<p>修改基本表使用如下语句：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> <span class="operator">&lt;</span>NAME<span class="operator">&gt;</span></span><br><span class="line">[<span class="keyword">ADD</span> [<span class="keyword">COLUMN</span>] <span class="operator">&lt;</span>LineName<span class="operator">&gt;</span><span class="operator">&lt;</span>DataType<span class="operator">&gt;</span> [Restriction]]</span><br><span class="line">[<span class="keyword">ADD</span> <span class="operator">&lt;</span>TableLevelRestriction<span class="operator">&gt;</span>]</span><br><span class="line">[<span class="keyword">DROP</span> [<span class="keyword">COLUMN</span>] <span class="operator">&lt;</span>LineName<span class="operator">&gt;</span> [CASCADE <span class="operator">|</span> RESTRICT]]</span><br><span class="line">[<span class="keyword">DROP</span> <span class="keyword">CONSTRAINT</span> <span class="operator">&lt;</span>RestrictionName<span class="operator">&gt;</span> [CASCADE <span class="operator">|</span> RESTRICT]]</span><br><span class="line">[<span class="keyword">ALTER</span> <span class="keyword">COLUMN</span> <span class="operator">&lt;</span>LineName<span class="operator">&gt;</span><span class="operator">&lt;</span>DataType<span class="operator">&gt;</span>];</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在 DROP 操作中，如果删除的列被其他的列所引用且使用了 CASCADE 模式，则连带删除所有引用的对象（如视图）</li>
+</ul>
+<h3 id="索引的建立与删除"><a href="#索引的建立与删除" class="headerlink" title="索引的建立与删除"></a>索引的建立与删除</h3><p>索引可以加速大数据量的查询速度。数据库索引有多种类型，常见的包括顺序文件索引、B+树索引、散列索引、位图索引等。索引是关系数据库管理系统的内部实现技术，属于<strong>内模式</strong>的管理范围</p>
+<ul>
+<li>索引需要占用一定的存储空间，并且需要随数据更新而维护，因此需要有选择地创建索引。</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> [<span class="keyword">UNIQUE</span>] [CLUSTER] INDEX <span class="operator">&lt;</span>IndexName<span class="operator">&gt;</span> <span class="keyword">ON</span> <span class="operator">&lt;</span>TableName<span class="operator">&gt;</span>(<span class="operator">&lt;</span>LineName<span class="operator">&gt;</span>[<span class="operator">&lt;</span>排列次序<span class="operator">&gt;</span>][, <span class="operator">&lt;</span>LineName<span class="operator">&gt;</span>[排列次序]]);</span><br><span class="line"><span class="keyword">ALTER</span> INDEX <span class="operator">&lt;</span>OldName<span class="operator">&gt;</span> RENAME <span class="keyword">TO</span> <span class="operator">&lt;</span>NewName<span class="operator">&gt;</span>;  <span class="comment">/* 索引的重命名 */</span></span><br><span class="line"><span class="keyword">DROP</span> INDEX <span class="operator">&lt;</span>IndexName<span class="operator">&gt;</span>                      <span class="comment">/* 删除索引    */</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>索引可以建立在多个列上，每个列使用逗号隔开</li>
+<li>次序指定索引值的排列次序，默认为 ASC(升序)，也可采用 DESC(降序)</li>
+<li>UNIQUE 表示索引值只唯一对应数据记录</li>
+<li>CLUSTER 表示建立聚簇索引</li>
+</ul>
+<h2 id="数据查询"><a href="#数据查询" class="headerlink" title="数据查询"></a>数据查询</h2><p>SQL 使用 SELECT 语句进行数据查询，SELECT 指令可以进行单表查询，也可进行复杂的连接查询和嵌套查询，其指令格式为：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> [<span class="keyword">ALL</span> <span class="operator">|</span> <span class="keyword">DISTINCT</span>] <span class="operator">&lt;</span>LineExp<span class="operator">&gt;</span> [, <span class="operator">&lt;</span>LineExp<span class="operator">&gt;</span>]</span><br><span class="line"><span class="keyword">FROM</span> <span class="operator">&lt;</span><span class="keyword">Table</span><span class="operator">/</span><span class="keyword">View</span><span class="operator">&gt;</span> [, <span class="operator">&lt;</span><span class="keyword">Table</span><span class="operator">/</span><span class="keyword">View</span><span class="operator">&gt;</span>] <span class="operator">|</span> (<span class="operator">&lt;</span><span class="keyword">SELECT</span>语句<span class="operator">&gt;</span>) [<span class="keyword">AS</span>] <span class="operator">&lt;</span>别名<span class="operator">&gt;</span></span><br><span class="line">[<span class="keyword">WHERE</span> <span class="operator">&lt;</span>Cond<span class="operator">&gt;</span>]</span><br><span class="line">[<span class="keyword">GROUP</span> <span class="keyword">BY</span> <span class="operator">&lt;</span>LineName1<span class="operator">&gt;</span> [<span class="keyword">HAVING</span> <span class="operator">&lt;</span>Cond<span class="operator">&gt;</span>]]</span><br><span class="line">[<span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="operator">&lt;</span>LineName2<span class="operator">&gt;</span> [<span class="keyword">ASC</span> <span class="operator">|</span> <span class="keyword">DESC</span>]];</span><br></pre></td></tr></table></figure>
+
+<h3 id="单表查询"><a href="#单表查询" class="headerlink" title="单表查询"></a>单表查询</h3><h4 id="列查询"><a href="#列查询" class="headerlink" title="列查询"></a>列查询</h4><ul>
+<li>查询指定列时则可以在第一行中的 <code>LineExp</code> 中指定查询的属性列，选择全部列时可以简写为 <code>*</code>（输出顺序和原表中一致）</li>
+<li><code>LineExp</code> 不仅可以输入列的名，也可以输入含列的表达式，例如 <code>SELECT Sno+10 FROM Student;</code>，就把 <code>Sno+10</code> 这个表达式作为元素进行输出</li>
+</ul>
+<h4 id="条件查询"><a href="#条件查询" class="headerlink" title="条件查询"></a>条件查询</h4><ul>
+<li>当输出内容中包含有完全相同的两个元组时，可以通过 <code>DISTINCT</code> 对重复行进行合并，使用 <code>ALL</code> 则不合并输出</li>
+<li>当需要对元组进行内容上的筛选时，使用 <code>WHERE</code> 子句对元组进行筛选，常用的查询条件如下：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>条件</th>
+<th>谓词</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>比较</td>
+<td>比较运算符</td>
+</tr>
+<tr>
+<td>确定范围</td>
+<td>[NOT] BETWEEN &lt;data1&gt; AND &lt;data2&gt;</td>
+</tr>
+<tr>
+<td>确定集合</td>
+<td>[NOT] IN (element1, element2)</td>
+</tr>
+<tr>
+<td>字符匹配</td>
+<td>[NOT] LIKE &lt;String&gt; ESCAPE &lt;换码字符&gt;</td>
+</tr>
+<tr>
+<td>空值</td>
+<td>IS [NOT] NULL</td>
+</tr>
+<tr>
+<td>逻辑运算</td>
+<td>AND, OR, NOT</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>比较：表示某个字段是否满足数学上的关系</p>
+</li>
+<li><p>确定范围：寻找属性值在指定范围内的元组；<code>Cno BETWEEN 1 AND 10</code></p>
+</li>
+<li><p>确定集合：寻找属性值是 <code>element&lt;i&gt;</code> 的元组；<code>Cname IN (name1, name2)</code></p>
+</li>
+<li><p>字符匹配：换码字符表示其后的字符不再具有通配符的含义，转义为普通的字符，例如 <code>LIKE &#39;APP\_00__&#39; ESCAPE &#39;\&#39;</code> 中，换码字符为 <code>\</code>，那么在 00 前的 <code>\_</code> 就将通配符转化为了一般的下划线字符，而后面的两个通配符没有进行转义，仍表示通配意义</p>
+<ul>
+<li>关于字符串匹配符：表示多个字符用 <code>%</code>，单个字符用 <code>_</code>，中文字符在 <code>ASCII</code> 中使用两个下划线， <code>GBK</code> 中使用一个</li>
+</ul>
+</li>
+<li><p>多条件约束：使用 <code>AND</code> 和 <code>OR</code> 连接多个查询条件</p>
+</li>
+</ul>
+<h4 id="聚集函数"><a href="#聚集函数" class="headerlink" title="聚集函数"></a>聚集函数</h4><ul>
+<li>聚集函数用于查询的返回值字段，用于执行一些整体上的统计功能，包含 <code>DISTINCT</code> 和 <code>ALL</code> 两个短语，默认为后者，前者会取消计数重复值</li>
+<li>除了第一个 <code>COUNT(*)</code> 外，其余的聚集函数会跳过 NULL 值</li>
+<li>聚集函数不能应用于 WHERE 子句中，只能使用在 HAVING 子句和 SELECT 子句中</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>聚集函数名</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>COUNT(*)</td>
+<td>统计返回的元组个数</td>
+</tr>
+<tr>
+<td>COUNT([DISTINCT | ALL] &lt;LineName&gt;)</td>
+<td>计算指定列有值（不为 NULL）的个数</td>
+</tr>
+<tr>
+<td>SUM([DISTINCT |ALL] &lt;LineName&gt;)</td>
+<td>计算指定列值的总和</td>
+</tr>
+<tr>
+<td>AVG([DISTINCT |ALL] &lt;LineName&gt;)</td>
+<td>计算指定列值的平均值</td>
+</tr>
+<tr>
+<td>MAX([DISTINCT |ALL] &lt;LineName&gt;)</td>
+<td>同理，最大值</td>
+</tr>
+<tr>
+<td>MIN([DISTINCT |ALL] &lt;LineName&gt;)</td>
+<td>最小值</td>
+</tr>
+</tbody></table>
+<h4 id="分组操作"><a href="#分组操作" class="headerlink" title="分组操作"></a>分组操作</h4><ul>
+<li>GROUP BY 语句将查询结果值相等的所有元组看作一个组，在分组操作后，聚集函数会单独应用于每个组内</li>
+<li>类似的可以对组进行筛选，使用 HAVING 语句指定筛选条件</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> Sno             <span class="comment">/* 查询 学生学号 */</span></span><br><span class="line"><span class="keyword">FROM</span> SC                <span class="comment">/* 从 选课记录表 中进行选择 */</span></span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> Sno           <span class="comment">/* 以 学生学号 分组 */</span></span><br><span class="line"><span class="keyword">HAVING</span> <span class="built_in">COUNT</span>(<span class="operator">*</span>) <span class="operator">&gt;</span> <span class="number">3</span>;   <span class="comment">/* 筛选 元组数量大于 3 的组 */</span></span><br></pre></td></tr></table></figure>
+
+<p>我们可以注意到，聚集函数的功能都是应用于复数个元组的，所以显然不能在 WHERE 语句中使用，但对于 GROUP BY 语句，它操作的对象是<strong>组</strong>，也就是复数个元组，此时就可以使用聚集函数进行筛选，获得符合计算要求的组</p>
+<h3 id="多表查询"><a href="#多表查询" class="headerlink" title="多表查询"></a>多表查询</h3><ul>
+<li>当查询操作同时涉及多个表，操作便成为了<strong>连接查询</strong>，连接查询是关系数据库中最主要的查询操作</li>
+<li>连接语句中 WHERE 子句用于连接两个表的条件被称为连接条件，通过控制连接条件驱动进行多表查询，连接条件中字段类型必须是可比较的，但是列名不需要完全一致</li>
+<li>对于两个表以上的连接操作，设置复数个连接条件即可</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> A, B, C</span><br><span class="line"><span class="keyword">FROM</span> T1, T2, T3</span><br><span class="line"><span class="keyword">WHERE</span> T1.Z<span class="operator">=</span>T2<span class="operator">=</span>Z <span class="keyword">AND</span> T2.Y<span class="operator">=</span>T3.Y;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="等值、非等值连接查询"><a href="#等值、非等值连接查询" class="headerlink" title="等值、非等值连接查询"></a>等值、非等值连接查询</h4><ul>
+<li>当连接条件中的连接运算符为 <code>=</code> 时，操作被称为<strong>等值连接</strong></li>
+</ul>
+<p>例如查询每个学生的信息与选课情况：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> Student.<span class="operator">*</span> SC.<span class="operator">*</span>       <span class="comment">/* 展示字段 */</span></span><br><span class="line"><span class="keyword">FROM</span> Student, SC            <span class="comment">/* 数据来源 */</span></span><br><span class="line"><span class="keyword">WHERE</span> Student.Sno <span class="operator">=</span> SC.Sno; <span class="comment">/* 等值连接 */</span></span><br></pre></td></tr></table></figure>
+
+<p>执行结果如下：</p>
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202310131826348.png" alt="image-20231013182648190"></p>
+<ul>
+<li>可以在 WHERE 执行连接操作的同时追加其他的限定条件从而对连接后的结果进行筛选</li>
+</ul>
+<h4 id="自身连接"><a href="#自身连接" class="headerlink" title="自身连接"></a>自身连接</h4><p>一个表也可以和自己连接，查询操作一致，只需要注意命名问题：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> FIRST.Cno, SECOND.Cpno</span><br><span class="line"><span class="keyword">FROM</span> Course <span class="keyword">FIRST</span>, Course <span class="keyword">SECOND</span> <span class="comment">/* 注意需要给两个表起名进行区分 */</span></span><br><span class="line"><span class="keyword">WHERE</span> FIRST.Cpno <span class="operator">=</span> Second.Cno;</span><br></pre></td></tr></table></figure>
+
+<h4 id="外连接"><a href="#外连接" class="headerlink" title="外连接"></a>外连接</h4><p>当元组不满足连接条件时，连接操作会默认将这些元组删去，可以用 <code>LEFT | RIGHT OUTER JOIN &lt;Table&gt; ON (Condition)</code> 来执行外连接操作</p>
+<p>例如 FROM 语句可以写成：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">FROM</span> <span class="keyword">LEFT</span> <span class="keyword">OUTER</span> <span class="keyword">JOIN</span> SC <span class="keyword">ON</span> (Student.Sno<span class="operator">=</span>SC.Sno) </span><br><span class="line"><span class="comment">/* 这里等号左边就是 LEFT 表了 */</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="嵌套查询"><a href="#嵌套查询" class="headerlink" title="嵌套查询"></a>嵌套查询</h3><ul>
+<li><p><strong>嵌套查询</strong>：将一个查询块嵌至另一个查询块的 WHERE、HAVING 条件中就形成了嵌套查询；两个操作分别被称为<strong>外层查询</strong>和<strong>内层查询</strong>；</p>
+</li>
+<li><p>当子查询的查询条件与父查询不相关时是不相关子查询，有依赖时称为相关子查询</p>
+</li>
+<li><p>SQL 允许多层嵌套，但只有最外层操作可以使用 ORDER BY 进行排序</p>
+</li>
+</ul>
+<p>嵌套查询一般分有几类，IN 查询、比较运算符查询、ANY/ALL 谓词查询、EXISTS 谓词查询</p>
+<p>当子查询返回了一个元组/值（聚集函数）时，可以直接使用比较运算符进行处理，若返回了多个元组，就要使用 <code>ANY/ALL</code> 进行辅助（或者利用<strong>聚集函数</strong>转化结果为单值）</p>
+<p>ANYALL 谓词需要和比较运算符连用：</p>
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202310131911301.png" alt="image-20231013191145200"></p>
+<p>EXISTS 查询返回逻辑真值</p>
+<p>下面是一些查询的示例：</p>
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202310131906518.png" alt="image-20231013190645408"></p>
+<h3 id="集合查询"><a href="#集合查询" class="headerlink" title="集合查询"></a>集合查询</h3><p>实质上是把多次查询的结果做了运算，包括集合上的交并差三种（分别为 INTERSECT、UNION、EXCEPT）集合运算。</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="number">1</span></span><br><span class="line"><span class="keyword">UNION</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="派生表查询"><a href="#派生表查询" class="headerlink" title="派生表查询"></a>派生表查询</h3><p>将子查询放在 <code>FROM</code> 子句中，充当父级查询的数据来源，如：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"># 查询<span class="keyword">SELECT</span> Sno, Cno</span><br><span class="line"><span class="keyword">FROM</span> SC, (</span><br><span class="line">    <span class="keyword">SELECT</span> Sno, <span class="built_in">Avg</span>(Grade) </span><br><span class="line">    <span class="keyword">FROM</span> SC <span class="keyword">GROUP</span> <span class="keyword">BY</span> Sno</span><br><span class="line">) <span class="keyword">AS</span> Avg_sc(avg_sno, avg_grade)</span><br><span class="line"><span class="keyword">WHERE</span> SC.Sno <span class="operator">=</span> Avg_sc.Sno <span class="keyword">AND</span> SC.Grade <span class="operator">&gt;=</span> Avg_sc.avg_grade</span><br></pre></td></tr></table></figure>
+
+<h2 id="数据更新"><a href="#数据更新" class="headerlink" title="数据更新"></a>数据更新</h2><p>主要分为增删改三种操作，简单说明：</p>
+<ul>
+<li>插入：<code>INSERT INTO &lt;Table&gt; &lt;Column&gt;, &lt;Column&gt; VALUES &lt;Value&gt;, &lt;Value&gt;</code></li>
+<li>更新：<code>UPDATE &lt;Table&gt; SET &lt;Column&gt;=&lt;Value&gt;, &lt;Column&gt;=&lt;Value&gt;</code></li>
+<li>删除：<code>DELETE FROM &lt;Table&gt; WHERE &lt;Cond&gt;</code><ul>
+<li>这里的 <code>&lt;Cond&gt;</code> 可以用来构造子查询，充当删除项的筛选条件</li>
+</ul>
+</li>
+</ul>
+<p>数据更新操作可能会破坏数据表的参照完整性</p>
+<h3 id="空值"><a href="#空值" class="headerlink" title="空值"></a>空值</h3><p>空值与另一个值的算数运算结果为空值，比较运算结果为 UNKNOWN。在查询语句中，只有使得 WHERE 和 HAVING 的条件为 TRUE 的元组才能被选中。</p>
+<ul>
+<li>要注意一个空值和另一个空值做 <code>eq</code> 运算结果可能为 <code>Unknown</code>，需要注意判断条件</li>
+</ul>
+<h2 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h2><p>视图是从几个基本表中导出的虚表，不存放实际数据。基本表数据若发生变化，视图数据也会变化。允许在视图上再定义视图，但更新视图有一定限制。</p>
+<h3 id="视图的操作"><a href="#视图的操作" class="headerlink" title="视图的操作"></a>视图的操作</h3><ul>
+<li>定义视图：<code>CREATE VIEW &lt;NAME&gt; &lt;Column&gt;, &lt;Column&gt; AS &lt;子查询&gt; [WITH CHECK OPTION]</code>。子查询可以是任意 <code>SELECT</code> 指令，最后的条件语句说明修改视图时会自动加上子查询中的筛选条件，不合法则不执行。</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">VIEW</span> V_S</span><br><span class="line"><span class="keyword">AS</span></span><br><span class="line"><span class="keyword">SELECT</span> Sno, Sname</span><br><span class="line"><span class="keyword">FROM</span> Student</span><br><span class="line"><span class="keyword">WHERE</span> Sdept <span class="operator">=</span> <span class="number">6</span></span><br><span class="line"><span class="keyword">WITH</span> <span class="keyword">CHECK</span> OPEION;</span><br></pre></td></tr></table></figure>
+
+<p>这里就会把所有 6 系学生的学号+姓名拿出来形成一个新视图，在修改视图时，数据库系统会自动检查修改后是否满足 <code>Sdept = 6</code> 这个限制条件。</p>
+<ul>
+<li><p>删除视图：<code>DROP VIEW &lt;NAME&gt; [CASCADE]</code> ，如果被删除的视图导出了其他的视图，<code>CASECADE</code> 关键字会将所有关联视图都删除掉</p>
+</li>
+<li><p>查询视图：操作与查基本表相同，视图会持久保存</p>
+</li>
+<li><p>修改数据：也和基本表类似，但是需要注意并不是所有视图都支持更新。如果视图的某一列使用了类似聚集函数等操作（例如AVG），因为系统无法更改所有与之相关的数据从而修改 AVG，所以这个表就是不可更新的。</p>
+</li>
+</ul>
+<p>以下是不允许更新的视图：</p>
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202310242136814.png" alt="image-20231024213643712"></p>
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202310242136296.png" alt="image-20231024213657260"></p>
+<ul>
+<li>需要注意<strong>不允许更新</strong>视图仍然有可能更新，但是不可更新视图一定不能更新</li>
+</ul>
+<h1 id="第-4-章-数据库的安全性与完整性"><a href="#第-4-章-数据库的安全性与完整性" class="headerlink" title="第 4 章 数据库的安全性与完整性"></a>第 4 章 数据库的安全性与完整性</h1><blockquote>
+<p>这一章不是授课重点喵，过一遍 ppt 选点放放</p>
+</blockquote>
+<h2 id="SQL-的数据控制"><a href="#SQL-的数据控制" class="headerlink" title="SQL 的数据控制"></a>SQL 的数据控制</h2><p>当数据库管理员建立了一个新用户之后，必须授予它一定的权限，该用户才能使用数据库。在数据库系统中可以授予用户两类权限：</p>
+<ul>
+<li>用户级权限：用户级权限是数据库管理员为每个用户授予的特定权限。这种权限与整个数据库相关，与数据库中具体的关系无关。这种权限是对用户使用整个数据库的权限的限定。</li>
+<li>关系级权限：关系级权限是数据库管理员或数据库对象的拥有者为用户授予的与关系或视图有关的权限。这种权限是对用户使用关系和视图的权限的限定。</li>
+</ul>
+<h2 id="用户级权限的管理"><a href="#用户级权限的管理" class="headerlink" title="用户级权限的管理"></a>用户级权限的管理</h2><ul>
+<li>通过 Grant 语句为用户授予用户级权限或角色，其语法格式为：</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">Grant</span> <span class="operator">&lt;</span>用户级权限<span class="operator">&gt;</span><span class="operator">|</span><span class="operator">&lt;</span>角色<span class="operator">&gt;</span> [&#123;,<span class="operator">&lt;</span>用户级权限<span class="operator">&gt;</span><span class="operator">|</span><span class="operator">&lt;</span>角色<span class="operator">&gt;</span>&#125;]</span><br><span class="line"><span class="keyword">To</span> <span class="operator">&lt;</span>用户名<span class="operator">&gt;</span><span class="operator">|</span><span class="operator">&lt;</span>角色<span class="operator">&gt;</span><span class="operator">|</span>public [&#123;,<span class="operator">&lt;</span>用户名<span class="operator">&gt;</span><span class="operator">|</span><span class="operator">&lt;</span>角色<span class="operator">&gt;</span>&#125;]</span><br><span class="line">[<span class="keyword">With</span> <span class="keyword">Grant</span> Option]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>通过 Revoke 指令收回权限</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">Revoke</span> <span class="operator">&lt;</span>用户级权限<span class="operator">&gt;</span><span class="operator">|</span><span class="operator">&lt;</span>角色<span class="operator">&gt;</span> [&#123;,<span class="operator">&lt;</span>用户级权限<span class="operator">&gt;</span><span class="operator">|</span><span class="operator">&lt;</span>角色<span class="operator">&gt;</span>&#125;]</span><br><span class="line"><span class="keyword">From</span> <span class="operator">&lt;</span>用户名<span class="operator">&gt;</span><span class="operator">|</span><span class="operator">&lt;</span>角色<span class="operator">&gt;</span><span class="operator">|</span>public [&#123;,<span class="operator">&lt;</span>用户名<span class="operator">&gt;</span><span class="operator">|</span><span class="operator">&lt;</span>角色<span class="operator">&gt;</span>&#125;]</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><code>public</code> 指数据库中所有用户，<code>With Grant Option</code> 则说明权限是否可以二次传递，若包含则说明本次被 <code>Grant</code> 的用户也有了使用 <code>Grant</code> 语句的权力</li>
+<li>仍要注意，当收回权限时，若该用户已将权限授予其它用户，则也一并收回。</li>
+</ul>
+<h2 id="完整性规则"><a href="#完整性规则" class="headerlink" title="完整性规则"></a>完整性规则</h2><ul>
+<li>一条完整性规则可以用一个五元组描述（DOACP）：</li>
+<li>D（Data）约束所作用的数据对象</li>
+<li>O（Operation）触发完整性检查的数据库操作，即当用户发出什么操作请求时需要检查该完整性规则，是立即检查还是延迟检查。</li>
+<li>A（Assertion）数据对象必须满足的断言或语义约束。</li>
+<li>C（Condition）选择A作用的数据对象值的谓词。</li>
+<li>P（Procedure）违反完整性规则时触发的过程。</li>
+</ul>
+<h2 id="完整性约束的分类"><a href="#完整性约束的分类" class="headerlink" title="完整性约束的分类"></a>完整性约束的分类</h2><ul>
+<li>固有约束：在 DBMS 实现时已经考虑，不必特殊说明。</li>
+<li>隐含约束的说明可以通过 DDL 语句来定义实现，实体完整性、参照完整性</li>
+<li>显式完整性约束的说明一般有过程说明方式，断言说明方式，触发器说明方式等几种。</li>
+</ul>
+<hr>
+<ul>
+<li>过程说明方式：把约束的说明和检验作为一个过程，由程序员编码到每个更新数据库的事务中。用以检验数据库更新是否违反了给定约束。使用这种方法，为程序员利用通用程序设计语言编制高效率完整性验证程序提供了有利条件。然而，这种方法也为程序员增加了负担。程序员必须清楚他所编码的事务所涉及的所有完整性约束，为每个约束编制一个验证过程。程序员的任何误解、遗漏，疏忽都将导致数据库不正确。同时，一旦完整性约束发生变化，应用程序就必须作相应的修改。</li>
+<li>断言说明方式：断言指数据库必须满足的逻辑条件，数据库完整性约束可以看成一系列断言的集合。使用这种方法DBMS需要提供断言说明语言，用以定义断言。并提供完整性验证子系统将其编译和存储到约束库，对于每个更新事务，完整性检查子系统利用约束库中的定义进行检查，判断是否违背了完整性约束。利用这种方法可以将约束集中在约束库中，免除了程序员在应用程序中分散定义和维护完整性约束的问题，减少了编程的麻烦，方便了应用程序和约束的维护。但其实现比较复杂，开销也大，降低了数据库更新的性能。例如 ASSERT 余额约束 ON 储蓄表：余额&gt;=0；</li>
+<li>触发器说明方式：所谓触发器就是一类事件驱动的特殊过程，一旦定义，当发生预定义的事件时，系统自动执行相应的触发器。定义触发器时，需要定义：触发器的触发条件以及触发器应当完成的操作。注意：断言表示数据库状态应当满足的条件，而触发器中的条件却是违反约束的条件，二者正好相反。</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://cookedbear.github.io">CookedBear</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://cookedbear.github.io/p/29249924.html">https://cookedbear.github.io/p/29249924.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://cookedbear.github.io" target="_blank">sin</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/BUAA/">BUAA</a><a class="post-meta__tags" href="/tags/Elevate/">Elevate</a><a class="post-meta__tags" href="/tags/DataBase/">DataBase</a></div><div class="post_share"><div class="social-share" data-image="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/p/eb75ce2.html" title="BUAA-DataBase-Homework3"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">BUAA-DataBase-Homework3</div></div></a></div><div class="next-post pull-right"><a href="/p/942e82b.html" title="BUAA-CompilePrincipal-Chapter4"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">BUAA-CompilePrincipal-Chapter4</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/p/5e23a9b2.html" title="BUAA-DataBase-Chapter3"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-24</div><div class="title">BUAA-DataBase-Chapter3</div></div></a></div><div><a href="/p/eb75ce2.html" title="BUAA-DataBase-Homework3"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-22</div><div class="title">BUAA-DataBase-Homework3</div></div></a></div><div><a href="/p/b02dc89e.html" title="BUAA-DataBase-Chapter1"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-19</div><div class="title">BUAA-DataBase-Chapter1</div></div></a></div><div><a href="/p/d4de58c7.html" title="BUAA-OO-TOP"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112056684.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-14</div><div class="title">BUAA-OO-TOP</div></div></a></div><div><a href="/p/1727.html" title="BUAA-OS-TOP"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202306132108192.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-22</div><div class="title">BUAA-OS-TOP</div></div></a></div><div><a href="/p/a137a2e9.html" title="编译课设编译器设计文档"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-12-19</div><div class="title">编译课设编译器设计文档</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305132152908.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">CookedBear</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">59</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/CookedBear"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/CookedBear" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">ReStart</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC-3-%E7%AB%A0-SQL-%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">第 3 章 SQL 概述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%AE%9A%E4%B9%89"><span class="toc-number">1.1.</span> <span class="toc-text">数据定义</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%AE%9A%E4%B9%89%E4%B8%8E%E5%88%A0%E9%99%A4"><span class="toc-number">1.1.1.</span> <span class="toc-text">模式的定义与删除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E8%A1%A8%E7%9A%84%E5%AE%9A%E4%B9%89%E3%80%81%E5%88%A0%E9%99%A4%E4%B8%8E%E4%BF%AE%E6%94%B9"><span class="toc-number">1.1.2.</span> <span class="toc-text">基本表的定义、删除与修改</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E5%BB%BA%E7%AB%8B%E4%B8%8E%E5%88%A0%E9%99%A4"><span class="toc-number">1.1.3.</span> <span class="toc-text">索引的建立与删除</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.2.</span> <span class="toc-text">数据查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E8%A1%A8%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.2.1.</span> <span class="toc-text">单表查询</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%97%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">列查询</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">条件查询</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%81%9A%E9%9B%86%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">聚集函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E7%BB%84%E6%93%8D%E4%BD%9C"><span class="toc-number">1.2.1.4.</span> <span class="toc-text">分组操作</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.2.2.</span> <span class="toc-text">多表查询</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AD%89%E5%80%BC%E3%80%81%E9%9D%9E%E7%AD%89%E5%80%BC%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">等值、非等值连接查询</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E8%BA%AB%E8%BF%9E%E6%8E%A5"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">自身连接</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%96%E8%BF%9E%E6%8E%A5"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">外连接</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B5%8C%E5%A5%97%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.2.3.</span> <span class="toc-text">嵌套查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%86%E5%90%88%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.2.4.</span> <span class="toc-text">集合查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B4%BE%E7%94%9F%E8%A1%A8%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.2.5.</span> <span class="toc-text">派生表查询</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%96%B0"><span class="toc-number">1.3.</span> <span class="toc-text">数据更新</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A9%BA%E5%80%BC"><span class="toc-number">1.3.1.</span> <span class="toc-text">空值</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%86%E5%9B%BE"><span class="toc-number">1.4.</span> <span class="toc-text">视图</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%86%E5%9B%BE%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="toc-number">1.4.1.</span> <span class="toc-text">视图的操作</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC-4-%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E4%B8%8E%E5%AE%8C%E6%95%B4%E6%80%A7"><span class="toc-number">2.</span> <span class="toc-text">第 4 章 数据库的安全性与完整性</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SQL-%E7%9A%84%E6%95%B0%E6%8D%AE%E6%8E%A7%E5%88%B6"><span class="toc-number">2.1.</span> <span class="toc-text">SQL 的数据控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%BA%A7%E6%9D%83%E9%99%90%E7%9A%84%E7%AE%A1%E7%90%86"><span class="toc-number">2.2.</span> <span class="toc-text">用户级权限的管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%8C%E6%95%B4%E6%80%A7%E8%A7%84%E5%88%99"><span class="toc-number">2.3.</span> <span class="toc-text">完整性规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%8C%E6%95%B4%E6%80%A7%E7%BA%A6%E6%9D%9F%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-number">2.4.</span> <span class="toc-text">完整性约束的分类</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/p/feaaa974.html" title="超低配主播女孩，略显可惜的小品作——《Pricolage -IDOLIZED-》"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/2510890/header_schinese.jpg?t=1708421482" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="超低配主播女孩，略显可惜的小品作——《Pricolage -IDOLIZED-》"/></a><div class="content"><a class="title" href="/p/feaaa974.html" title="超低配主播女孩，略显可惜的小品作——《Pricolage -IDOLIZED-》">超低配主播女孩，略显可惜的小品作——《Pricolage -IDOLIZED-》</a><time datetime="2024-02-20T17:54:28.000Z" title="发表于 2024-02-21 01:54:28">2024-02-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/a137a2e9.html" title="编译课设编译器设计文档"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="编译课设编译器设计文档"/></a><div class="content"><a class="title" href="/p/a137a2e9.html" title="编译课设编译器设计文档">编译课设编译器设计文档</a><time datetime="2023-12-18T19:16:58.000Z" title="发表于 2023-12-19 03:16:58">2023-12-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/9291ce54.html" title="编译技术实验课程感想"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="编译技术实验课程感想"/></a><div class="content"><a class="title" href="/p/9291ce54.html" title="编译技术实验课程感想">编译技术实验课程感想</a><time datetime="2023-12-18T18:52:34.000Z" title="发表于 2023-12-19 02:52:34">2023-12-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/373cf855.html" title="编译课设编译器优化文档"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="编译课设编译器优化文档"/></a><div class="content"><a class="title" href="/p/373cf855.html" title="编译课设编译器优化文档">编译课设编译器优化文档</a><time datetime="2023-12-15T05:32:39.000Z" title="发表于 2023-12-15 13:32:39">2023-12-15</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By CookedBear</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container').forEach(node => {
+            if (node.hasAttribute('display')) {
+              btf.wrap(node, 'div', { class: 'mathjax-overflow' })
+            } else {
+              btf.wrap(node, 'span', { class: 'mathjax-overflow' })
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script defer src="https://gcore.jsdelivr.net/combine/npm/jquery@latest/dist/jquery.min.js,gh/weilining/jsdelivr/jquery/circlemagic/circlemagic.min.js,gh/weilining/jsdelivr@latest/jquery/circlemagic/butterflycirclemagic.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

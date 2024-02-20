@@ -1,0 +1,531 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>BUAA-DataBase-Homework3 | sin</title><meta name="author" content="CookedBear"><meta name="copyright" content="CookedBear"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="数据库第三章作业实验环境 Windows 10 21H2 SQL Server 19 Microsoft SQL Server Management Studio  实验内容创建数据库 创建一个 school 数据库，为数据库文件和日志文件命名，并将它们存储到不同目录下。将数据库文件的初始大小设置为 10M，最大大小设置为 20M，每次增长 1M。 为 school 数据库再增加一个数据库文件。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BUAA-DataBase-Homework3">
+<meta property="og:url" content="https://cookedbear.github.io/p/eb75ce2.html">
+<meta property="og:site_name" content="sin">
+<meta property="og:description" content="数据库第三章作业实验环境 Windows 10 21H2 SQL Server 19 Microsoft SQL Server Management Studio  实验内容创建数据库 创建一个 school 数据库，为数据库文件和日志文件命名，并将它们存储到不同目录下。将数据库文件的初始大小设置为 10M，最大大小设置为 20M，每次增长 1M。 为 school 数据库再增加一个数据库文件。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp">
+<meta property="article:published_time" content="2023-10-21T17:58:06.000Z">
+<meta property="article:modified_time" content="2023-10-24T13:42:02.274Z">
+<meta property="article:author" content="CookedBear">
+<meta property="article:tag" content="BUAA">
+<meta property="article:tag" content="Elevate">
+<meta property="article:tag" content="DataBase">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://cookedbear.github.io/p/eb75ce2.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":150},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'BUAA-DataBase-Homework3',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-10-24 21:42:02'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/center-atom.css" ><meta name="generator" content="Hexo 5.4.2"></head><body>
+    <div id='loader'>
+        
+        <div class="loading-left-bg"></div>
+        <div class="loading-right-bg"></div>
+        <div class="spinner-box">
+            <div class="configure-border-1">
+                <div class="configure-core"></div>
+            </div>
+            <div class="configure-border-2">
+                <div class="configure-core"></div>
+            </div>
+            <div class="loading-word">加载中...</div>
+        </div>
+        
+    </div>
+        
+    <script>
+        var endLoading = function () {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+        }
+        window.addEventListener('load',endLoading);
+    </script>
+    <div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305132152908.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">59</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp')"><nav id="nav"><span id="blog-info"><a href="/" title="sin"><span class="site-name">sin</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">BUAA-DataBase-Homework3</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-10-21T17:58:06.000Z" title="发表于 2023-10-22 01:58:06">2023-10-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-10-24T13:42:02.274Z" title="更新于 2023-10-24 21:42:02">2023-10-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Elevate/">Elevate()</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/DataBase/">DataBase</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>14分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="BUAA-DataBase-Homework3"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="数据库第三章作业"><a href="#数据库第三章作业" class="headerlink" title="数据库第三章作业"></a>数据库第三章作业</h1><h2 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h2><ul>
+<li>Windows 10 21H2</li>
+<li>SQL Server 19</li>
+<li>Microsoft SQL Server Management Studio</li>
+</ul>
+<h2 id="实验内容"><a href="#实验内容" class="headerlink" title="实验内容"></a>实验内容</h2><h3 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h3><ol>
+<li>创建一个 school 数据库，为数据库文件和日志文件命名，并将它们存储到不同目录下。将数据库文件的初始大小设置为 10M，最大大小设置为 20M，每次增长 1M。</li>
+<li>为 school 数据库再增加一个数据库文件。</li>
+</ol>
+<p>新建数据库图示如下，过程中要注意选取自动增长和最大大小。数据库文件第一行为普通数据，第二行为数据库日志文件。</p>
+<img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202310192133309.png" alt="image-20231019213347215" style="zoom:80%;" />
+
+<p>右键数据库名并查看数据库属性，可以添加新的数据库文件</p>
+<img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202310192140602.png" alt="image-20231019214016574" style="zoom:67%;" />
+
+<img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202310192139285.png" alt="image-20231019213939244" style="zoom: 80%;" />
+
+<h3 id="完成练习"><a href="#完成练习" class="headerlink" title="完成练习"></a>完成练习</h3><p>数据表规格如下：</p>
+<ul>
+<li>学生表（学号，姓名，性别，年龄，入学年份，籍贯，系号，班长学号），学号是主码，系号和班长学号是外部码，手机号码必须唯一，学生的年龄不得小于10岁和大于50岁，性别必须是’男’或者’女’。</li>
+<li>系表（系号，系名，系主任），其中系号是主码，系名不能有重复的。</li>
+<li>选课表（学号，课程号，成绩），（学号，课程号）是主码，学号和课程号是外部码，成绩不能小于0分和大于100分</li>
+<li>课程表（课程号，课程名，先修课，学分），课程号是主码，课程名必须唯一，学分必须大于0小于5。</li>
+</ul>
+<ul>
+<li>创建上述表，并定义相应的完整性约束。</li>
+</ul>
+<p>实现数据表创建的代码为 <code>Create.sql</code> 文件，于 SSMS 中运行可以直接获得正确的数据表结构。</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* 建立数据表和相关约束 */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> Department(</span><br><span class="line">	Dnumber <span class="type">INT</span> <span class="keyword">PRIMARY</span> KEY,</span><br><span class="line">	Dname <span class="type">VarChar</span>(<span class="number">40</span>) <span class="keyword">UNIQUE</span>,</span><br><span class="line">	Director <span class="type">VarChar</span>(<span class="number">10</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> Class(</span><br><span class="line">	Cnumber <span class="type">VarChar</span>(<span class="number">10</span>) <span class="keyword">PRIMARY</span> KEY,</span><br><span class="line">	Cname <span class="type">VarChar</span>(<span class="number">40</span>) <span class="keyword">UNIQUE</span>,</span><br><span class="line">	Cprev <span class="type">VarChar</span>(<span class="number">10</span>),</span><br><span class="line">	Ccredit <span class="type">FLOAT</span> <span class="keyword">CONSTRAINT</span> Ccredit_1 <span class="keyword">CHECK</span> (Ccredit <span class="operator">&gt;</span> <span class="number">0</span> <span class="keyword">AND</span> Ccredit <span class="operator">&lt;</span> <span class="number">5</span>),</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> Student(</span><br><span class="line">	Sno <span class="type">VarChar</span>(<span class="number">10</span>) <span class="keyword">PRIMARY</span> KEY,</span><br><span class="line">	Sname <span class="type">VarChar</span>(<span class="number">40</span>),</span><br><span class="line">	Ssex <span class="type">VarChar</span>(<span class="number">10</span>) <span class="keyword">CONSTRAINT</span> Ccredit_0 <span class="keyword">CHECK</span> (Ssex<span class="operator">=</span><span class="string">&#x27;男&#x27;</span> <span class="keyword">OR</span> Ssex<span class="operator">=</span><span class="string">&#x27;女&#x27;</span>),</span><br><span class="line">	Sage <span class="type">FLOAT</span> <span class="keyword">CHECK</span> (Sage <span class="operator">&gt;=</span> <span class="number">10</span> <span class="keyword">AND</span> Sage <span class="operator">&lt;=</span> <span class="number">50</span>),</span><br><span class="line">	Syear <span class="type">FLOAT</span>,</span><br><span class="line">	Shometown <span class="type">VarChar</span>(<span class="number">40</span>),</span><br><span class="line">	SDnumber <span class="type">INT</span>,</span><br><span class="line">	Smonitor <span class="type">VarChar</span>(<span class="number">10</span>),</span><br><span class="line">	<span class="keyword">FOREIGN</span> KEY (SDnumber) <span class="keyword">REFERENCES</span> Department(Dnumber),</span><br><span class="line">	<span class="keyword">FOREIGN</span> KEY (Smonitor) <span class="keyword">REFERENCES</span> Student(Sno)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> Record(</span><br><span class="line">	Sno <span class="type">VarChar</span>(<span class="number">10</span>),</span><br><span class="line">	Cnumber <span class="type">VarChar</span>(<span class="number">10</span>),</span><br><span class="line">	Score <span class="type">FLOAT</span> <span class="keyword">CHECK</span> (Score <span class="operator">&gt;=</span> <span class="number">0</span> <span class="keyword">AND</span> Score <span class="operator">&lt;=</span> <span class="number">100</span>),</span><br><span class="line">	<span class="keyword">FOREIGN</span> KEY (Sno) <span class="keyword">REFERENCES</span> Student(Sno),</span><br><span class="line">	<span class="keyword">FOREIGN</span> KEY (Cnumber) <span class="keyword">REFERENCES</span> Class(Cnumber),</span><br><span class="line">    <span class="keyword">PRIMARY</span> KEY (Sno, Cnumber)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>将提供的上述各表的数据导入 SQL Server。如果导入过程存在错误，请说明可能是什么原因。</li>
+</ul>
+<p>通过数据库菜单下的 任务 - 导入数据 操作将 Excel 文件导入数据库中（Excel → SQL Server Native Client 11.0）。导入过程中发生了错误，经检查发现是因为约束条件出错：不能将选课表中不存在的学号（外码） <code>0320</code>、<code>0321</code> 加入数据表中；同时还存在同一学生有多个同一课程的成绩的现象（主码重复），修改方式是删去不合法记录。</p>
+<ul>
+<li>在学生表中插入学号为26，姓名为’李四’，性别为’女’，年龄为20，入学年份为2008，籍贯为’广东’，手机号码为10010001000，班长学号为10的一条记录。</li>
+</ul>
+<p>首先，原文件中学生表不存在手机号码字段，故予以忽略；其次，不存在学号为 10 的记录，在这里忽视班长学号的信息。</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span></span><br><span class="line"><span class="keyword">INTO</span> Student</span><br><span class="line"><span class="keyword">Values</span> (<span class="string">&#x27;26&#x27;</span>, <span class="string">&#x27;李四&#x27;</span>, <span class="string">&#x27;女&#x27;</span>, <span class="number">20</span>, <span class="number">8</span>, <span class="string">&#x27;广东&#x27;</span>, <span class="keyword">null</span>, <span class="string">&#x27;0105&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>删除上述记录。</li>
+</ul>
+<p>由于 Student 主码为学号（Sno），故使用 Sno 作为筛选条件删除学号为 26 的记录即可。</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">DELETE</span></span><br><span class="line"><span class="keyword">FROM</span> Student</span><br><span class="line"><span class="keyword">WHERE</span> Sno<span class="operator">=</span><span class="number">26</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>将学生表中的姓名字段的长度改为6个汉字。</li>
+</ul>
+<p>由于姓名字段原本使用了 <code>VarChar(10)</code> 作为字段长度限制，且一个汉字通常使用两个<code>VarChar</code>，故将长度修改为 <code>VarChar(12)</code> 即可。</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* ALTER COLUMN */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> Student </span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">COLUMN</span> Sname <span class="type">VarChar</span>(<span class="number">12</span>);</span><br></pre></td></tr></table></figure>
+
+<p>操作后可从可视化界面中观察结果：</p>
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202310192326754.png" alt="image-20231019232601727"></p>
+<ul>
+<li>为学生表增加一个字段电子邮件，20个字符。</li>
+</ul>
+<p>对一般英文字符，使用 <code>Char</code> 作为变量类型即可。</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* ALTER COLUMN */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> Student </span><br><span class="line"><span class="keyword">ADD</span> Email <span class="type">Char</span>(<span class="number">20</span>);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202310212027266.png" alt="image-20231021202747185"></p>
+<p>查询整个表的结果如下，发现 <code>Email</code> 列添加成功</p>
+<ul>
+<li>对课程表的学分字段上的完整性约束进行修改，使其在0到6之间取值。</li>
+</ul>
+<p>修改完整性约束应拆解为删除旧约束并添加新约束：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> Class </span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">CONSTRAINT</span> Ccredit_1;</span><br><span class="line"></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> Class </span><br><span class="line"><span class="keyword">ADD</span> <span class="keyword">CONSTRAINT</span> Ccredit_2 <span class="keyword">CHECK</span> (Ccredit <span class="operator">&gt;=</span> <span class="number">0</span> <span class="keyword">AND</span> Ccredit <span class="operator">&lt;=</span> <span class="number">6</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>为学生表在学号列上创建cluster索引。</li>
+</ul>
+<p>将按学号升序建立唯一聚簇索引。</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">UNIQUE</span> INDEX Stusno <span class="keyword">ON</span> Student(Sno);</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>创建一个视图，计算每门课的最高分。</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">VIEW</span> C_G(Cnumber, Gmax)</span><br><span class="line"><span class="keyword">AS</span></span><br><span class="line"><span class="keyword">SELECT</span> Cnumber, <span class="built_in">MAX</span>(Score)</span><br><span class="line"><span class="keyword">FROM</span> Record</span><br><span class="line"><span class="keyword">Group</span> <span class="keyword">BY</span> Cnumber;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202310212030443.png" alt="image-20231021203026404"></p>
+<ul>
+<li>查找每个学生的学号、姓名、总成绩和平均分。</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> Student.Sno, Sname, <span class="built_in">SUM</span>(Score), <span class="built_in">AVG</span>(Score)</span><br><span class="line"><span class="keyword">FROM</span> Student, Record</span><br><span class="line"><span class="keyword">WHERE</span> Student.Sno <span class="operator">=</span> Record.Sno</span><br><span class="line"><span class="keyword">Group</span> <span class="keyword">BY</span> Student.Sno, Sname;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202310212030999.png" alt="image-20231021203057974"></p>
+<ul>
+<li>将6系所有学生的年龄，改为7系学生的平均年龄。</li>
+</ul>
+<p>没有 7 系学生，条件改为 8 系。</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> Student</span><br><span class="line"><span class="keyword">SET</span> Sage<span class="operator">=</span>(</span><br><span class="line">	<span class="keyword">SELECT</span> <span class="built_in">AVG</span>(b.Sage) </span><br><span class="line">	<span class="keyword">FROM</span> Student b </span><br><span class="line">	<span class="keyword">WHERE</span> b.SDnumber <span class="operator">=</span> <span class="number">8</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">WHERE</span> SDnumber <span class="operator">=</span> <span class="number">6</span>;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202310212031803.png" alt="image-20231021203138767"></p>
+<ul>
+<li>将’曹洪’同学操作系统课程的成绩改为62分。</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> Record</span><br><span class="line"><span class="keyword">SET</span> Score <span class="operator">=</span> <span class="number">62</span></span><br><span class="line"><span class="keyword">WHERE</span> Sno <span class="operator">=</span> (</span><br><span class="line">	<span class="keyword">SELECT</span> Sno</span><br><span class="line">	<span class="keyword">FROM</span> Student</span><br><span class="line">	<span class="keyword">WHERE</span> Sname <span class="operator">=</span> <span class="string">&#x27;曹洪&#x27;</span></span><br><span class="line">) <span class="keyword">AND</span> Cnumber <span class="operator">=</span> (</span><br><span class="line">	<span class="keyword">SELECT</span> Cnumber</span><br><span class="line">	<span class="keyword">FROM</span> Class</span><br><span class="line">	<span class="keyword">WHERE</span> Cname <span class="operator">=</span> <span class="string">&#x27;操作系统&#x27;</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>查找所有学生的姓名、入学年份和籍贯。</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> Sname, Syear, Shometown <span class="keyword">FROM</span> Student;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202310212032433.png" alt="image-20231021203222397"></p>
+<ul>
+<li>列出籍贯为’山东’的同学的所有属性。</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span></span><br><span class="line"><span class="keyword">FROM</span> Student</span><br><span class="line"><span class="keyword">WHERE</span> Shometown <span class="operator">=</span> <span class="string">&#x27;山东&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202310212032025.png" alt="image-20231021203230990"></p>
+<ul>
+<li>查找年龄最小的学生的学号和姓名。</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> Sno, Sname</span><br><span class="line"><span class="keyword">FROM</span> Student</span><br><span class="line"><span class="keyword">WHERE</span> Sage <span class="operator">=</span> (</span><br><span class="line">	<span class="keyword">SELECT</span> <span class="built_in">MIN</span>(Sage)</span><br><span class="line">	<span class="keyword">FROM</span> Student</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202310212032861.png" alt="image-20231021203245830"></p>
+<ul>
+<li>查找选修了’数据库’的学生的学号。</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> Sno</span><br><span class="line"><span class="keyword">FROM</span> Record</span><br><span class="line"><span class="keyword">WHERE</span> Cnumber <span class="operator">=</span> (</span><br><span class="line">	<span class="keyword">SELECT</span> Cnumber</span><br><span class="line">	<span class="keyword">FROM</span> Class</span><br><span class="line">	<span class="keyword">WHERE</span> Cname <span class="operator">=</span> <span class="string">&#x27;数据库&#x27;</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202310212032792.png" alt="image-20231021203255760"></p>
+<ul>
+<li>查找选修了’编译技术’的女学生的学号和姓名。</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> Record.Sno, Sname</span><br><span class="line"><span class="keyword">FROM</span> Record, Student</span><br><span class="line"><span class="keyword">WHERE</span> Record.Sno <span class="operator">=</span> Student.Sno <span class="keyword">AND</span></span><br><span class="line">	Cnumber <span class="operator">=</span> (</span><br><span class="line">		<span class="keyword">SELECT</span> Cnumber</span><br><span class="line">		<span class="keyword">FROM</span> Class</span><br><span class="line">		<span class="keyword">WHERE</span> Cname <span class="operator">=</span> <span class="string">&#x27;编译技术&#x27;</span></span><br><span class="line">	) <span class="keyword">AND</span> Ssex <span class="operator">=</span> <span class="string">&#x27;女&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202310212033216.png" alt="image-20231021203304184"></p>
+<ul>
+<li>查找’典韦’同学的班长所选修的课程的课程号。</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> Cnumber</span><br><span class="line"><span class="keyword">FROM</span> Record, Student</span><br><span class="line"><span class="keyword">WHERE</span> Record.Sno <span class="operator">=</span> Student.Sno <span class="keyword">AND</span></span><br><span class="line">	Record.Sno <span class="operator">=</span> (</span><br><span class="line">		<span class="keyword">SELECT</span> Smonitor</span><br><span class="line">		<span class="keyword">FROM</span> Student</span><br><span class="line">		<span class="keyword">WHERE</span> Sname <span class="operator">=</span> <span class="string">&#x27;典韦&#x27;</span></span><br><span class="line">	);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202310212033802.png" alt="image-20231021203312776"></p>
+<ul>
+<li>查找名字中倒数第二字为’侯’的学生的学号、姓名和所在系的系名。</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> Sno, Sname, SDnumber</span><br><span class="line"><span class="keyword">FROM</span> Student</span><br><span class="line"><span class="keyword">WHERE</span> Sname <span class="keyword">LIKE</span> <span class="string">&#x27;%侯_&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202310212033551.png" alt="image-20231021203320527"></p>
+<ul>
+<li>查找名字以P打头，倒数第三字为L的课程的名字。</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> Cname</span><br><span class="line"><span class="keyword">FROM</span> Class</span><br><span class="line"><span class="keyword">WHERE</span> Cname <span class="keyword">LIKE</span> <span class="string">&#x27;P%L__&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202310212033311.png" alt="image-20231021203328278"></p>
+<ul>
+<li>查找’甘宁’同学所有选修课程的总分。</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">SUM</span>(Score) <span class="keyword">AS</span> TotalScore</span><br><span class="line"><span class="keyword">FROM</span> Record</span><br><span class="line"><span class="keyword">WHERE</span> Sno <span class="operator">=</span> (</span><br><span class="line">	<span class="keyword">SELECT</span> Sno</span><br><span class="line">	<span class="keyword">FROM</span> Student</span><br><span class="line">	<span class="keyword">WHERE</span> Sname <span class="operator">=</span> <span class="string">&#x27;甘宁&#x27;</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202310212033364.png" alt="image-20231021203335338"></p>
+<ul>
+<li>查找既选修了’数据库’，也选修了’操作系统’的同学。</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> Sno, Sname</span><br><span class="line"><span class="keyword">FROM</span> Student s</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">EXISTS</span>(</span><br><span class="line">	<span class="keyword">SELECT</span> <span class="operator">*</span></span><br><span class="line">	<span class="keyword">FROM</span> Record</span><br><span class="line">	<span class="keyword">WHERE</span> s.Sno <span class="operator">=</span> Sno <span class="keyword">AND</span> Cnumber <span class="operator">=</span> (</span><br><span class="line">		<span class="keyword">SELECT</span> Cnumber</span><br><span class="line">		<span class="keyword">FROM</span> Class</span><br><span class="line">		<span class="keyword">WHERE</span> Cname <span class="operator">=</span> <span class="string">&#x27;数据库&#x27;</span></span><br><span class="line">	)</span><br><span class="line">) <span class="keyword">AND</span> <span class="keyword">EXISTS</span>(</span><br><span class="line">	<span class="keyword">SELECT</span> <span class="operator">*</span></span><br><span class="line">	<span class="keyword">FROM</span> Record</span><br><span class="line">	<span class="keyword">WHERE</span> s.Sno <span class="operator">=</span> Sno <span class="keyword">AND</span> Cnumber <span class="operator">=</span> (</span><br><span class="line">		<span class="keyword">SELECT</span> Cnumber</span><br><span class="line">		<span class="keyword">FROM</span> Class</span><br><span class="line">		<span class="keyword">WHERE</span> Cname <span class="operator">=</span> <span class="string">&#x27;操作系统&#x27;</span></span><br><span class="line">	)</span><br><span class="line">);</span><br><span class="line"><span class="comment">/* Another Way to Solve */</span></span><br><span class="line"><span class="keyword">SELECT</span> Sno, Sname</span><br><span class="line"><span class="keyword">FROM</span> Student s</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">EXISTS</span>(</span><br><span class="line">	<span class="keyword">SELECT</span> <span class="operator">*</span></span><br><span class="line">	<span class="keyword">FROM</span> Record, Class</span><br><span class="line">	<span class="keyword">WHERE</span> Record.Cnumber <span class="operator">=</span> Class.Cnumber <span class="keyword">AND</span></span><br><span class="line">		Cname <span class="keyword">IN</span> (<span class="string">&#x27;数据库&#x27;</span>, <span class="string">&#x27;操作系统&#x27;</span>) <span class="keyword">AND</span></span><br><span class="line">		Sno <span class="operator">=</span> s.Sno</span><br><span class="line">	<span class="keyword">Group</span> <span class="keyword">BY</span> Sno</span><br><span class="line">	<span class="keyword">HAVING</span> <span class="built_in">COUNT</span>(<span class="operator">*</span>) <span class="operator">=</span> <span class="number">2</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202310212033612.png" alt="image-20231021203347581"></p>
+<ul>
+<li>查找没有选修’数据库’课程的学生的学号和姓名。</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> Student.Sno, Sname</span><br><span class="line"><span class="keyword">FROM</span> Student, Record r1, Class</span><br><span class="line"><span class="keyword">WHERE</span> Student.Sno <span class="operator">=</span> r1.Sno <span class="keyword">AND</span></span><br><span class="line">	r1.Cnumber <span class="operator">=</span> Class.Cnumber <span class="keyword">AND</span></span><br><span class="line">	<span class="keyword">NOT</span> <span class="keyword">EXISTS</span>(</span><br><span class="line">		<span class="keyword">SELECT</span> <span class="operator">*</span></span><br><span class="line">		<span class="keyword">FROM</span> Record r2</span><br><span class="line">		<span class="keyword">WHERE</span> r1.Sno <span class="operator">=</span> r2.Sno <span class="keyword">AND</span></span><br><span class="line">			r2.Cnumber <span class="operator">=</span> (</span><br><span class="line">				<span class="keyword">SELECT</span> Cnumber</span><br><span class="line">				<span class="keyword">FROM</span> Class</span><br><span class="line">				<span class="keyword">WHERE</span> Cname <span class="operator">=</span> <span class="string">&#x27;数据库&#x27;</span></span><br><span class="line">			)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202310212033112.png" alt="image-20231021203355078"></p>
+<ul>
+<li>查找’数据库’课程及格了，但’编译技术’没有及格的学生的学号和姓名。</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> Student.Sno, Sname</span><br><span class="line"><span class="keyword">FROM</span> Student, Record</span><br><span class="line"><span class="keyword">WHERE</span> Student.Sno <span class="operator">=</span> Record.Sno <span class="keyword">AND</span> </span><br><span class="line">	<span class="keyword">EXISTS</span> (</span><br><span class="line">		<span class="keyword">SELECT</span> <span class="operator">*</span></span><br><span class="line">		<span class="keyword">FROM</span> Record</span><br><span class="line">		<span class="keyword">WHERE</span> Sno <span class="operator">=</span> Student.Sno <span class="keyword">AND</span></span><br><span class="line">			Cnumber <span class="operator">=</span> (</span><br><span class="line">				<span class="keyword">SELECT</span> Cnumber</span><br><span class="line">				<span class="keyword">FROM</span> Class</span><br><span class="line">				<span class="keyword">WHERE</span> Cname <span class="operator">=</span> <span class="string">&#x27;数据库&#x27;</span>) <span class="keyword">AND</span></span><br><span class="line">			Score <span class="operator">&gt;=</span> <span class="number">60</span></span><br><span class="line">	) <span class="keyword">AND</span> <span class="keyword">EXISTS</span>(</span><br><span class="line">		<span class="keyword">SELECT</span> <span class="operator">*</span></span><br><span class="line">		<span class="keyword">FROM</span> Record</span><br><span class="line">		<span class="keyword">WHERE</span> Sno <span class="operator">=</span> Student.Sno <span class="keyword">AND</span></span><br><span class="line">			Cnumber <span class="operator">=</span> (</span><br><span class="line">				<span class="keyword">SELECT</span> Cnumber</span><br><span class="line">				<span class="keyword">FROM</span> Class</span><br><span class="line">				<span class="keyword">WHERE</span> Cname <span class="operator">=</span> <span class="string">&#x27;编译技术&#x27;</span>) <span class="keyword">AND</span></span><br><span class="line">			Score <span class="operator">&lt;</span> <span class="number">60</span></span><br><span class="line">	);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202310212034430.png" alt="image-20231021203403398"></p>
+<ul>
+<li>查找数据库成绩低于数据库课平均成绩的同学的学号和姓名。</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> Student.Sno, Sname</span><br><span class="line"><span class="keyword">FROM</span> Student, Record</span><br><span class="line"><span class="keyword">WHERE</span> Student.Sno <span class="operator">=</span> Record.Sno <span class="keyword">AND</span></span><br><span class="line">	<span class="keyword">EXISTS</span>(</span><br><span class="line">		<span class="keyword">SELECT</span> <span class="operator">*</span></span><br><span class="line">		<span class="keyword">FROM</span> Record</span><br><span class="line">		<span class="keyword">WHERE</span> Sno <span class="operator">=</span> Student.Sno <span class="keyword">AND</span></span><br><span class="line">			Cnumber <span class="operator">=</span> (</span><br><span class="line">			<span class="keyword">SELECT</span> Cnumber</span><br><span class="line">			<span class="keyword">FROM</span> Class</span><br><span class="line">			<span class="keyword">WHERE</span> Cname <span class="operator">=</span> <span class="string">&#x27;数据库&#x27;</span>) <span class="keyword">AND</span></span><br><span class="line">			Score <span class="operator">&lt;</span> </span><br><span class="line">					(<span class="keyword">SELECT</span> <span class="built_in">AVG</span>(Score)</span><br><span class="line">					<span class="keyword">FROM</span> Record</span><br><span class="line">					<span class="keyword">WHERE</span> Cnumber <span class="operator">=</span> (</span><br><span class="line">							<span class="keyword">SELECT</span> Cnumber</span><br><span class="line">							<span class="keyword">FROM</span> Class</span><br><span class="line">							<span class="keyword">WHERE</span> Cname <span class="operator">=</span> <span class="string">&#x27;编译技术&#x27;</span></span><br><span class="line">						)</span><br><span class="line">					)</span><br><span class="line">	);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202310212034301.png" alt="image-20231021203411270"></p>
+<ul>
+<li>查找与’貂蝉’同学选修课程完全相同的学生的学号和姓名（不能多选也不能少选）。</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> s1.Sno, s1.Sname</span><br><span class="line"><span class="keyword">FROM</span> Student s1</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span>(</span><br><span class="line">	<span class="keyword">SELECT</span> <span class="operator">*</span></span><br><span class="line">	<span class="keyword">FROM</span> Record r1</span><br><span class="line">	<span class="keyword">WHERE</span> r1.Sno <span class="operator">=</span> (<span class="keyword">SELECT</span> Sno <span class="keyword">FROM</span> Student <span class="keyword">WHERE</span> Sname <span class="operator">=</span> <span class="string">&#x27;貂蝉&#x27;</span>) <span class="keyword">AND</span></span><br><span class="line">		<span class="keyword">NOT</span> <span class="keyword">EXISTS</span>(</span><br><span class="line">			<span class="keyword">SELECT</span> <span class="operator">*</span></span><br><span class="line">			<span class="keyword">FROM</span> Record r2</span><br><span class="line">			<span class="keyword">WHERE</span> r2.Sno <span class="operator">=</span> s1.Sno <span class="keyword">AND</span></span><br><span class="line">				r2.Cnumber <span class="operator">=</span> r1.Cnumber</span><br><span class="line">		)</span><br><span class="line">) <span class="keyword">AND</span> (<span class="keyword">SELECT</span> <span class="built_in">COUNT</span>(<span class="operator">*</span>) </span><br><span class="line">		<span class="keyword">FROM</span> Record </span><br><span class="line">		<span class="keyword">WHERE</span> Sno <span class="operator">=</span> s1.Sno) <span class="operator">=</span> (</span><br><span class="line">			<span class="keyword">SELECT</span> <span class="built_in">COUNT</span>(<span class="operator">*</span>) </span><br><span class="line">			<span class="keyword">FROM</span> Record </span><br><span class="line">			<span class="keyword">WHERE</span> Sno <span class="operator">=</span> (</span><br><span class="line">				<span class="keyword">SELECT</span> Sno </span><br><span class="line">				<span class="keyword">FROM</span> Student </span><br><span class="line">				<span class="keyword">WHERE</span> Sname <span class="operator">=</span> <span class="string">&#x27;貂蝉&#x27;</span></span><br><span class="line">				)</span><br><span class="line">			);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202310212034522.png" alt="image-20231021203419494"></p>
+<ul>
+<li>查找不仅选修了’貂蝉’同学选修的课程，而且还选修了其他课程的同学。</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> s1.Sno, s1.Sname</span><br><span class="line"><span class="keyword">FROM</span> Student s1</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span>(</span><br><span class="line">	<span class="keyword">SELECT</span> <span class="operator">*</span></span><br><span class="line">	<span class="keyword">FROM</span> Record r1</span><br><span class="line">	<span class="keyword">WHERE</span> r1.Sno <span class="operator">=</span> (<span class="keyword">SELECT</span> Sno <span class="keyword">FROM</span> Student <span class="keyword">WHERE</span> Sname <span class="operator">=</span> <span class="string">&#x27;貂蝉&#x27;</span>) <span class="keyword">AND</span></span><br><span class="line">		<span class="keyword">NOT</span> <span class="keyword">EXISTS</span>(</span><br><span class="line">			<span class="keyword">SELECT</span> <span class="operator">*</span></span><br><span class="line">			<span class="keyword">FROM</span> Record r2</span><br><span class="line">			<span class="keyword">WHERE</span> r2.Sno <span class="operator">=</span> s1.Sno <span class="keyword">AND</span></span><br><span class="line">				r2.Cnumber <span class="operator">=</span> r1.Cnumber</span><br><span class="line">		)</span><br><span class="line">) <span class="keyword">AND</span> (<span class="keyword">SELECT</span> <span class="built_in">COUNT</span>(<span class="operator">*</span>) </span><br><span class="line">		<span class="keyword">FROM</span> Record </span><br><span class="line">		<span class="keyword">WHERE</span> Sno <span class="operator">=</span> s1.Sno) <span class="operator">&gt;</span> (</span><br><span class="line">			<span class="keyword">SELECT</span> <span class="built_in">COUNT</span>(<span class="operator">*</span>) </span><br><span class="line">			<span class="keyword">FROM</span> Record </span><br><span class="line">			<span class="keyword">WHERE</span> Sno <span class="operator">=</span> (</span><br><span class="line">				<span class="keyword">SELECT</span> Sno </span><br><span class="line">				<span class="keyword">FROM</span> Student </span><br><span class="line">				<span class="keyword">WHERE</span> Sname <span class="operator">=</span> <span class="string">&#x27;貂蝉&#x27;</span></span><br><span class="line">				)</span><br><span class="line">			);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202310212034146.png" alt="image-20231021203429110"></p>
+<ul>
+<li>查找’高等数学’平均成绩最高的系的系名。</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> TOP <span class="number">1</span> Dname</span><br><span class="line"><span class="keyword">FROM</span> Record, Student, Department</span><br><span class="line"><span class="keyword">WHERE</span> Cnumber <span class="operator">=</span> (<span class="keyword">SELECT</span> Cnumber <span class="keyword">FROM</span> Class <span class="keyword">WHERE</span> Cname <span class="operator">=</span> <span class="string">&#x27;数学&#x27;</span>) <span class="keyword">AND</span> </span><br><span class="line">	Record.Sno <span class="operator">=</span> Student.Sno <span class="keyword">AND</span></span><br><span class="line">	Student.SDnumber <span class="operator">=</span> Department.Dnumber</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> SDnumber, Dname</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="built_in">AVG</span>(Score) <span class="keyword">desc</span>;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202310212035296.png" alt="image-20231021203553262"></p>
+<ul>
+<li>查找至少有一个籍贯为’四川’同学所选修的课程的课程名。</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> Cname</span><br><span class="line"><span class="keyword">FROM</span> Student, Class, Record</span><br><span class="line"><span class="keyword">WHERE</span> Student.Sno <span class="operator">=</span> Record.Sno <span class="keyword">AND</span></span><br><span class="line">	Class.Cnumber <span class="operator">=</span> Record.Cnumber <span class="keyword">AND</span></span><br><span class="line">	<span class="keyword">EXISTS</span>(<span class="keyword">SELECT</span> <span class="operator">*</span></span><br><span class="line">	<span class="keyword">WHERE</span> Shometown <span class="operator">=</span> <span class="string">&#x27;四川&#x27;</span>)</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> Cname;</span><br></pre></td></tr></table></figure>
+
+<p>鉴定为，根本没有。</p>
+<ul>
+<li>查询选修了’数据库’课程的学生的学号和获得的学分。</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> Student.Sno, Ccredit</span><br><span class="line"><span class="keyword">FROM</span> Student, Record, Class</span><br><span class="line"><span class="keyword">WHERE</span> Student.Sno <span class="operator">=</span> Record.Sno <span class="keyword">AND</span></span><br><span class="line">	Record.Cnumber <span class="operator">=</span> Class.Cnumber <span class="keyword">AND</span></span><br><span class="line">	Cname <span class="operator">=</span> <span class="string">&#x27;数据库&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202310212036002.png" alt="image-20231021203621966"></p>
+<h3 id="回答问题"><a href="#回答问题" class="headerlink" title="回答问题"></a>回答问题</h3><ul>
+<li>SQL语言的特点。</li>
+</ul>
+<p>综合统一、高度非过程化、面向集合的操作方式、以同一种语法结构提供多种使用方式、语言简洁</p>
+<ul>
+<li>创建一个数据库，需要创建几个文件，它们分别是做什么用的？它们对应于三级模式中的哪一级？创建的表存储在什么地方？它们对应于三级模式中的哪一级？</li>
+</ul>
+<p>创建两个文件。分别是数据库主文件和数据库日志文件。它们对应三级模式中的内模式。创建的表存储在数据库主文件中，对应模式。</p>
+<ul>
+<li>可以为表定义哪些完整性约束？它们各自的作用是什么？</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">约束类型</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">主键约束<br/>（PRIMARY KEY）</td>
+<td align="center">确定表中的标识列（主键字段不能为空，必须唯一）标识：确定一个对象的唯一表现</td>
+</tr>
+<tr>
+<td align="center">外键约束<br/>（FOREIGN KEY）</td>
+<td align="center">确定表与表之间的联系方式，一般情况下通过主表的标识列进行确定主表：给哪张表添加约束哪张表就是主表，辅助表为从表</td>
+</tr>
+<tr>
+<td align="center">唯一约束<br/>（UNIQUE）</td>
+<td align="center">确定这个字段中的数据必须是唯一存在的</td>
+</tr>
+<tr>
+<td align="center">非空约束（NOT NULL）</td>
+<td align="center">确定这个字段中的数据必须不能为空</td>
+</tr>
+<tr>
+<td align="center">检查约束<br/>（CHECK）</td>
+<td align="center">设置这个字段中的数据特性</td>
+</tr>
+<tr>
+<td align="center">默认约束<br>（DEFAULT ）</td>
+<td align="center">若在表中定义了默认值约束，用户在插入新的数据行时，如果该行没有指定数据，那么系统将默认值赋给该列，如果我们不设置默认值，系统默认为NULL</td>
+</tr>
+</tbody></table>
+<ul>
+<li>自然连接和等值连接有什么差别？</li>
+</ul>
+<p>等值连接是基于两个表之间的相等条件进行连接，而自然连接是基于两个表之间的相同列名进行连接。等值连接可以连接任意两个表，而自然连接只能连接具有相同列名的两个表。等值连接可以通过指定连接条件来连接两个表，而自然连接只能通过列名相同来连接两个表。</p>
+<ul>
+<li>子查询分为哪几种？它们之间有什么区别？</li>
+</ul>
+<p>子查询主要包括嵌套子查询和连接子查询两种类型。</p>
+<p>嵌套子查询是一个查询内部包含另一个子查询的查询。它可以用于在一个完整的查询中引用外部查询中的条件，通常用于在FROM子句中引用外部查询的结果集。嵌套子查询通常涉及多层嵌套，但也可以有单层嵌套。</p>
+<p>连接子查询则主要用于在两个或多个表之间建立关系，通过在WHERE子句中使用外部查询的结果作为连接条件。连接子查询可以使用INNER JOIN、LEFT JOIN、RIGHT JOIN等连接类型。</p>
+<p>这两种子查询的主要区别在于它们的使用方式和目的不同。嵌套子查询主要关注如何在一个完整的查询中引用外部查询中的条件，而连接子查询则关注如何在多个表之间建立关系。同时，它们的使用场景和限制也不同，需要根据具体的需求和场景选择合适的子查询类型。另外，嵌套子查询和连接子查询在语法上也有所不同，需要根据具体情况进行适当的调整。</p>
+<ul>
+<li>索引有什么作用和缺点？</li>
+</ul>
+<ol>
+<li>提高查询性能：索引可以大大提高查询速度，特别是在处理大量数据时。</li>
+<li>减少磁盘I/O操作：索引通过将数据存储在内存中，减少了从磁盘中读取数据的需求，从而减少了I/O操作的数量。</li>
+<li>减少重新排序和排序成本：索引通常基于数据表的某些列创建，这样可以减少在进行更新操作时对整个表进行重新排序或排序的成本。</li>
+</ol>
+<p>其主要缺点是会增加插入、更新和删除操作的开销，因为每次对这些操作都需要重新构建索引。此外，如果一个表上的索引过多，可能会占用更多的存储空间，并影响数据库的性能。因此，在设计数据库时，需要权衡索引的优点和缺点，并根据实际需求选择合适的索引策略。</p>
+<ul>
+<li>基本表和视图有什么区别？视图有什么优点？什么样的视图是可以更新的？</li>
+</ul>
+<p>基本表是数据库中实际存在的表，具有完整的字段和记录，并且可以与其他表建立关系。基本表提供了数据存储的框架，是数据库中数据存储的基本单位。视图是基本表的虚拟表，它是基于基本表的查询结果而生成的。在实际操作中，视图并不存在于数据库中，它只是一种基于基本表的查询逻辑。</p>
+<p>视图优点有：</p>
+<ol>
+<li>简化操作：视图可以对基本表进行筛选，只显示符合特定条件的数据，从而简化复杂的查询操作。</li>
+<li>提高安全性：视图可以用于保护数据，只有具有适当权限的用户才能查看视图的记录。</li>
+<li>提高性能：视图可以减少对基本表的频繁查询操作，从而提高查询性能。</li>
+</ol>
+<p>可以更新的视图是指用户可以通过直接修改视图的定义来更新视图所展示的数据。通常情况下，只有受支持的、符合特定条件的视图才可以进行更新操作。更新的操作通常涉及到对基本表的修改，并在更新后重新创建视图。</p>
+<ul>
+<li>请针对第三章SQL语言讲义中的除法例子，给出其他两种除法的实现方法。</li>
+</ul>
+<p>SQL语言中没有全称量词，具体实现时可以把带有全称量词的谓词转换为等价的带有存在量词的谓词。</p>
+<p>解决这类的除法问题一般采用双嵌套notexists来实现带全称量词的查询解决所谓forall的问题。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://cookedbear.github.io">CookedBear</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://cookedbear.github.io/p/eb75ce2.html">https://cookedbear.github.io/p/eb75ce2.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://cookedbear.github.io" target="_blank">sin</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/BUAA/">BUAA</a><a class="post-meta__tags" href="/tags/Elevate/">Elevate</a><a class="post-meta__tags" href="/tags/DataBase/">DataBase</a></div><div class="post_share"><div class="social-share" data-image="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/p/5e23a9b2.html" title="BUAA-DataBase-Chapter3"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">BUAA-DataBase-Chapter3</div></div></a></div><div class="next-post pull-right"><a href="/p/29249924.html" title="BUAA-DataBase-Chapter2"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">BUAA-DataBase-Chapter2</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/p/5e23a9b2.html" title="BUAA-DataBase-Chapter3"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-24</div><div class="title">BUAA-DataBase-Chapter3</div></div></a></div><div><a href="/p/29249924.html" title="BUAA-DataBase-Chapter2"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-10</div><div class="title">BUAA-DataBase-Chapter2</div></div></a></div><div><a href="/p/b02dc89e.html" title="BUAA-DataBase-Chapter1"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-19</div><div class="title">BUAA-DataBase-Chapter1</div></div></a></div><div><a href="/p/d4de58c7.html" title="BUAA-OO-TOP"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112056684.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-14</div><div class="title">BUAA-OO-TOP</div></div></a></div><div><a href="/p/1727.html" title="BUAA-OS-TOP"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202306132108192.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-22</div><div class="title">BUAA-OS-TOP</div></div></a></div><div><a href="/p/a137a2e9.html" title="编译课设编译器设计文档"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-12-19</div><div class="title">编译课设编译器设计文档</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305132152908.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">CookedBear</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">59</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/CookedBear"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/CookedBear" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">ReStart</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AC%AC%E4%B8%89%E7%AB%A0%E4%BD%9C%E4%B8%9A"><span class="toc-number">1.</span> <span class="toc-text">数据库第三章作业</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83"><span class="toc-number">1.1.</span> <span class="toc-text">实验环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E5%86%85%E5%AE%B9"><span class="toc-number">1.2.</span> <span class="toc-text">实验内容</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">1.2.1.</span> <span class="toc-text">创建数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%8C%E6%88%90%E7%BB%83%E4%B9%A0"><span class="toc-number">1.2.2.</span> <span class="toc-text">完成练习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E7%AD%94%E9%97%AE%E9%A2%98"><span class="toc-number">1.2.3.</span> <span class="toc-text">回答问题</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/p/feaaa974.html" title="超低配主播女孩，略显可惜的小品作——《Pricolage -IDOLIZED-》"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/2510890/header_schinese.jpg?t=1708421482" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="超低配主播女孩，略显可惜的小品作——《Pricolage -IDOLIZED-》"/></a><div class="content"><a class="title" href="/p/feaaa974.html" title="超低配主播女孩，略显可惜的小品作——《Pricolage -IDOLIZED-》">超低配主播女孩，略显可惜的小品作——《Pricolage -IDOLIZED-》</a><time datetime="2024-02-20T17:54:28.000Z" title="发表于 2024-02-21 01:54:28">2024-02-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/a137a2e9.html" title="编译课设编译器设计文档"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="编译课设编译器设计文档"/></a><div class="content"><a class="title" href="/p/a137a2e9.html" title="编译课设编译器设计文档">编译课设编译器设计文档</a><time datetime="2023-12-18T19:16:58.000Z" title="发表于 2023-12-19 03:16:58">2023-12-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/9291ce54.html" title="编译技术实验课程感想"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="编译技术实验课程感想"/></a><div class="content"><a class="title" href="/p/9291ce54.html" title="编译技术实验课程感想">编译技术实验课程感想</a><time datetime="2023-12-18T18:52:34.000Z" title="发表于 2023-12-19 02:52:34">2023-12-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/373cf855.html" title="编译课设编译器优化文档"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="编译课设编译器优化文档"/></a><div class="content"><a class="title" href="/p/373cf855.html" title="编译课设编译器优化文档">编译课设编译器优化文档</a><time datetime="2023-12-15T05:32:39.000Z" title="发表于 2023-12-15 13:32:39">2023-12-15</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By CookedBear</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container').forEach(node => {
+            if (node.hasAttribute('display')) {
+              btf.wrap(node, 'div', { class: 'mathjax-overflow' })
+            } else {
+              btf.wrap(node, 'span', { class: 'mathjax-overflow' })
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script defer src="https://gcore.jsdelivr.net/combine/npm/jquery@latest/dist/jquery.min.js,gh/weilining/jsdelivr/jquery/circlemagic/circlemagic.min.js,gh/weilining/jsdelivr@latest/jquery/circlemagic/butterflycirclemagic.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
