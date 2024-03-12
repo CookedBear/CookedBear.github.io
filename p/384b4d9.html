@@ -1,0 +1,238 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>BUAA-SoftwareEngineering-Task0 | sin</title><meta name="author" content="CookedBear"><meta name="copyright" content="CookedBear"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="本系列文章是 2024 春季学期北航计算机学院本科生课程《软件工程》（嵌入式方向）的实验部分报告，不包含团队大作业项目内容与相关细节  任务0-ROS配置与话题通信Ubuntu系统安装从北航云盘（提取码：0GhE）下载 Ubuntu 18.04 版本系统，因为只有 18.04 对应的 ROS 版本是 melodic，其他的版本有所不同。 第一步是创建共享文件夹，首先在虚拟机设置—选项中启用共享文">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BUAA-SoftwareEngineering-Task0">
+<meta property="og:url" content="https://cookedbear.github.io/p/384b4d9.html">
+<meta property="og:site_name" content="sin">
+<meta property="og:description" content="本系列文章是 2024 春季学期北航计算机学院本科生课程《软件工程》（嵌入式方向）的实验部分报告，不包含团队大作业项目内容与相关细节  任务0-ROS配置与话题通信Ubuntu系统安装从北航云盘（提取码：0GhE）下载 Ubuntu 18.04 版本系统，因为只有 18.04 对应的 ROS 版本是 melodic，其他的版本有所不同。 第一步是创建共享文件夹，首先在虚拟机设置—选项中启用共享文">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403130016509.jpg?imageMogr2/format/webp">
+<meta property="article:published_time" content="2024-03-12T16:10:25.000Z">
+<meta property="article:modified_time" content="2024-03-12T16:16:15.507Z">
+<meta property="article:author" content="CookedBear">
+<meta property="article:tag" content="BUAA">
+<meta property="article:tag" content="Elevate">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403130016509.jpg?imageMogr2/format/webp"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://cookedbear.github.io/p/384b4d9.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":150},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'BUAA-SoftwareEngineering-Task0',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-03-13 00:16:15'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/center-atom.css" ><meta name="generator" content="Hexo 5.4.2"></head><body>
+    <div id='loader'>
+        
+        <div class="loading-left-bg"></div>
+        <div class="loading-right-bg"></div>
+        <div class="spinner-box">
+            <div class="configure-border-1">
+                <div class="configure-core"></div>
+            </div>
+            <div class="configure-border-2">
+                <div class="configure-core"></div>
+            </div>
+            <div class="loading-word">加载中...</div>
+        </div>
+        
+    </div>
+        
+    <script>
+        var endLoading = function () {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+        }
+        window.addEventListener('load',endLoading);
+    </script>
+    <div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305132152908.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">62</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403130016509.jpg?imageMogr2/format/webp')"><nav id="nav"><span id="blog-info"><a href="/" title="sin"><span class="site-name">sin</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">BUAA-SoftwareEngineering-Task0</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-03-12T16:10:25.000Z" title="发表于 2024-03-13 00:10:25">2024-03-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-03-12T16:16:15.507Z" title="更新于 2024-03-13 00:16:15">2024-03-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Elevate/">Elevate()</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>5分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="BUAA-SoftwareEngineering-Task0"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<p>本系列文章是 2024 春季学期北航计算机学院本科生课程《软件工程》（嵌入式方向）的实验部分报告，不包含团队大作业项目内容与相关细节</p>
+</blockquote>
+<h1 id="任务0-ROS配置与话题通信"><a href="#任务0-ROS配置与话题通信" class="headerlink" title="任务0-ROS配置与话题通信"></a>任务0-ROS配置与话题通信</h1><h2 id="Ubuntu系统安装"><a href="#Ubuntu系统安装" class="headerlink" title="Ubuntu系统安装"></a>Ubuntu系统安装</h2><p>从<a target="_blank" rel="noopener" href="https://bhpan.buaa.edu.cn/link/AA92CF62C0FB0343039DB8C77B5862304D">北航云盘</a>（提取码：0GhE）下载 Ubuntu 18.04 版本系统，因为只有 18.04 对应的 ROS 版本是 <code>melodic</code>，其他的版本有所不同。</p>
+<p>第一步是创建共享文件夹，首先在虚拟机设置—选项中启用共享文件夹，再在虚拟机中挂载文件夹：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo mount -t fuse.vmhgfs-fuse .host:/ /mnt/hgfs -o allow_other</span><br></pre></td></tr></table></figure>
+
+<h2 id="melodic（ROS）安装"><a href="#melodic（ROS）安装" class="headerlink" title="melodic（ROS）安装"></a>melodic（ROS）安装</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget http://fishros.com/install -O fishros &amp;&amp; . fishros</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403122044280.png" alt="image-20240312204427183"></p>
+<p>利用鱼香 ROS 安装 ROS 系统，注意安装过程中要选择 <code>melodic</code> 以及 <code>melodic</code>（桌面版）。桌面版有一些可视化的库，在后续展示小车状态时十分有效。</p>
+<p>安装后使用 <code>roscore</code> 指令在终端测试 ROS 是否安装成功</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cookedbear@ubuntu:~$ roscore</span><br><span class="line">... logging to /home/cookedbear/.ros/log/a0f68c1a-e06e-11ee-9294-000c29175981/roslaunch-ubuntu-36422.<span class="built_in">log</span></span><br><span class="line">Checking <span class="built_in">log</span> directory <span class="keyword">for</span> disk usage. This may take a <span class="keyword">while</span>.</span><br><span class="line">Press Ctrl-C to interrupt</span><br><span class="line">Done checking <span class="built_in">log</span> file disk usage. Usage is &lt;1GB.</span><br><span class="line"></span><br><span class="line">started roslaunch server http://ubuntu:46803/</span><br><span class="line">ros_comm version 1.14.13</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="创建ROS项目"><a href="#创建ROS项目" class="headerlink" title="创建ROS项目"></a>创建ROS项目</h2><p>第一步是创建项目工作目录与环境，首先进入 <code>src</code> 文件夹，在终端中运行 <code>catkin_init_workspace</code> 完成初始化，然后回到上一级目录运行 <code>catkin_make</code> 编译建好的工作空间</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> yknb</span><br><span class="line"><span class="built_in">mkdir</span> yknb/src</span><br><span class="line"><span class="built_in">cd</span> yknb/src</span><br><span class="line">catkin_init_workspace</span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line">catkin_make</span><br><span class="line"><span class="built_in">source</span> ./devel/setup.bash</span><br></pre></td></tr></table></figure>
+
+<h2 id="ROS节点话题通信"><a href="#ROS节点话题通信" class="headerlink" title="ROS节点话题通信"></a>ROS节点话题通信</h2><p>首先创建功能包，然后使用 Python 语言新建两个脚本，分别执行 <code>Publisher</code> 和 <code>Subscriber</code> 的功能。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">catkin_create_pkg iamyk</span><br></pre></td></tr></table></figure>
+
+<p>Python 代码如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># talker.py</span></span><br><span class="line"><span class="keyword">import</span> rospy</span><br><span class="line"><span class="keyword">from</span> std_msgs.msg <span class="keyword">import</span> String</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">talker</span>():</span><br><span class="line">    pub = rospy.Publisher(<span class="string">&#x27;chatter&#x27;</span>, String, queue_size=<span class="number">10</span>)</span><br><span class="line">    rospy.init_node(<span class="string">&#x27;talker&#x27;</span>, anonymous=<span class="literal">True</span>)</span><br><span class="line">    rate = rospy.Rate(<span class="number">10</span>) <span class="comment"># 10hz</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">not</span> rospy.is_shutdown():</span><br><span class="line">        hello_str = <span class="string">&quot;hello world %s&quot;</span> % rospy.get_time()</span><br><span class="line">        rospy.loginfo(hello_str)</span><br><span class="line">        pub.publish(hello_str)</span><br><span class="line">        rate.sleep()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        talker()</span><br><span class="line">    <span class="keyword">except</span> rospy.ROSInterruptException:</span><br><span class="line">        <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># listener.py</span></span><br><span class="line"><span class="keyword">import</span> rospy</span><br><span class="line"><span class="keyword">from</span> std_msgs.msg <span class="keyword">import</span> String</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">callback</span>(<span class="params">data</span>):</span><br><span class="line">    rospy.loginfo(rospy.get_caller_id() + <span class="string">&#x27;I heard %s&#x27;</span>, data.data)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">listener</span>():</span><br><span class="line"></span><br><span class="line">    <span class="comment"># In ROS, nodes are uniquely named. If two nodes with the same</span></span><br><span class="line">    <span class="comment"># name are launched, the previous one is kicked off. The</span></span><br><span class="line">    <span class="comment"># anonymous=True flag means that rospy will choose a unique</span></span><br><span class="line">    <span class="comment"># name for our &#x27;listener&#x27; node so that multiple listeners can</span></span><br><span class="line">    <span class="comment"># run simultaneously.</span></span><br><span class="line">    rospy.init_node(<span class="string">&#x27;listener&#x27;</span>, anonymous=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    rospy.Subscriber(<span class="string">&#x27;chatter&#x27;</span>, String, callback)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># spin() simply keeps python from exiting until this node is stopped</span></span><br><span class="line">    rospy.spin()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    listener()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>两段代码利用 <code>std_msgs.msg</code> 作为传递字符串的载体，由 talker.py 在指定话题中以固定的频率循环发送信息；listener.py 同样加入该话题，并接收发送的 <code>msg</code> 信息，转化为字符串打印在控制台中</p>
+<p>随后修改 <code>CMakeLists.txt</code> 文件，将原本注释的 python 脚本还原，并且加入两个新的脚本：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">catkin_install_python(PROGRAMS</span><br><span class="line">  scripts/talker.py</span><br><span class="line">  scripts/listener.py</span><br><span class="line">  DESTINATION $&#123;CATKIN_PACKAGE_BIN_DESTINATION&#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>设置完毕后，使用 <code>catkin_make</code> 重新编译项目，即可分别在两个命令行中运行两个节点：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cookedbear@ubuntu:~/Desktop/ros/yknb$ rosrun iamyk talker.py</span><br><span class="line">[INFO] [1710258107.379227]: hello world 1710258107.3791575</span><br><span class="line">[INFO] [1710258107.479932]: hello world 1710258107.4797711</span><br><span class="line">[INFO] [1710258107.579850]: hello world 1710258107.5796387</span><br><span class="line">[INFO] [1710258107.679717]: hello world 1710258107.679525</span><br><span class="line">[INFO] [1710258107.780339]: hello world 1710258107.7801197</span><br><span class="line">[INFO] [1710258107.880397]: hello world 1710258107.8802269</span><br><span class="line">[INFO] [1710258107.979713]: hello world 1710258107.9794989</span><br><span class="line">[INFO] [1710258108.079838]: hello world 1710258108.0796237</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cookedbear@ubuntu:~/Desktop/ros/yknb$ rosrun iamyk listener.py</span><br><span class="line">[INFO] [1710258131.381349]: /listener_3772_1710258131254I heard hello world 1710258131.380313</span><br><span class="line">[INFO] [1710258131.482291]: /listener_3772_1710258131254I heard hello world 1710258131.4802547</span><br><span class="line">[INFO] [1710258131.581786]: /listener_3772_1710258131254I heard hello world 1710258131.5797513</span><br><span class="line">[INFO] [1710258131.681842]: /listener_3772_1710258131254I heard hello world 1710258131.6798933</span><br><span class="line">[INFO] [1710258131.781949]: /listener_3772_1710258131254I heard hello world 1710258131.77978</span><br></pre></td></tr></table></figure>
+
+<p>在节点运行过程中，使用 <code>rosnode</code> 打印节点名、查询详细信息：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cookedbear@ubuntu:~/Desktop/ros/yknb$ rosnode list</span><br><span class="line">/listener_3802_1710258195435</span><br><span class="line">/rosout</span><br><span class="line">/talker_3826_1710258197701</span><br><span class="line">cookedbear@ubuntu:~/Desktop/ros/yknb$ rosnode info /talker_3826_1710258197701 </span><br><span class="line">--------------------------------------------------------------------------------</span><br><span class="line">Node [/talker_3826_1710258197701]</span><br><span class="line">Publications: </span><br><span class="line"> * /chatter [std_msgs/String]</span><br><span class="line"> * /rosout [rosgraph_msgs/Log]</span><br><span class="line"></span><br><span class="line">Subscriptions: None</span><br><span class="line"></span><br><span class="line">Services: </span><br><span class="line"> * /talker_3826_1710258197701/get_loggers</span><br><span class="line"> * /talker_3826_1710258197701/set_logger_level</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">contacting node http://ubuntu:45411/ ...</span><br><span class="line">Pid: 3826</span><br><span class="line">Connections:</span><br><span class="line"> * topic: /chatter</span><br><span class="line">    * to: /listener_3802_1710258195435</span><br><span class="line">    * direction: outbound (38897 - 127.0.0.1:40302) [10]</span><br><span class="line">    * transport: TCPROS</span><br><span class="line"> * topic: /rosout</span><br><span class="line">    * to: /rosout</span><br><span class="line">    * direction: outbound (38897 - 127.0.0.1:40306) [8]</span><br><span class="line">    * transport: TCPROS</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>同样可以使用命令行 <code>rostopic</code> 对话题进行相关信息的查阅：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cookedbear@ubuntu:~/Desktop/ros/yknb$ rostopic list</span><br><span class="line">/chatter</span><br><span class="line">/rosout</span><br><span class="line">/rosout_agg</span><br><span class="line">cookedbear@ubuntu:~/Desktop/ros/yknb$ rostopic info /chatter</span><br><span class="line">Type: std_msgs/String</span><br><span class="line"></span><br><span class="line">Publishers: </span><br><span class="line"> * /talker_3826_1710258197701 (http://ubuntu:45411/)</span><br><span class="line"></span><br><span class="line">Subscribers: </span><br><span class="line"> * /listener_3802_1710258195435 (http://ubuntu:36141/)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">cookedbear@ubuntu:~/Desktop/ros/yknb$ rostopic <span class="built_in">echo</span> /chatter</span><br><span class="line">data: <span class="string">&quot;hello world 1710258298.9224079&quot;</span></span><br><span class="line">---</span><br><span class="line">data: <span class="string">&quot;hello world 1710258299.022878&quot;</span></span><br><span class="line">---</span><br><span class="line">data: <span class="string">&quot;hello world 1710258299.1224391&quot;</span></span><br><span class="line">---</span><br><span class="line">data: <span class="string">&quot;hello world 1710258299.2226434&quot;</span></span><br><span class="line">---</span><br><span class="line">data: <span class="string">&quot;hello world 1710258299.3219335&quot;</span></span><br><span class="line">---</span><br><span class="line">data: <span class="string">&quot;hello world 1710258299.4222023&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>接着新建一个 <code>launch</code> 文件夹和 <code>launcher.launch</code> 文件，实现多节点的同时工作：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">node</span> <span class="attr">pkg</span>=<span class="string">&quot;iamyk&quot;</span> <span class="attr">type</span>=<span class="string">&quot;talker.py&quot;</span> <span class="attr">name</span>=<span class="string">&quot;talker1&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">node</span> <span class="attr">pkg</span>=<span class="string">&quot;iamyk&quot;</span> <span class="attr">type</span>=<span class="string">&quot;talker.py&quot;</span> <span class="attr">name</span>=<span class="string">&quot;talker2&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">node</span> <span class="attr">pkg</span>=<span class="string">&quot;iamyk&quot;</span> <span class="attr">type</span>=<span class="string">&quot;listener.py&quot;</span> <span class="attr">name</span>=<span class="string">&quot;listener&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>最后使用 <code>rqt_graph</code> 生成节点关系图：</p>
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403122347987.png" alt="image-20240312234728955"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://cookedbear.github.io">CookedBear</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://cookedbear.github.io/p/384b4d9.html">https://cookedbear.github.io/p/384b4d9.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://cookedbear.github.io" target="_blank">sin</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/BUAA/">BUAA</a><a class="post-meta__tags" href="/tags/Elevate/">Elevate</a></div><div class="post_share"><div class="social-share" data-image="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403130016509.jpg?imageMogr2/format/webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/p/384b4d9.html" title="BUAA-SoftwareEngineering-Task0"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403130016509.jpg?imageMogr2/format/webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">BUAA-SoftwareEngineering-Task0</div></div></a></div><div class="next-post pull-right"><a href="/p/5ed428af.html" title="BUAA-X86汇编程序设计笔记"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202402292225468.jpg?imageMogr2/format/webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">BUAA-X86汇编程序设计笔记</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/p/d4de58c7.html" title="BUAA-OO-TOP"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112056684.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-14</div><div class="title">BUAA-OO-TOP</div></div></a></div><div><a href="/p/1727.html" title="BUAA-OS-TOP"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202306132108192.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-22</div><div class="title">BUAA-OS-TOP</div></div></a></div><div><a href="/p/5ed428af.html" title="BUAA-X86汇编程序设计笔记"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202402292225468.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-02-29</div><div class="title">BUAA-X86汇编程序设计笔记</div></div></a></div><div><a href="/p/a137a2e9.html" title="编译课设编译器设计文档"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-12-19</div><div class="title">编译课设编译器设计文档</div></div></a></div><div><a href="/p/9291ce54.html" title="编译技术实验课程感想"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-12-19</div><div class="title">编译技术实验课程感想</div></div></a></div><div><a href="/p/373cf855.html" title="编译课设编译器优化文档"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112117797.png?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-12-15</div><div class="title">编译课设编译器优化文档</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305132152908.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">CookedBear</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">62</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/CookedBear"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/CookedBear" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">ReStart</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%BB%E5%8A%A10-ROS%E9%85%8D%E7%BD%AE%E4%B8%8E%E8%AF%9D%E9%A2%98%E9%80%9A%E4%BF%A1"><span class="toc-number">1.</span> <span class="toc-text">任务0-ROS配置与话题通信</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Ubuntu%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85"><span class="toc-number">1.1.</span> <span class="toc-text">Ubuntu系统安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#melodic%EF%BC%88ROS%EF%BC%89%E5%AE%89%E8%A3%85"><span class="toc-number">1.2.</span> <span class="toc-text">melodic（ROS）安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BAROS%E9%A1%B9%E7%9B%AE"><span class="toc-number">1.3.</span> <span class="toc-text">创建ROS项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ROS%E8%8A%82%E7%82%B9%E8%AF%9D%E9%A2%98%E9%80%9A%E4%BF%A1"><span class="toc-number">1.4.</span> <span class="toc-text">ROS节点话题通信</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/p/384b4d9.html" title="BUAA-SoftwareEngineering-Task0"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403130016509.jpg?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BUAA-SoftwareEngineering-Task0"/></a><div class="content"><a class="title" href="/p/384b4d9.html" title="BUAA-SoftwareEngineering-Task0">BUAA-SoftwareEngineering-Task0</a><time datetime="2024-03-12T16:13:26.000Z" title="发表于 2024-03-13 00:13:26">2024-03-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/384b4d9.html" title="BUAA-SoftwareEngineering-Task0"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403130016509.jpg?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BUAA-SoftwareEngineering-Task0"/></a><div class="content"><a class="title" href="/p/384b4d9.html" title="BUAA-SoftwareEngineering-Task0">BUAA-SoftwareEngineering-Task0</a><time datetime="2024-03-12T16:10:25.000Z" title="发表于 2024-03-13 00:10:25">2024-03-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/5ed428af.html" title="BUAA-X86汇编程序设计笔记"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202402292225468.jpg?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BUAA-X86汇编程序设计笔记"/></a><div class="content"><a class="title" href="/p/5ed428af.html" title="BUAA-X86汇编程序设计笔记">BUAA-X86汇编程序设计笔记</a><time datetime="2024-02-28T17:54:28.000Z" title="发表于 2024-02-29 01:54:28">2024-02-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/feaaa974.html" title="超低配主播女孩，略显可惜的小品作——《Pricolage -IDOLIZED-》"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/2510890/header_schinese.jpg?t=1708421482" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="超低配主播女孩，略显可惜的小品作——《Pricolage -IDOLIZED-》"/></a><div class="content"><a class="title" href="/p/feaaa974.html" title="超低配主播女孩，略显可惜的小品作——《Pricolage -IDOLIZED-》">超低配主播女孩，略显可惜的小品作——《Pricolage -IDOLIZED-》</a><time datetime="2024-02-20T17:54:28.000Z" title="发表于 2024-02-21 01:54:28">2024-02-21</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By CookedBear</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script defer src="https://gcore.jsdelivr.net/combine/npm/jquery@latest/dist/jquery.min.js,gh/weilining/jsdelivr/jquery/circlemagic/circlemagic.min.js,gh/weilining/jsdelivr@latest/jquery/circlemagic/butterflycirclemagic.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
