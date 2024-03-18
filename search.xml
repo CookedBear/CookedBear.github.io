@@ -4,33 +4,6 @@
   
     
     <entry>
-      <title>蓝桥杯单片机备赛</title>
-      <link href="/p/e95c889b.html"/>
-      <url>/p/e95c889b.html</url>
-      
-        <content type="html"><![CDATA[<blockquote><p>本系列文章是第 15 届蓝桥杯大赛电子赛单片机设计与开发赛道的备赛记录，笔记参考了<a href="https://www.bilibili.com/video/BV1Bt41187hw?p=1">网络视频</a></p><p>我记得前年 13 届看的也是这一套视频，当时摸了个省二，可惜今年要尽量打一个省一下来</p></blockquote><h1 id="蓝桥杯单片机备赛"><a href="#蓝桥杯单片机备赛" class="headerlink" title="蓝桥杯单片机备赛"></a>蓝桥杯单片机备赛</h1><h1 id="LED指示灯的基本控制"><a href="#LED指示灯的基本控制" class="headerlink" title="LED指示灯的基本控制"></a>LED指示灯的基本控制</h1><ul><li><code>J13</code> 引脚决定了程序的开发模式<ul><li><strong>IO：I/O 扩展模式（较常用）</strong></li><li>MM：内存模式</li></ul></li></ul><p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403180027581.png" alt="image-20240318002724507"></p><h2 id="74HC138译码器"><a href="#74HC138译码器" class="headerlink" title="74HC138译码器"></a>74HC138译码器</h2><p>译码器使用三路输入 decode 出八路输出；所有输出为互斥低电平有效输出（同时只有一个低电平）</p><p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403180029103.png" alt="image-20240318002926078"></p><p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403180033935.png" alt="image-20240318003351862"></p>]]></content>
-      
-      
-      <categories>
-          
-          <category> Elevate() </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> BUAA </tag>
-            
-            <tag> Elevate </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>BUAA-SoftwareEngineering-Task3</title>
       <link href="/p/9a8de563.html"/>
       <url>/p/9a8de563.html</url>
