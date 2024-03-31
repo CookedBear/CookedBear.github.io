@@ -1,0 +1,285 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>BUAA-SoftwareEngineering-Task5 | sin</title><meta name="author" content="CookedBear"><meta name="copyright" content="CookedBear"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="本系列文章是 2024 春季学期北航计算机学院本科生课程《软件工程》（嵌入式方向）的实验部分报告，不包含团队大作业项目内容与相关细节  任务5-机械臂操控与语音识别输出实验目的 了解启智机器人的机械臂组件，并操作机械臂完成较为复杂的机械臂控制行为   启智机器人安装了一个可用于抓取桌面上物品的机械臂，该机械臂提供两个控制量：上升高度和手抓的闭合宽度。通过配合机器人其他传感器，设置这两个控制量，能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BUAA-SoftwareEngineering-Task5">
+<meta property="og:url" content="https://cookedbear.github.io/p/73ee4056.html">
+<meta property="og:site_name" content="sin">
+<meta property="og:description" content="本系列文章是 2024 春季学期北航计算机学院本科生课程《软件工程》（嵌入式方向）的实验部分报告，不包含团队大作业项目内容与相关细节  任务5-机械臂操控与语音识别输出实验目的 了解启智机器人的机械臂组件，并操作机械臂完成较为复杂的机械臂控制行为   启智机器人安装了一个可用于抓取桌面上物品的机械臂，该机械臂提供两个控制量：上升高度和手抓的闭合宽度。通过配合机器人其他传感器，设置这两个控制量，能">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403130016509.jpg?imageMogr2/format/webp">
+<meta property="article:published_time" content="2024-03-31T12:28:57.000Z">
+<meta property="article:modified_time" content="2024-03-31T12:33:47.793Z">
+<meta property="article:author" content="CookedBear">
+<meta property="article:tag" content="BUAA">
+<meta property="article:tag" content="Elevate">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403130016509.jpg?imageMogr2/format/webp"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://cookedbear.github.io/p/73ee4056.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":150},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'BUAA-SoftwareEngineering-Task5',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-03-31 20:33:47'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/center-atom.css" ><meta name="generator" content="Hexo 5.4.2"></head><body>
+    <div id='loader'>
+        
+        <div class="loading-left-bg"></div>
+        <div class="loading-right-bg"></div>
+        <div class="spinner-box">
+            <div class="configure-border-1">
+                <div class="configure-core"></div>
+            </div>
+            <div class="configure-border-2">
+                <div class="configure-core"></div>
+            </div>
+            <div class="loading-word">加载中...</div>
+        </div>
+        
+    </div>
+        
+    <script>
+        var endLoading = function () {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+        }
+        window.addEventListener('load',endLoading);
+    </script>
+    <div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305132152908.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">71</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 小工具</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page" target="_blank" rel="noopener" href="http://103.151.216.224:80/"><span> bdpan</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="http://103.151.216.224:81/"><span> 25時生成器</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="http://103.151.216.224:9667/"><span> 程序员备忘录</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403130016509.jpg?imageMogr2/format/webp')"><nav id="nav"><span id="blog-info"><a href="/" title="sin"><span class="site-name">sin</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 小工具</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page" target="_blank" rel="noopener" href="http://103.151.216.224:80/"><span> bdpan</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="http://103.151.216.224:81/"><span> 25時生成器</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="http://103.151.216.224:9667/"><span> 程序员备忘录</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">BUAA-SoftwareEngineering-Task5</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-03-31T12:28:57.000Z" title="发表于 2024-03-31 20:28:57">2024-03-31</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-03-31T12:33:47.793Z" title="更新于 2024-03-31 20:33:47">2024-03-31</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Elevate/">Elevate()</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>5分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="BUAA-SoftwareEngineering-Task5"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<p>本系列文章是 2024 春季学期北航计算机学院本科生课程《软件工程》（嵌入式方向）的实验部分报告，不包含团队大作业项目内容与相关细节</p>
+</blockquote>
+<h1 id="任务5-机械臂操控与语音识别输出"><a href="#任务5-机械臂操控与语音识别输出" class="headerlink" title="任务5-机械臂操控与语音识别输出"></a>任务5-机械臂操控与语音识别输出</h1><h1 id="实验目的"><a href="#实验目的" class="headerlink" title="实验目的"></a>实验目的</h1><ul>
+<li>了解启智机器人的机械臂组件，并操作机械臂完成较为复杂的机械臂控制行为</li>
+</ul>
+<blockquote>
+<p>启智机器人安装了一个可用于抓取桌面上物品的机械臂，该机械臂提供两个控制量：上升高度和手抓的闭合宽度。通过配合机器人其他传感器，设置这两个控制量，能够实现较为复杂的机械臂控制行为。</p>
+</blockquote>
+<ul>
+<li>了解启智机器人的语音识别输出组件，实现语音识别、语音输出等交互操作</li>
+</ul>
+<blockquote>
+<p>启智ROS 机器人头部Kinect2 下半部分有一组阵列麦克风，采集正前方的声音信息，可以用来接收语音指令。本实验将在虚拟机上模拟实现，使用语音识别引擎，识别语音指令，再通过语音输出交互内容。</p>
+</blockquote>
+<h1 id="实验任务"><a href="#实验任务" class="headerlink" title="实验任务"></a>实验任务</h1><ul>
+<li>操作启智机器人机械臂，完成机械臂的操控和物体抓取任务。</li>
+<li>编写语音交互中间节点，获取识别语音信息，输出对应信息。</li>
+</ul>
+<h1 id="实验内容"><a href="#实验内容" class="headerlink" title="实验内容"></a>实验内容</h1><h2 id="机械臂控制例程"><a href="#机械臂控制例程" class="headerlink" title="机械臂控制例程"></a>机械臂控制例程</h2><ul>
+<li>启动机器人机械臂控制示例进程和机械臂控制节点</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">roslaunch wpr_simulation wpb_table.launch</span><br><span class="line">rosrun wpb_home_tutorials wpb_home_mani_ctrl</span><br></pre></td></tr></table></figure>
+
+<p>进程启动了 RViz 界面，控制节点会周期性地发送机械臂的控制指令，可以在 RViz 界面中观察到机械臂状态的变化。</p>
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403311633027.png" alt="image-20240331162613933"></p>
+<p>具体而言， <code>wpb_home_mani_ctrl</code> 节点通过发送 <code>JointState</code> 类型的消息将信息包 publish 到机械臂部分，具体而言可以仿照示例修改 <code>position</code> 和 <code>velocity</code> 字段的内容：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">sensor_msgs::JointState ctrl_msg;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* other content */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> WPBH_TEST_MANI_ZERO:   <span class="comment">//收起状态,先变成初始状态</span></span><br><span class="line">    ROS_INFO(<span class="string">&quot;[wpb_home_mani_ctrl] ZERO -&gt; DOWN&quot;</span>);</span><br><span class="line">    ctrl_msg.position[<span class="number">0</span>] = <span class="number">0.5</span>;     <span class="comment">//升降高度(单位:米)</span></span><br><span class="line">    ctrl_msg.velocity[<span class="number">0</span>] = <span class="number">0.5</span>;     <span class="comment">//升降速度(单位:米/秒)</span></span><br><span class="line">    ctrl_msg.position[<span class="number">1</span>] = <span class="number">0.1</span>;     <span class="comment">//手爪指间距(单位:米)</span></span><br><span class="line">    ctrl_msg.velocity[<span class="number">1</span>] = <span class="number">5</span>;       <span class="comment">//手爪开合角速度(单位:度/秒)</span></span><br><span class="line">    nState = WPBH_TEST_MANI_DOWN;</span><br><span class="line">    <span class="keyword">break</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="机械臂物体抓取任务"><a href="#机械臂物体抓取任务" class="headerlink" title="机械臂物体抓取任务"></a>机械臂物体抓取任务</h2><ul>
+<li>启动机器人机械臂控制例程和物体识别抓取节点 <code>wpb_home_grab_client</code>，观察机械臂运动状况与信息输出</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">roslaunch wpr_simulation wpb_table.launch</span><br><span class="line">rosrun wpb_home_tutorials wpb_home_grab_client</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>抓取过程关键截图：</p>
+</blockquote>
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403311640901.png" alt="image-20240331164021810"></p>
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403311641866.png" alt="image-20240331164104784"></p>
+<h2 id="语音识别输出"><a href="#语音识别输出" class="headerlink" title="语音识别输出"></a>语音识别输出</h2><ul>
+<li>安装依赖项、在 src 目录中引入源码：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install ros-melodic-audio-common</span><br><span class="line">sudo apt-get install libasound2</span><br><span class="line">sudo apt-get install ros-melodic-sound-play</span><br><span class="line">git <span class="built_in">clone</span> git@github.com:6-robot/xfyun_waterplus.git</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>注意因为机器人官方代码包已经将 kinetic ~ noetic 的三个版本封装在一个 branch 上，并且没有保留其他分支，所以也不用 checkout，直接在 master 上配置即可</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">./scripts/install_for_melodic.sh</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在 <code>src</code> 目录下创建语音识别软件包 <code>sr_pkg</code> 并回到项目根目录再次编译</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">catkin_create_pkg sr_pkg rospy std_msgs</span><br><span class="line">catkin_make</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>进入软件包创建 <code>scripts</code> 文件夹并编写一个节点文件 <code>sr_en_node.py</code>，使其简单支持两种文字的识别，由于文字处理能力有限，所以相关的操作只能绑定字符的完全匹配</li>
+<li>编写完毕后赋予执行权限</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> rospy</span><br><span class="line"><span class="keyword">from</span> std_msgs.msg <span class="keyword">import</span> String</span><br><span class="line"></span><br><span class="line"><span class="comment"># 语音识别回调函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">cbKeyword</span>(<span class="params">msg</span>):</span><br><span class="line">    rospy.logwarn(<span class="string">&quot;语音识别结果 = %s&quot;</span>, msg.data)</span><br><span class="line">    <span class="keyword">if</span> msg.data == <span class="string">&quot; Hello&quot;</span>:</span><br><span class="line">        spk_msg = String()</span><br><span class="line">        spk_msg.data = <span class="string">&quot;Hi&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;received&quot;</span>)</span><br><span class="line">        spk_pub.publish(spk_msg)</span><br><span class="line">    <span class="keyword">elif</span> msg.data == <span class="string">&quot; Good bye&quot;</span>:</span><br><span class="line">        spk_msg = String()</span><br><span class="line">        spk_msg.data = <span class="string">&quot;See you&quot;</span></span><br><span class="line">        spk_pub.publish(spk_msg)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 主函数</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    rospy.init_node(<span class="string">&quot;sr_en_node&quot;</span>)</span><br><span class="line">    <span class="comment"># 订阅语音识别结果的话题</span></span><br><span class="line">    sr_sub = rospy.Subscriber(<span class="string">&quot;/xfyun/iat&quot;</span>, String, cbKeyword, queue_size=<span class="number">10</span>)</span><br><span class="line">    <span class="comment"># 发布语音说话内容的话题</span></span><br><span class="line">    spk_pub = rospy.Publisher(<span class="string">&quot;/xfyun/tts&quot;</span>, String, queue_size=<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">    rospy.spin()</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<ul>
+<li><code>msg.data</code>：语音识别的结果</li>
+<li><code>spk_msg.data</code>：机器人发声的回复语句</li>
+</ul>
+<p>这里需要注意回调函数中 <code>msg.data</code> 最开始必须要有一个空格，否则会无法匹配；如果想手动添加新的 <code>elif</code> 识别分支，建议先读一遍识别出正确的文本后进行复制</p>
+</blockquote>
+<p>配置完毕后分别启动语音转换服务以及语音交互中间节点即可进行识别：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">roslaunch xfyun_waterplus sr_tts_en.launch</span><br><span class="line">rosrun sr_pkg sr_en_node.py</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403312000488.png" alt="image-20240331195635552"></p>
+<ul>
+<li>使用 <code>rqt_graph</code> 观察服务消息传递路径</li>
+</ul>
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403312021694.png" alt="image-20240331202137650"></p>
+<ul>
+<li><code>/xfyun_iat_node</code> 从系统中录制声音，完成从语音转文字的功能，并将信息发布到 <code>/xfyun/iat</code> 话题中</li>
+<li>我们编写的节点 <code>/sr_en_node</code> 订阅 <code>iat</code> 话题并获取转换后的文字信息，通过回调函数设置好待发送的信息并发布到 <code>/xfyun/tts</code> 话题中</li>
+<li><code>/xfyun_tts_node</code> 订阅话题 <code>tts</code>，完成生成对应文字的录音的功能，并将发布录音文件</li>
+<li>soundplay_node 服务提供了一个 ROS 节点，订阅话题 ( <code>/robotsound</code> ) ，还可以将转换为声音。该节点支持内置声音，播放OGG/WAV文件，实现录音播放，完成整个语音交互流程。</li>
+</ul>
+<ul>
+<li><strong>在执行语音识别时的一个小报错</strong></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">请在 10 秒内下达命令</span><br><span class="line">开始录音...</span><br><span class="line">/home/cookedbear/catkin_ws/src/xfyun_waterplus/sound/on.wav: No such file or directory</span><br><span class="line">识别结果:[  I don&#x27;t know ]</span><br></pre></td></tr></table></figure>
+
+<p>如果在启动语音服务后显示上面这个找不到文件的报错信息，无需理会，这个 <code>wav</code> 文件只起到提示音的作用，如果想要消除报错可以参照以下操作：</p>
+<ul>
+<li>找到工作目录下的 <code>/home/&lt;Your Username&gt;/&lt;Your Working Directory&gt;/src/xfyun_waterplus/src/iat_node.cpp</code> 文件</li>
+<li>修改文件的第 141 行代码中的路径为工作路径</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">char</span> <span class="type">const</span>* home = getenv(<span class="string">&quot;HOME&quot;</span>);</span><br><span class="line">strOnSoundFile = home;</span><br><span class="line">strOnSoundFile += <span class="string">&quot;/&lt;Your Working Directory&gt;/src/xfyun_waterplus/sound/on.wav&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用 <code>catkin_make</code> 重新编译项目，然后报错就不会显示了，你还会在开始语音转换时听到动耳的提示音（）</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://cookedbear.github.io">CookedBear</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://cookedbear.github.io/p/73ee4056.html">https://cookedbear.github.io/p/73ee4056.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://cookedbear.github.io" target="_blank">sin</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/BUAA/">BUAA</a><a class="post-meta__tags" href="/tags/Elevate/">Elevate</a></div><div class="post_share"><div class="social-share" data-image="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403130016509.jpg?imageMogr2/format/webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/p/f08030b1.html" title="BUAA-X86Programming-2"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202402292225468.jpg?imageMogr2/format/webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">BUAA-X86Programming-2</div></div></a></div><div class="next-post pull-right"><a href="/p/4e970c0.html" title="BUAA-SoftwareEngineering-Task4"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403130016509.jpg?imageMogr2/format/webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">BUAA-SoftwareEngineering-Task4</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/p/d4de58c7.html" title="BUAA-OO-TOP"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112056684.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-14</div><div class="title">BUAA-OO-TOP</div></div></a></div><div><a href="/p/1727.html" title="BUAA-OS-TOP"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202306132108192.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-22</div><div class="title">BUAA-OS-TOP</div></div></a></div><div><a href="/p/f08030b1.html" title="BUAA-X86Programming-2"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202402292225468.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-31</div><div class="title">BUAA-X86Programming-2</div></div></a></div><div><a href="/p/4e970c0.html" title="BUAA-SoftwareEngineering-Task4"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403130016509.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-23</div><div class="title">BUAA-SoftwareEngineering-Task4</div></div></a></div><div><a href="/p/204601f4.html" title="BUAA-FPGA多核并行计算-Exp2-2"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403142326098.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-20</div><div class="title">BUAA-FPGA多核并行计算-Exp2-2</div></div></a></div><div><a href="/p/74b98825.html" title="BUAA-X86汇编程序设计-Exp1"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202402292225468.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-20</div><div class="title">BUAA-X86汇编程序设计-Exp1</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305132152908.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">CookedBear</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">71</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/CookedBear"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/CookedBear" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">ReStart</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%BB%E5%8A%A15-%E6%9C%BA%E6%A2%B0%E8%87%82%E6%93%8D%E6%8E%A7%E4%B8%8E%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E8%BE%93%E5%87%BA"><span class="toc-number">1.</span> <span class="toc-text">任务5-机械臂操控与语音识别输出</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%9B%AE%E7%9A%84"><span class="toc-number">2.</span> <span class="toc-text">实验目的</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E4%BB%BB%E5%8A%A1"><span class="toc-number">3.</span> <span class="toc-text">实验任务</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E5%86%85%E5%AE%B9"><span class="toc-number">4.</span> <span class="toc-text">实验内容</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%BA%E6%A2%B0%E8%87%82%E6%8E%A7%E5%88%B6%E4%BE%8B%E7%A8%8B"><span class="toc-number">4.1.</span> <span class="toc-text">机械臂控制例程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%BA%E6%A2%B0%E8%87%82%E7%89%A9%E4%BD%93%E6%8A%93%E5%8F%96%E4%BB%BB%E5%8A%A1"><span class="toc-number">4.2.</span> <span class="toc-text">机械臂物体抓取任务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E8%BE%93%E5%87%BA"><span class="toc-number">4.3.</span> <span class="toc-text">语音识别输出</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/p/f08030b1.html" title="BUAA-X86Programming-2"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202402292225468.jpg?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BUAA-X86Programming-2"/></a><div class="content"><a class="title" href="/p/f08030b1.html" title="BUAA-X86Programming-2">BUAA-X86Programming-2</a><time datetime="2024-03-31T12:32:08.000Z" title="发表于 2024-03-31 20:32:08">2024-03-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/73ee4056.html" title="BUAA-SoftwareEngineering-Task5"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403130016509.jpg?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BUAA-SoftwareEngineering-Task5"/></a><div class="content"><a class="title" href="/p/73ee4056.html" title="BUAA-SoftwareEngineering-Task5">BUAA-SoftwareEngineering-Task5</a><time datetime="2024-03-31T12:28:57.000Z" title="发表于 2024-03-31 20:28:57">2024-03-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/4e970c0.html" title="BUAA-SoftwareEngineering-Task4"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403130016509.jpg?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BUAA-SoftwareEngineering-Task4"/></a><div class="content"><a class="title" href="/p/4e970c0.html" title="BUAA-SoftwareEngineering-Task4">BUAA-SoftwareEngineering-Task4</a><time datetime="2024-03-22T18:21:57.000Z" title="发表于 2024-03-23 02:21:57">2024-03-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/204601f4.html" title="BUAA-FPGA多核并行计算-Exp2-2"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403142326098.jpg?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BUAA-FPGA多核并行计算-Exp2-2"/></a><div class="content"><a class="title" href="/p/204601f4.html" title="BUAA-FPGA多核并行计算-Exp2-2">BUAA-FPGA多核并行计算-Exp2-2</a><time datetime="2024-03-20T15:24:39.000Z" title="发表于 2024-03-20 23:24:39">2024-03-20</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By CookedBear</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script defer src="https://gcore.jsdelivr.net/combine/npm/jquery@latest/dist/jquery.min.js,gh/weilining/jsdelivr/jquery/circlemagic/circlemagic.min.js,gh/weilining/jsdelivr@latest/jquery/circlemagic/butterflycirclemagic.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
