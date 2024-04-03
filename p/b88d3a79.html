@@ -1,0 +1,324 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>BUAA-FPGA多核并行计算-Exp3-1 | sin</title><meta name="author" content="CookedBear"><meta name="copyright" content="CookedBear"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="本系列是北航计算机学院于 2024 年春季学期开设的一般专业课《FPGA多核并行计算》课程的实验报告记录，由于学习过程中掌握并不牢靠，如有错误请读者不吝赐教！  深度学习编译器：TVM实验说明与实验相关内容上传在 Github 仓库中。实验过程中使用到的环境与程序：  运行环境：Ubuntu 16.04，在线实验平台 apache&#x2F;tvm pjreddie&#x2F;darknet ultralytics">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BUAA-FPGA多核并行计算-Exp3-1">
+<meta property="og:url" content="https://cookedbear.github.io/p/b88d3a79.html">
+<meta property="og:site_name" content="sin">
+<meta property="og:description" content="本系列是北航计算机学院于 2024 年春季学期开设的一般专业课《FPGA多核并行计算》课程的实验报告记录，由于学习过程中掌握并不牢靠，如有错误请读者不吝赐教！  深度学习编译器：TVM实验说明与实验相关内容上传在 Github 仓库中。实验过程中使用到的环境与程序：  运行环境：Ubuntu 16.04，在线实验平台 apache&#x2F;tvm pjreddie&#x2F;darknet ultralytics">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403142326098.jpg?imageMogr2/format/webp">
+<meta property="article:published_time" content="2024-04-03T19:55:39.000Z">
+<meta property="article:modified_time" content="2024-04-03T19:55:22.302Z">
+<meta property="article:author" content="CookedBear">
+<meta property="article:tag" content="BUAA">
+<meta property="article:tag" content="Elevate">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403142326098.jpg?imageMogr2/format/webp"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://cookedbear.github.io/p/b88d3a79.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":150},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'BUAA-FPGA多核并行计算-Exp3-1',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-04-04 03:55:22'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/center-atom.css" ><meta name="generator" content="Hexo 5.4.2"></head><body>
+    <div id='loader'>
+        
+        <div class="loading-left-bg"></div>
+        <div class="loading-right-bg"></div>
+        <div class="spinner-box">
+            <div class="configure-border-1">
+                <div class="configure-core"></div>
+            </div>
+            <div class="configure-border-2">
+                <div class="configure-core"></div>
+            </div>
+            <div class="loading-word">加载中...</div>
+        </div>
+        
+    </div>
+        
+    <script>
+        var endLoading = function () {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+        }
+        window.addEventListener('load',endLoading);
+    </script>
+    <div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305132152908.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">72</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 小工具</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page" target="_blank" rel="noopener" href="http://103.151.216.224:80/"><span> bdpan</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="http://103.151.216.224:81/"><span> 25時生成器</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="http://103.151.216.224:9667/"><span> 程序员备忘录</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403142326098.jpg?imageMogr2/format/webp')"><nav id="nav"><span id="blog-info"><a href="/" title="sin"><span class="site-name">sin</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 小工具</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page" target="_blank" rel="noopener" href="http://103.151.216.224:80/"><span> bdpan</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="http://103.151.216.224:81/"><span> 25時生成器</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="http://103.151.216.224:9667/"><span> 程序员备忘录</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">BUAA-FPGA多核并行计算-Exp3-1</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-04-03T19:55:39.000Z" title="发表于 2024-04-04 03:55:39">2024-04-04</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-04-03T19:55:22.302Z" title="更新于 2024-04-04 03:55:22">2024-04-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Elevate/">Elevate()</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="BUAA-FPGA多核并行计算-Exp3-1"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<p>本系列是北航计算机学院于 2024 年春季学期开设的一般专业课《FPGA多核并行计算》课程的实验报告记录，由于学习过程中掌握并不牢靠，如有错误请读者不吝赐教！</p>
+</blockquote>
+<h1 id="深度学习编译器：TVM"><a href="#深度学习编译器：TVM" class="headerlink" title="深度学习编译器：TVM"></a>深度学习编译器：TVM</h1><p>实验说明与实验相关内容上传在 <a target="_blank" rel="noopener" href="https://github.com/CookedBear/BUAA-FPGA-Parallel-2024/tree/exp3-1">Github</a> 仓库中。实验过程中使用到的环境与程序：</p>
+<ul>
+<li>运行环境：Ubuntu 16.04，在线实验平台</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/apache/tvm">apache/tvm</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/pjreddie/darknet">pjreddie/darknet</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ultralytics/yolov3">ultralytics/yolov3</a></li>
+</ul>
+<blockquote>
+<p>Apache TVM 是一个开源的机器学习编译框架，用于 CPU、GPU 和机器学习的加速。它的设计目标是令机器学习工程师可以在不同的硬件后端高效地优化和运行计算过程。</p>
+</blockquote>
+<h1 id="实验分析"><a href="#实验分析" class="headerlink" title="实验分析"></a>实验分析</h1><ul>
+<li>掌握TVM运行环境的配置方法</li>
+<li>使用TVM对<code>darknet</code>平台生成的模型进行编译</li>
+</ul>
+<h2 id="配置-TVM-运行环境"><a href="#配置-TVM-运行环境" class="headerlink" title="配置 TVM 运行环境"></a>配置 TVM 运行环境</h2><p>配置 TVM 环境前，需要预先准备好其编译链工具：</p>
+<ul>
+<li>gcc 9.3.0</li>
+<li>llvm 11.1.0</li>
+<li>python 3.7</li>
+<li>git 2.25.1</li>
+</ul>
+<p>若环境未安装可按照实验文档进行安装，经验证在线实验平台上所有环境均满足</p>
+<ul>
+<li>安装 python 依赖：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get install -y gcc libtinfo-dev zlib1g-dev build-essential cmake libedit-dev libxml2-dev</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这里的编译过程使用了课程平台提供的 tvm 整合包，其中包含了其他链接仓库，若从原始仓库 clone 并编译，需要拉取多个链接仓库。</p>
+<p>可使用 <code>git submodule update --init --recursive</code> 下载包含的子模块，或从实验代码仓库中获取整合包</p>
+</blockquote>
+<ul>
+<li>解压后创建构建目录 build、放置 CMAKE 文件，再修改 TVM 的构建参数如下，满足实验平台的硬件设置和使用需求：<ul>
+<li>禁用CUDA(GPU平台): 仅使用 CPU 设备计算</li>
+<li>启用图执行器: 使用图执行器(Graph Executor)运行和管理深度学习模型的计算图，它是一种用于优化和执行深度学习计算图的工具</li>
+<li>启用探针程序: 在项目运行时将收集性能相关的数据，从而进一步分析优化模型</li>
+<li>配置llvm地址: 使用 llvm 作为程序后端输出</li>
+<li>配置VTA模拟器: VTA（Versatile Tensor Accelerator）是一个灵活的张量加速器，主要用于深度学习推理和训练的加速</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 禁用CUDA(GPU平台)</span></span><br><span class="line"><span class="built_in">set</span>(USE_CUDA OFF)</span><br><span class="line"><span class="comment"># 启用图执行器</span></span><br><span class="line"><span class="built_in">set</span>(USE_GRAPH_EXECUTOR ON)</span><br><span class="line"><span class="comment"># 启用探针程序</span></span><br><span class="line"><span class="built_in">set</span>(USE_PROFILER ON)</span><br><span class="line"><span class="comment"># 配置llvm地址</span></span><br><span class="line"><span class="built_in">set</span>(USE_LLVM ON)</span><br><span class="line"><span class="comment"># 配置VTA模拟器</span></span><br><span class="line"><span class="built_in">set</span>(USE_VTA_FSIM ON)</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>返回文件目录后构建 TVM 运行环境：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd build</span><br><span class="line">cmake ..</span><br><span class="line">make -j4</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>编译时间较长，若过程中缺少其他依赖时需要再进行补全</p>
+</blockquote>
+<ul>
+<li>配置运行库环境和依赖</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">rm</span> -rf /headless/.tvm_test_data  <span class="comment"># 该命令只需运行一次</span></span><br><span class="line"><span class="built_in">export</span> TVM_HOME=/path/to/tvm</span><br><span class="line"><span class="built_in">export</span> PYTHONPATH=<span class="variable">$TVM_HOME</span>/python:<span class="variable">$&#123;PYTHONPATH&#125;</span></span><br><span class="line">pip37 install scipy numpy decorator install attrs</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>至此，TVM 环境配置工作完成，可通过以下指令确认是否正确安装</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python37 -m tvm.driver.tvmc</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202404031945086.png" alt="image-20240403194330423"></p>
+<h2 id="编译-YOLOV3-模型"><a href="#编译-YOLOV3-模型" class="headerlink" title="编译 YOLOV3 模型"></a>编译 YOLOV3 模型</h2><blockquote>
+<p>本章节的处理思路来源于官方文档 <a target="_blank" rel="noopener" href="https://tvm.apache.org/docs/how_to/compile_models/from_darknet.html#sphx-glr-download-how-to-compile-models-from-darknet-py">Compile YOLO-V2 and YOLO-V3 in DarkNet Models</a>，源代码的数据、权重文件等均从 Github 直接获取，若网络访问不便捷可以先预下载文件，并将内部所有使用到如 <code>lib_path = download_testdata(DARKNET_URL, DARKNET_LIB, module=&quot;darknet&quot;)</code> 的部分改为本地路径引用即可</p>
+</blockquote>
+<ul>
+<li>安装 python 依赖</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip37 install cffi opencv-python</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>创建一个 python 文件（<code>yolov3.py</code>），文件内容组织如下，**代码文件可见<a href="#%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%BC%96%E8%AF%91%E5%99%A8%EF%BC%9ATVM">仓库</a>**：<ul>
+<li>引入依赖包、选择模型</li>
+<li>选择下载后的文件</li>
+<li>将模型实现为 Relay 形式</li>
+<li>加载测试图像</li>
+<li>在 Runtime 上执行模型</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>执行检测后的图像如下所示：<img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202404031944071.png" alt="image-20240403194430010"></li>
+</ul>
+<h1 id="实验思考"><a href="#实验思考" class="headerlink" title="实验思考"></a>实验思考</h1><h2 id="实验过程截图"><a href="#实验过程截图" class="headerlink" title="实验过程截图"></a>实验过程截图</h2><blockquote>
+<p>截图粘贴TVM成功配置的截图及YOLO算法实验结果</p>
+</blockquote>
+<p>成功配置 TVM 的截图和 YOLO 算法实验结果已在上文贴出</p>
+<h2 id="已训练模型的-TVM-运行"><a href="#已训练模型的-TVM-运行" class="headerlink" title="已训练模型的 TVM 运行"></a>已训练模型的 TVM 运行</h2><blockquote>
+<p>任选一个在公开数据集上进行训练的神经网络模型，仿照上面实验步骤使用 TVM 运行。截图粘贴运行结果，说明模型结构（可使用可视化工具）以及数据集。</p>
+</blockquote>
+<p>在本部分我选用了在实验 2-1 中已训练好的 MNIST 网络模型，先在本地电脑中使用 pytorch 导出其网络结构为 onnx 结构的文件，再于在线实验平台中利用 onnx 将其重新加载，并运行在 TVM，实现模型的迁移与优化</p>
+<p><strong>本节所用的所有代码文件可见<a href="#%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%BC%96%E8%AF%91%E5%99%A8%EF%BC%9ATVM">仓库</a></strong></p>
+<ul>
+<li>在本地电脑基于 pytorch 的原有网络模型的基础上导出 onnx 配置</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> torch.onnx</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设已训练好的网络模型为 net</span></span><br><span class="line">torch_model_path = <span class="string">&#x27;net.pth&#x27;</span></span><br><span class="line">onnx_model_path = <span class="string">&quot;mnist_model.onnx&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># torch 模型参数保存再加载到新的 model 中，避免报错</span></span><br><span class="line">torch.save(net.state_dict(), torch_model_path)</span><br><span class="line">model = Net()</span><br><span class="line">model.load_state_dict(torch.load(<span class="string">&quot;net.pth&quot;</span>))</span><br><span class="line">model.<span class="built_in">eval</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用TorchScript来跟踪并导出模型</span></span><br><span class="line">input_tensor = torch.randn(<span class="number">1</span>, <span class="number">1</span>, <span class="number">28</span>, <span class="number">28</span>)</span><br><span class="line">traced_model = torch.jit.trace(model, input_tensor)</span><br><span class="line">traced_model.save(<span class="string">&quot;mnist_model.pt&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个样本输入，大小需要与模型的输入层相匹配</span></span><br><span class="line">sample_input = torch.randn(<span class="number">1</span>, <span class="number">1</span>, <span class="number">28</span>, <span class="number">28</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 导出 onnx 模型</span></span><br><span class="line">torch.onnx.export(model, sample_input, onnx_model_path)</span><br></pre></td></tr></table></figure>
+
+<p>若不执行第一次的 save 过程，可能在执行过程中第 14 行会报错，加上上面的 save 再重新 load 就没有问题了：</p>
+<blockquote>
+<p>RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument weight in method wrapper___slow_conv2d_forward)</p>
+</blockquote>
+<ul>
+<li>导出参数和网络结构后回到在线实验平台中，创建 <code>mnist.py</code> 文件进行模型加载、优化、运行，注意运行时需要引入 <a target="_blank" rel="noopener" href="http://yann.lecun.com/exdb/mnist/">MNIST Dataset</a>（仓库中还有 ipynb 分段的文件，但窘于实验平台配置 jupyter notebook 较为繁琐所以没有保存运行内容）</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">　　# -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">　　# @Time    : 2024/4/3 20:45</span></span><br><span class="line"><span class="string">　　# @Author  : CookedBear</span></span><br><span class="line"><span class="string">　　# @File    : mnist.py</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> tvm</span><br><span class="line"><span class="keyword">from</span> tvm <span class="keyword">import</span> relay</span><br><span class="line"><span class="keyword">import</span> onnx</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> struct</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">test_images_idx3_ubyte_file = <span class="string">&#x27;t10k-images.idx3-ubyte&#x27;</span>   <span class="comment"># 测试图片数据</span></span><br><span class="line">test_labels_idx1_ubyte_file = <span class="string">&#x27;t10k-labels.idx1-ubyte&#x27;</span>   <span class="comment"># 测试标签数据</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decode_idx3_ubyte</span>(<span class="params">idx3_ubyte_file</span>):</span><br><span class="line">    bin_data = <span class="built_in">open</span>(idx3_ubyte_file, <span class="string">&#x27;rb&#x27;</span>).read()</span><br><span class="line">    offset = <span class="number">0</span></span><br><span class="line">    fmt_header = <span class="string">&#x27;&gt;iiii&#x27;</span></span><br><span class="line">    magic_number, num_images, num_rows, num_cols = struct.unpack_from(fmt_header, bin_data, offset)</span><br><span class="line">    image_size = num_rows * num_cols</span><br><span class="line">    offset += struct.calcsize(fmt_header)</span><br><span class="line">    fmt_image = <span class="string">&#x27;&gt;&#x27;</span> + <span class="built_in">str</span>(image_size) + <span class="string">&#x27;B&#x27;</span></span><br><span class="line">    images = np.empty((num_images, num_rows, num_cols))</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(num_images):</span><br><span class="line">        images[i] = np.array(struct.unpack_from(fmt_image, bin_data, offset)).reshape((num_rows, num_cols))</span><br><span class="line">        offset += struct.calcsize(fmt_image)</span><br><span class="line">    <span class="keyword">return</span> images</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decode_idx1_ubyte</span>(<span class="params">idx1_ubyte_file</span>):</span><br><span class="line">    bin_data = <span class="built_in">open</span>(idx1_ubyte_file, <span class="string">&#x27;rb&#x27;</span>).read()</span><br><span class="line">    offset = <span class="number">0</span></span><br><span class="line">    fmt_header = <span class="string">&#x27;&gt;ii&#x27;</span></span><br><span class="line">    magic_number, num_images = struct.unpack_from(fmt_header, bin_data, offset)</span><br><span class="line">    offset += struct.calcsize(fmt_header)</span><br><span class="line">    fmt_image = <span class="string">&#x27;&gt;B&#x27;</span></span><br><span class="line">    labels = np.empty(num_images)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(num_images):</span><br><span class="line">        labels[i] = struct.unpack_from(fmt_image, bin_data, offset)[<span class="number">0</span>]</span><br><span class="line">        offset += struct.calcsize(fmt_image)</span><br><span class="line">    <span class="keyword">return</span> labels</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">load_test_images</span>(<span class="params">idx_ubyte_file=test_images_idx3_ubyte_file</span>):</span><br><span class="line">    <span class="keyword">return</span> decode_idx3_ubyte(idx_ubyte_file)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">load_test_labels</span>(<span class="params">idx_ubyte_file=test_labels_idx1_ubyte_file</span>):</span><br><span class="line">    <span class="keyword">return</span> decode_idx1_ubyte(idx_ubyte_file)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">test_images = load_test_images()</span><br><span class="line">test_labels = load_test_labels()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;data installed!&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载ONNX模型</span></span><br><span class="line">onnx_model = onnx.load(<span class="string">&quot;mnist_model.onnx&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置target为CPU，如果要用GPU可以设置为&quot;cuda&quot;</span></span><br><span class="line">target = <span class="string">&quot;llvm&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置输入信息，这里 &quot;1, 1, 28, 28&quot; 对应于(batch_size, num_channels, H, W)</span></span><br><span class="line">input_shape = (<span class="number">1</span>, <span class="number">1</span>, <span class="number">28</span>, <span class="number">28</span>)</span><br><span class="line">input_name = <span class="string">&quot;input.1&quot;</span>  <span class="comment"># 根据实际模型可能需要修改</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用relay模块将ONNX模型转换为TVM的表示</span></span><br><span class="line">mod, params = relay.frontend.from_onnx(onnx_model, shape=&#123;input_name: input_shape&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用TVM进行模型优化，target指定优化的硬件</span></span><br><span class="line"><span class="keyword">with</span> tvm.transform.PassContext(opt_level=<span class="number">3</span>):</span><br><span class="line">    lib = relay.build(mod, target=target, params=params)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建TVM运行时</span></span><br><span class="line">ctx = tvm.runtime.device(target, <span class="number">0</span>)</span><br><span class="line">module = tvm.contrib.graph_executor.GraphModule(lib[<span class="string">&quot;default&quot;</span>](ctx))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;model loaded!&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;tranvse &quot;</span> + <span class="built_in">str</span>(test_images[<span class="number">0</span>].dtype) + <span class="string">&quot; to &quot;</span>, end=<span class="string">&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line">test_images = np.expand_dims(test_images, axis=<span class="number">1</span>) / <span class="number">255.0</span></span><br><span class="line">test_images = test_images.astype(np.float32)</span><br><span class="line">test_labels = test_labels.astype(<span class="string">&#x27;int&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(test_images[<span class="number">0</span>].dtype)</span><br><span class="line"></span><br><span class="line">correct_predictions = <span class="number">0</span></span><br><span class="line">total_predictions = <span class="built_in">len</span>(test_images)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;evaluation start!&quot;</span>)</span><br><span class="line"><span class="comment"># 对于每一张图片，我们都进行预测并与真实标签比较</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(total_predictions):</span><br><span class="line">    <span class="comment"># 设置输入并运行模型</span></span><br><span class="line">    module.set_input(input_name, tvm.nd.array(test_images[i:i+<span class="number">1</span>]))</span><br><span class="line">    module.run()</span><br><span class="line">    <span class="comment"># 获取输出</span></span><br><span class="line">    output_data = module.get_output(<span class="number">0</span>).asnumpy()</span><br><span class="line">    <span class="comment"># 得到预测结果</span></span><br><span class="line">    predicted_label = np.argmax(output_data[<span class="number">0</span>])</span><br><span class="line">    <span class="comment"># 检查预测是否正确</span></span><br><span class="line">    correct_predictions += (predicted_label == test_labels[i])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算准确率</span></span><br><span class="line">accuracy = correct_predictions / total_predictions</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Model accuracy on test set: <span class="subst">&#123;accuracy * <span class="number">100</span>:<span class="number">.2</span>f&#125;</span>%&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在加载输入数据的过程中，在 96 行中 <code>set_input()</code> 函数出错的状况，仔细分析报错信息：</p>
+<blockquote>
+<p>TVMError:  </p>
+<hr>
+<p>An error occurred during the execution of TVM. For more information, please see: <a target="_blank" rel="noopener" href="https://tvm.apache.org/docs/errors.html">https://tvm.apache.org/docs/errors.html</a> </p>
+<hr>
+<p>Check failed: from_size == to_size (6272 vs. 3136) : TVMArrayCopyFromTo: The size must exactly match</p>
+</blockquote>
+<p>发现是输入给 TVM 模型的数据和入口数据格式不统一，单图片有 28pixel * 28pixel 的像素资源，并且信息中 3136 = 28pixel*28pixel*4byte；6272 = 28pixel*28pixel*8byte</p>
+<p>最终发现是因为 TVM 输入时采用的是 <code>float32</code>，但是从数据处理函数中获得的数据格式为 <code>float64</code>，所以一直会差这么一个二倍的关系，再第 85 行执行一个数组转型函数即可解决此问题，最终实验结果：</p>
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202404040205810.png" alt="image-20240404013049868"></p>
+<blockquote>
+<p>模型分类的准确率：93.35%</p>
+</blockquote>
+<h1 id="实验总结"><a href="#实验总结" class="headerlink" title="实验总结"></a>实验总结</h1><p>本次实验通过在在线实验平台上编译 Apache TVM 实现已有模型在不同的硬件后端的性能优化。</p>
+<ul>
+<li>实验部分 1 实现了 TVM 在 Linux 系统下的自行编译过程</li>
+<li>实验部分 2 实现了对 YOLOv3 的 llvm 优化</li>
+<li>实验思考题部分实现了对一个 MNIST 的 pytorch 架构模型导入到 TVM 进行加载优化的过程</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://cookedbear.github.io">CookedBear</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://cookedbear.github.io/p/b88d3a79.html">https://cookedbear.github.io/p/b88d3a79.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://cookedbear.github.io" target="_blank">sin</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/BUAA/">BUAA</a><a class="post-meta__tags" href="/tags/Elevate/">Elevate</a></div><div class="post_share"><div class="social-share" data-image="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403142326098.jpg?imageMogr2/format/webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/p/f08030b1.html" title="BUAA-X86Programming-2"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202402292225468.jpg?imageMogr2/format/webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">BUAA-X86Programming-2</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/p/d4de58c7.html" title="BUAA-OO-TOP"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112056684.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-14</div><div class="title">BUAA-OO-TOP</div></div></a></div><div><a href="/p/1727.html" title="BUAA-OS-TOP"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202306132108192.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-22</div><div class="title">BUAA-OS-TOP</div></div></a></div><div><a href="/p/f08030b1.html" title="BUAA-X86Programming-2"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202402292225468.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-31</div><div class="title">BUAA-X86Programming-2</div></div></a></div><div><a href="/p/73ee4056.html" title="BUAA-SoftwareEngineering-Task5"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403130016509.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-31</div><div class="title">BUAA-SoftwareEngineering-Task5</div></div></a></div><div><a href="/p/4e970c0.html" title="BUAA-SoftwareEngineering-Task4"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403130016509.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-23</div><div class="title">BUAA-SoftwareEngineering-Task4</div></div></a></div><div><a href="/p/204601f4.html" title="BUAA-FPGA多核并行计算-Exp2-2"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403142326098.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-20</div><div class="title">BUAA-FPGA多核并行计算-Exp2-2</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305132152908.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">CookedBear</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">72</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/CookedBear"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/CookedBear" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">ReStart</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%BC%96%E8%AF%91%E5%99%A8%EF%BC%9ATVM"><span class="toc-number">1.</span> <span class="toc-text">深度学习编译器：TVM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E5%88%86%E6%9E%90"><span class="toc-number">2.</span> <span class="toc-text">实验分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-TVM-%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83"><span class="toc-number">2.1.</span> <span class="toc-text">配置 TVM 运行环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%AF%91-YOLOV3-%E6%A8%A1%E5%9E%8B"><span class="toc-number">2.2.</span> <span class="toc-text">编译 YOLOV3 模型</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E6%80%9D%E8%80%83"><span class="toc-number">3.</span> <span class="toc-text">实验思考</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E8%BF%87%E7%A8%8B%E6%88%AA%E5%9B%BE"><span class="toc-number">3.1.</span> <span class="toc-text">实验过程截图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%B2%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B%E7%9A%84-TVM-%E8%BF%90%E8%A1%8C"><span class="toc-number">3.2.</span> <span class="toc-text">已训练模型的 TVM 运行</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">实验总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/p/b88d3a79.html" title="BUAA-FPGA多核并行计算-Exp3-1"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403142326098.jpg?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BUAA-FPGA多核并行计算-Exp3-1"/></a><div class="content"><a class="title" href="/p/b88d3a79.html" title="BUAA-FPGA多核并行计算-Exp3-1">BUAA-FPGA多核并行计算-Exp3-1</a><time datetime="2024-04-03T19:55:39.000Z" title="发表于 2024-04-04 03:55:39">2024-04-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/f08030b1.html" title="BUAA-X86Programming-2"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202402292225468.jpg?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BUAA-X86Programming-2"/></a><div class="content"><a class="title" href="/p/f08030b1.html" title="BUAA-X86Programming-2">BUAA-X86Programming-2</a><time datetime="2024-03-31T12:32:08.000Z" title="发表于 2024-03-31 20:32:08">2024-03-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/73ee4056.html" title="BUAA-SoftwareEngineering-Task5"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403130016509.jpg?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BUAA-SoftwareEngineering-Task5"/></a><div class="content"><a class="title" href="/p/73ee4056.html" title="BUAA-SoftwareEngineering-Task5">BUAA-SoftwareEngineering-Task5</a><time datetime="2024-03-31T12:28:57.000Z" title="发表于 2024-03-31 20:28:57">2024-03-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/4e970c0.html" title="BUAA-SoftwareEngineering-Task4"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403130016509.jpg?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BUAA-SoftwareEngineering-Task4"/></a><div class="content"><a class="title" href="/p/4e970c0.html" title="BUAA-SoftwareEngineering-Task4">BUAA-SoftwareEngineering-Task4</a><time datetime="2024-03-22T18:21:57.000Z" title="发表于 2024-03-23 02:21:57">2024-03-23</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By CookedBear</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script defer src="https://gcore.jsdelivr.net/combine/npm/jquery@latest/dist/jquery.min.js,gh/weilining/jsdelivr/jquery/circlemagic/circlemagic.min.js,gh/weilining/jsdelivr@latest/jquery/circlemagic/butterflycirclemagic.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
