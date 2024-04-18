@@ -1,0 +1,373 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>BUAA-FPGA多核并行计算-Exp3-2 | sin</title><meta name="author" content="CookedBear"><meta name="copyright" content="CookedBear"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="本系列是北航计算机学院于 2024 年春季学期开设的一般专业课《FPGA多核并行计算》课程的实验报告记录，由于学习过程中掌握并不牢靠，如有错误请读者不吝赐教！  FPGA深度学习加速器：VTA实验说明与实验相关内容上传在 Github 仓库中。实验过程中使用到的环境与程序：  运行环境：Ubuntu 16.04，在线实验平台 apache&#x2F;tvm   Apache TVM 是一个开源的机器学习编">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BUAA-FPGA多核并行计算-Exp3-2">
+<meta property="og:url" content="https://cookedbear.github.io/p/21846bc3.html">
+<meta property="og:site_name" content="sin">
+<meta property="og:description" content="本系列是北航计算机学院于 2024 年春季学期开设的一般专业课《FPGA多核并行计算》课程的实验报告记录，由于学习过程中掌握并不牢靠，如有错误请读者不吝赐教！  FPGA深度学习加速器：VTA实验说明与实验相关内容上传在 Github 仓库中。实验过程中使用到的环境与程序：  运行环境：Ubuntu 16.04，在线实验平台 apache&#x2F;tvm   Apache TVM 是一个开源的机器学习编">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403142326098.jpg?imageMogr2/format/webp">
+<meta property="article:published_time" content="2024-04-17T11:33:01.730Z">
+<meta property="article:modified_time" content="2024-04-18T08:17:28.988Z">
+<meta property="article:author" content="CookedBear">
+<meta property="article:tag" content="BUAA">
+<meta property="article:tag" content="Elevate">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403142326098.jpg?imageMogr2/format/webp"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://cookedbear.github.io/p/21846bc3.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":150},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'BUAA-FPGA多核并行计算-Exp3-2',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-04-18 16:17:28'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/center-atom.css" ><meta name="generator" content="Hexo 5.4.2"></head><body>
+    <div id='loader'>
+        
+        <div class="loading-left-bg"></div>
+        <div class="loading-right-bg"></div>
+        <div class="spinner-box">
+            <div class="configure-border-1">
+                <div class="configure-core"></div>
+            </div>
+            <div class="configure-border-2">
+                <div class="configure-core"></div>
+            </div>
+            <div class="loading-word">加载中...</div>
+        </div>
+        
+    </div>
+        
+    <script>
+        var endLoading = function () {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+        }
+        window.addEventListener('load',endLoading);
+    </script>
+    <div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305132152908.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">78</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 小工具</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page" target="_blank" rel="noopener" href="http://103.151.216.224:80/"><span> bdpan</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="http://103.151.216.224:81/"><span> 25時生成器</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="http://103.151.216.224:9667/"><span> 程序员备忘录</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403142326098.jpg?imageMogr2/format/webp')"><nav id="nav"><span id="blog-info"><a href="/" title="sin"><span class="site-name">sin</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 小工具</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page" target="_blank" rel="noopener" href="http://103.151.216.224:80/"><span> bdpan</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="http://103.151.216.224:81/"><span> 25時生成器</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="http://103.151.216.224:9667/"><span> 程序员备忘录</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">BUAA-FPGA多核并行计算-Exp3-2</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-04-17T11:33:01.730Z" title="发表于 2024-04-17 19:33:01">2024-04-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-04-18T08:17:28.988Z" title="更新于 2024-04-18 16:17:28">2024-04-18</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Elevate/">Elevate()</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>9分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="BUAA-FPGA多核并行计算-Exp3-2"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<p>本系列是北航计算机学院于 2024 年春季学期开设的一般专业课《FPGA多核并行计算》课程的实验报告记录，由于学习过程中掌握并不牢靠，如有错误请读者不吝赐教！</p>
+</blockquote>
+<h1 id="FPGA深度学习加速器：VTA"><a href="#FPGA深度学习加速器：VTA" class="headerlink" title="FPGA深度学习加速器：VTA"></a>FPGA深度学习加速器：VTA</h1><p>实验说明与实验相关内容上传在 <a target="_blank" rel="noopener" href="https://github.com/CookedBear/BUAA-FPGA-Parallel-2024/tree/exp3-2">Github</a> 仓库中。实验过程中使用到的环境与程序：</p>
+<ul>
+<li>运行环境：Ubuntu 16.04，在线实验平台</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/apache/tvm">apache/tvm</a></li>
+</ul>
+<blockquote>
+<p>Apache TVM 是一个开源的机器学习编译框架，用于 CPU、GPU 和机器学习的加速。它的设计目标是令机器学习工程师可以在不同的硬件后端高效地优化和运行计算过程。</p>
+</blockquote>
+<h1 id="实验分析"><a href="#实验分析" class="headerlink" title="实验分析"></a>实验分析</h1><ul>
+<li>了解深度学习加速器 VTA 的基本原理</li>
+<li>掌握 VTA 环境的基本搭建方法</li>
+</ul>
+<h2 id="配置VTA模拟器运行环境"><a href="#配置VTA模拟器运行环境" class="headerlink" title="配置VTA模拟器运行环境"></a>配置VTA模拟器运行环境</h2><p>配置 TVM 环境前，需要预先准备好其编译链工具：</p>
+<ul>
+<li>gcc 9.3.0</li>
+<li>llvm 9.0.0</li>
+<li>python 3.7</li>
+</ul>
+<p>首先需要在宿主机上配置好模拟和仿真 VTA 环境。</p>
+<p>由于 TVM 更新较快，所以本实验需要下载<a target="_blank" rel="noopener" href="https://github.com/apache/tvm/tree/09c55fd1f3354d2280bb792a252590ac6bd68e58">特定版本的 TVM</a>，需要注意如果选择从 Github 直接下载源码，需要注意把链接到的外部仓库文件也一并下载。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">版本hash：09c55fd1f3354d2280bb792a252590ac6bd68e58</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>配置环境变量：TVM_PATH、GCC、LLVM 的 PATH</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export TVM_PATH=/path/to/tvm</span><br><span class="line"></span><br><span class="line">export PATH=/usr/local/gcc-9/bin:$PATH</span><br><span class="line">export LD_LIBRARY_PATH=/usr/local/gcc-9/lib64</span><br><span class="line">export MANPATH=/usr/local/gcc-9/share/man:$MANPATH</span><br><span class="line"></span><br><span class="line">export PATH=$PATH:/path/to/llvm/bin</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>配置 VTA 仿真功能库：复制配置文件并进行修改</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /path/to/tvm</span><br><span class="line">mkdir build</span><br><span class="line">cp cmake/config.cmake build/.</span><br><span class="line">echo &#x27;set(USE_VTA_FSIM ON)&#x27; &gt;&gt; build/config.cmake</span><br><span class="line">echo &#x27;set(USE_LLVM ON)&#x27; &gt;&gt; build/config.cmake</span><br><span class="line">cd build &amp;&amp; cmake .. &amp;&amp; make -j4</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202404171933356.png" alt="image-20240417193308196"></p>
+<ul>
+<li>将 VTA python 运行库添加到 python 库路径中</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export PYTHONPATH=$TVM_PATH/python:$TVM_PATH/vta/python:$TVM_PATH/topi/python:$&#123;PYTHONPATH&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最终测试宿主机的 VTA 安装状态，测试 VTA 对卷积运算的支持</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">python37 &lt;tvm root&gt;/vta/tests/python/integration/test_benchmark_topi_conv2d.py</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202404171934874.png" alt="image-20240417193459760"></p>
+<h2 id="配置-VTA-FPGA-运行环境"><a href="#配置-VTA-FPGA-运行环境" class="headerlink" title="配置 VTA FPGA 运行环境"></a>配置 VTA FPGA 运行环境</h2><ul>
+<li>通过 jupyter notebook 将 tvm-09c 上传到开发板上，解压后构建运行环境</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tar -zxvf tvm.tar.gz</span><br><span class="line">cd /path/to/tvm</span><br><span class="line">mkdir build</span><br><span class="line">cp cmake/config.cmake build/.</span><br><span class="line">echo &#x27;set(USE_VTA_FPGA ON)&#x27; &gt;&gt; build/config.cmake</span><br><span class="line">cp vta/config/pynq_sample.json vta/config/vta_config.json</span><br><span class="line">cd build</span><br><span class="line">cmake ..</span><br><span class="line">make runtime vta -j2</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>编译时遇到如下问题：</p>
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202404171948088.png" alt="image-20240417194805005"></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45779334/article/details/121991176">解决方法</a></p>
+<p>但是因为是第一次编译，所以时间也没啥大问题，最后也是正常跑完了</p>
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202404171955662.png" alt="image-20240417195535593"></p>
+</blockquote>
+<ul>
+<li>修改 VTA 运行的配置</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;TARGET&quot;</span><span class="punctuation">:</span> <span class="string">&quot;pynq&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;HW_VER&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.0.1&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;LOG_INP_WIDTH&quot;</span><span class="punctuation">:</span> <span class="number">3</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;LOG_WGT_WIDTH&quot;</span><span class="punctuation">:</span> <span class="number">3</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;LOG_ACC_WIDTH&quot;</span><span class="punctuation">:</span> <span class="number">5</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;LOG_BATCH&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;LOG_BLOCK&quot;</span><span class="punctuation">:</span> <span class="number">4</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;LOG_UOP_BUFF_SIZE&quot;</span><span class="punctuation">:</span> <span class="number">15</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;LOG_INP_BUFF_SIZE&quot;</span><span class="punctuation">:</span> <span class="number">15</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;LOG_WGT_BUFF_SIZE&quot;</span><span class="punctuation">:</span> <span class="number">18</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;LOG_ACC_BUFF_SIZE&quot;</span><span class="punctuation">:</span> <span class="number">17</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;LOG_BLOCK_IN&quot;</span><span class="punctuation">:</span> <span class="number">4</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;LOG_BLOCK_OUT&quot;</span><span class="punctuation">:</span> <span class="number">4</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;LOG_OUT_WIDTH&quot;</span><span class="punctuation">:</span> <span class="number">3</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;LOG_OUT_BUFF_SIZE&quot;</span><span class="punctuation">:</span> <span class="number">15</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>配置开发板环境变量</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export TVM_HOME=/path/to/tvm</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>启动 RPC 服务器</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd ..</span><br><span class="line">python3 -m vta.exec.rpc_server --port 9095</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用宿主机调用FPGA-VTA环境"><a href="#使用宿主机调用FPGA-VTA环境" class="headerlink" title="使用宿主机调用FPGA VTA环境"></a>使用宿主机调用FPGA VTA环境</h2><ul>
+<li>配置 RPV 服务的地址，测试 VTA FPGA 运行环境是否正常运行</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export VTA_PYNQ_RPC_HOST=开发板IP</span><br><span class="line">export VTA_PYNQ_RPC_PORT=开发板VTA服务映射端口</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>配置宿主机 VTA 运行环境参数</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /path/to/tvm/vta/config</span><br><span class="line">mv vta_config.json vta_config_sim.json</span><br><span class="line">cp pynq_sample.json vta_config.json</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>测试 VTA RPC 连通性</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">python37 vta/tests/python/pynq/test_program_rpc.py</span><br></pre></td></tr></table></figure>
+
+<p>然后失败了（）</p>
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202404172107021.png" alt="image-20240417210736901"></p>
+<blockquote>
+<p>经过助教学长检查是平台服务器端口出现了问题，修复后再进行实验成功</p>
+</blockquote>
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202404172325353.png" alt="image-20240417232547280"></p>
+<p>再次运行 2D 卷积测试用例</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">python37 vta/tests/python/integration/test_benchmark_topi_conv2d.py</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202404172326806.png" alt="image-20240417232641755"></p>
+<p>成功完成 2D 卷积测试</p>
+<h2 id="问题思考"><a href="#问题思考" class="headerlink" title="问题思考"></a>问题思考</h2><h3 id="自学-VTA-矩阵乘法案例并提交结果"><a href="#自学-VTA-矩阵乘法案例并提交结果" class="headerlink" title="自学 VTA 矩阵乘法案例并提交结果"></a>自学 VTA 矩阵乘法案例并提交结果</h3><p><a target="_blank" rel="noopener" href="https://tvmchinese.gitee.io/topic/vta/tutorials/matrix_multiply.html">VTA 矩阵乘法案例</a></p>
+<blockquote>
+<p>首先要提的是实验文档里给出的连接已经宕掉了，这个页面是从 gitee 上托管的一个远古版本找到的</p>
+</blockquote>
+<p>首先将源码复制到本地，然后按照代码中的注释进行分析：</p>
+<ul>
+<li>Line 47：按照路径修改配置文件</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Load VTA parameters from the 3rdparty/vta-hw/config/vta_config.json file</span></span><br><span class="line">env = vta.get_env()</span><br></pre></td></tr></table></figure>
+
+<p>配置内容和 FPGA 平台上的配置内容一致即可</p>
+<ul>
+<li>Line 50：配置 RPC 远程的 IP 和端口，注意到这里用的环境变量字段和我们之前添加的并不完全一样，所以要进行修改</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># We read the Pynq RPC host IP address and port number from the OS environment</span></span><br><span class="line">host = os.environ.get(<span class="string">&quot;VTA_RPC_HOST&quot;</span>, <span class="string">&quot;192.168.2.99&quot;</span>)</span><br><span class="line">port = <span class="built_in">int</span>(os.environ.get(<span class="string">&quot;VTA_RPC_PORT&quot;</span>, <span class="string">&quot;9091&quot;</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># VTA_RPC_HOST -&gt; VTA_PYNQ_RPC_HOST</span></span><br><span class="line"><span class="comment"># VTA_RPC_PORT -&gt; VTA_PYNQ_RPC_PORT</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Line 55：若运行 target 是 PYNQ 或 DE-10 的开发板，则利用 RPC 服务连接 RPC 服务器</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> env.TARGET == <span class="string">&quot;pynq&quot;</span> <span class="keyword">or</span> env.TARGET == <span class="string">&quot;de10nano&quot;</span>:</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Make sure that TVM was compiled with RPC=1</span></span><br><span class="line">    <span class="keyword">assert</span> tvm.runtime.enabled(<span class="string">&quot;rpc&quot;</span>)</span><br><span class="line">    remote = rpc.connect(host, port)</span><br><span class="line">    vta.reconfig_runtime(remote)</span><br><span class="line">    vta.program_fpga(remote, bitstream=<span class="literal">None</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Line 165：创建矩阵的占位符 <code>A</code>、<code>B</code> 和中间张量 <code>A_buf</code>、<code>B_buf</code>。</li>
+</ul>
+<p>两个 buf 变量会在运算过程中存储在 VTA 的片上缓存中，计算乘法结果后产生 <code>C_buf</code>，复制回结果张量 <code>C</code> 中，完成运算。过程如图所示：</p>
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202404181017151.png?imageMogr2/format/webp" alt="gemm_dataflow"></p>
+<ul>
+<li>Line 202：定义了输入数据内部和外部两个规约轴 <code>ko</code> 和 <code>ki</code>，并执行了 VTA 的矩阵乘法操作。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ko = te.reduce_axis((<span class="number">0</span>, n), name=<span class="string">&quot;ko&quot;</span>)</span><br><span class="line">ki = te.reduce_axis((<span class="number">0</span>, env.BLOCK_IN), name=<span class="string">&quot;ki&quot;</span>)</span><br><span class="line"><span class="comment"># Describe the in-VTA matrix multiplication</span></span><br><span class="line">C_buf = te.compute(</span><br><span class="line">    (o, m, env.BATCH, env.BLOCK_OUT),</span><br><span class="line">    <span class="keyword">lambda</span> bo, co, bi, ci: te.<span class="built_in">sum</span>(</span><br><span class="line">        A_buf[bo, ko, bi, ki].astype(env.acc_dtype) * B_buf[co, ko, ci, ki].astype(env.acc_dtype),</span><br><span class="line">        axis=[ko, ki],</span><br><span class="line">    ),</span><br><span class="line">    name=<span class="string">&quot;C_buf&quot;</span>,</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Line 239：为了让数据能够在 VTA 的 DRAM 上存储，并且减少内存数据的传输量，需要执行类型转换</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">C = te.compute(</span><br><span class="line">    (o, m, env.BATCH, env.BLOCK_OUT), <span class="keyword">lambda</span> *i: C_buf(*i).astype(env.inp_dtype), name=<span class="string">&quot;C&quot;</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202404181331146.png?imageMogr2/format/webp" alt="tensor_core"></p>
+<blockquote>
+<p>TVM 要求用户提供一种称为调度（schedule）的计算实现。调度是对原始计算的一组变形，它改变了计算的实现方式，而不影响正确性。我们实际上可以通过调整调度来实现对计算方式、数据存储、DMA 传输等方面的控制。</p>
+</blockquote>
+<ul>
+<li>Line 269：创建一个调度 <code>s</code>，并设置中间运算变量在 VTA 片上缓冲区所放的区域</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">s = te.create_schedule(C.op)</span><br><span class="line"><span class="comment"># Set the intermediate tensor&#x27;s scope to VTA&#x27;s on-chip buffers</span></span><br><span class="line">s[A_buf].set_scope(env.inp_scope)</span><br><span class="line">s[B_buf].set_scope(env.wgt_scope)</span><br><span class="line">s[C_buf].set_scope(env.acc_scope)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<ul>
+<li><code>env.inp_scope</code>：输入缓冲区，属于只读 SRAM 缓冲区，存储形状为 <code>(env.BATCH, env.BLOCK_IN)</code> 并且类型为 <code>env.inp_dtype</code> 的输入矩阵</li>
+<li><code>env.wgt_scope</code>：权重缓冲区，属于只读 SRAM 缓冲区，存储形状为 <code>(env.BLOCK_OUT, env.BLOCK_IN)</code> 并且类型为 <code>env.wgt_dtype</code> 的权重矩阵</li>
+<li><code>env.acc_scope</code>：累加器缓冲区，可读写 SRAM 缓冲区，它存储形状为 <code>(env.BATCH, env.BLOCK_OUT)</code> 类型为 <code>env.acc_dtype</code> 的累加器矩阵。累加器缓冲区是 VTA 的通用寄存器文件：保存矩阵乘法、池化、批量归一化和激活层等计算的中间结果</li>
+</ul>
+</blockquote>
+<ul>
+<li>Line 339：DMA 传输。使用 <code>compute at</code> 将缓冲区的复制操作结合在矩阵乘法的循环中；再使用 <code>pragma</code> 原语控制计算 <code>A_buf</code>、<code>B_buf</code> 和 <code>C</code> 时应该直接通过 <code>env.dma_copy</code> 操作从内存中直接传输</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Move buffer copy into matrix multiply loop</span></span><br><span class="line">s[A_buf].compute_at(s[C_buf], ko)</span><br><span class="line">s[B_buf].compute_at(s[C_buf], ko)</span><br><span class="line"><span class="comment"># Tag the buffer copies with the DMA pragma to insert a DMA transfer</span></span><br><span class="line">s[A_buf].pragma(s[A_buf].op.axis[<span class="number">0</span>], env.dma_copy)</span><br><span class="line">s[B_buf].pragma(s[B_buf].op.axis[<span class="number">0</span>], env.dma_copy)</span><br><span class="line">s[C].pragma(s[C].op.axis[<span class="number">0</span>], env.dma_copy)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Line 371：张量化（Tensorization），这部分没有看明白，这一小块好像是用 <code>reorder</code> 重排了循环的顺序再进行了张量化（？）这也是算法中关于调度部分的结束</li>
+<li>Line 389：TVM 编译，在创建一个 GEMM 内核后，我们可以将调度内容封装为一个 TVM 函数，保存在内核里，并将其上传、加载在 RPC 服务器中</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">my_gemm = vta.build(s, [A, B, C], <span class="string">&quot;ext_dev&quot;</span>, env.target_host, name=<span class="string">&quot;my_gemm&quot;</span>)</span><br><span class="line">temp = utils.tempdir()</span><br><span class="line">my_gemm.save(temp.relpath(<span class="string">&quot;gemm.o&quot;</span>))</span><br><span class="line">remote.upload(temp.relpath(<span class="string">&quot;gemm.o&quot;</span>))</span><br><span class="line">f = remote.load_module(<span class="string">&quot;gemm.o&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Line 418：运行函数，先随机初始化两个矩阵 <code>A_orig</code> 和 <code>B_orig</code> 再打包、格式化到 <a target="_blank" rel="noopener" href="https://github.com/dmlc/dlpack">DLPack</a> 标准，最后调用封装好的模块 <code>f</code> 进行计算</li>
+<li>Line 447：最后通过 numpy 验证 TVM 模块计算后结果的正确性，通过所有的 <code>assert_equal</code> 后表明矩阵乘法的操作是成功的</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Compute reference result with numpy</span></span><br><span class="line">C_ref = np.dot(A_orig.astype(env.acc_dtype), B_orig.T.astype(env.acc_dtype)).astype(C.dtype)</span><br><span class="line">C_ref = C_ref.reshape(o, env.BATCH, m, env.BLOCK_OUT).transpose((<span class="number">0</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">3</span>))</span><br><span class="line">np.testing.assert_equal(C_ref, C_nd.numpy())</span><br></pre></td></tr></table></figure>
+
+<hr>
+<ul>
+<li>基于线上实验平台的 TVM 版本，官方帮助文档的代码仍有一些部分不可用，需要作出修改：</li>
+<li>Line 43：报错找不到模块 <code>utils</code>，查看项目内文件路径发现并不含有 <code>tvm.contrib.utils</code>，实际上应该是 <code>util</code>；同步修改 Line 392 的使用</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> tvm.contrib <span class="keyword">import</span> utils</span><br><span class="line"></span><br><span class="line">temp = utils.tempdir()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Line 50：在上面已经提及，需要更改获取环境变量的名称</li>
+<li>Line 449：<code>C_nd</code> 不包含方法 <code>numpy()</code>，使用 numpy 进行 TVM 效果验证时 C_nd 应该使用 <code>asnumpy</code> 函数进行类型的转换</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">np.testing.assert_equal(C_ref, C_nd.numpy())</span><br></pre></td></tr></table></figure>
+
+
+
+<p>最终结果：<img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202404172353211.png?imageMogr2/format/webp" alt="image-20240417235302186"></p>
+<p>完整的输出结果包含了一部分打印的调度信息，可以从<a target="_blank" rel="noopener" href="https://github.com/CookedBear/BUAA-FPGA-Parallel-2024/blob/exp3-2/matrix_multiply.log">这里</a>里看具体的内容</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://cookedbear.github.io">CookedBear</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://cookedbear.github.io/p/21846bc3.html">https://cookedbear.github.io/p/21846bc3.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://cookedbear.github.io" target="_blank">sin</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/BUAA/">BUAA</a><a class="post-meta__tags" href="/tags/Elevate/">Elevate</a></div><div class="post_share"><div class="social-share" data-image="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403142326098.jpg?imageMogr2/format/webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/p/cc350cc.html" title="BUAA-计算机网络实验-Exp5"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403251300866.jpg?imageMogr2/format/webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">BUAA-计算机网络实验-Exp5</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/p/d4de58c7.html" title="BUAA-OO-TOP"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112056684.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-14</div><div class="title">BUAA-OO-TOP</div></div></a></div><div><a href="/p/1727.html" title="BUAA-OS-TOP"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202306132108192.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-22</div><div class="title">BUAA-OS-TOP</div></div></a></div><div><a href="/p/cc350cc.html" title="BUAA-计算机网络实验-Exp5"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403251300866.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-04-15</div><div class="title">BUAA-计算机网络实验-Exp5</div></div></a></div><div><a href="/p/b88d3a79.html" title="BUAA-FPGA多核并行计算-Exp3-1"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403142326098.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-04-04</div><div class="title">BUAA-FPGA多核并行计算-Exp3-1</div></div></a></div><div><a href="/p/dbc82017.html" title="BUAA-X86Programming-Exp2"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202402292225468.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-04-03</div><div class="title">BUAA-X86Programming-Exp2</div></div></a></div><div><a href="/p/f08030b1.html" title="BUAA-X86Programming-2"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202402292225468.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-31</div><div class="title">BUAA-X86Programming-2</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305132152908.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">CookedBear</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">78</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/CookedBear"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/CookedBear" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">ReStart</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#FPGA%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%8A%A0%E9%80%9F%E5%99%A8%EF%BC%9AVTA"><span class="toc-number">1.</span> <span class="toc-text">FPGA深度学习加速器：VTA</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E5%88%86%E6%9E%90"><span class="toc-number">2.</span> <span class="toc-text">实验分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEVTA%E6%A8%A1%E6%8B%9F%E5%99%A8%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83"><span class="toc-number">2.1.</span> <span class="toc-text">配置VTA模拟器运行环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-VTA-FPGA-%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83"><span class="toc-number">2.2.</span> <span class="toc-text">配置 VTA FPGA 运行环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%AE%BF%E4%B8%BB%E6%9C%BA%E8%B0%83%E7%94%A8FPGA-VTA%E7%8E%AF%E5%A2%83"><span class="toc-number">2.3.</span> <span class="toc-text">使用宿主机调用FPGA VTA环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83"><span class="toc-number">2.4.</span> <span class="toc-text">问题思考</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AD%A6-VTA-%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95%E6%A1%88%E4%BE%8B%E5%B9%B6%E6%8F%90%E4%BA%A4%E7%BB%93%E6%9E%9C"><span class="toc-number">2.4.1.</span> <span class="toc-text">自学 VTA 矩阵乘法案例并提交结果</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/p/21846bc3.html" title="BUAA-FPGA多核并行计算-Exp3-2"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403142326098.jpg?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BUAA-FPGA多核并行计算-Exp3-2"/></a><div class="content"><a class="title" href="/p/21846bc3.html" title="BUAA-FPGA多核并行计算-Exp3-2">BUAA-FPGA多核并行计算-Exp3-2</a><time datetime="2024-04-17T11:33:01.730Z" title="发表于 2024-04-17 19:33:01">2024-04-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/cc350cc.html" title="BUAA-计算机网络实验-Exp5"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403251300866.jpg?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BUAA-计算机网络实验-Exp5"/></a><div class="content"><a class="title" href="/p/cc350cc.html" title="BUAA-计算机网络实验-Exp5">BUAA-计算机网络实验-Exp5</a><time datetime="2024-04-15T06:09:12.988Z" title="发表于 2024-04-15 14:09:12">2024-04-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/b88d3a79.html" title="BUAA-FPGA多核并行计算-Exp3-1"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403142326098.jpg?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BUAA-FPGA多核并行计算-Exp3-1"/></a><div class="content"><a class="title" href="/p/b88d3a79.html" title="BUAA-FPGA多核并行计算-Exp3-1">BUAA-FPGA多核并行计算-Exp3-1</a><time datetime="2024-04-03T19:55:39.000Z" title="发表于 2024-04-04 03:55:39">2024-04-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/dbc82017.html" title="BUAA-X86Programming-Exp2"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202402292225468.jpg?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BUAA-X86Programming-Exp2"/></a><div class="content"><a class="title" href="/p/dbc82017.html" title="BUAA-X86Programming-Exp2">BUAA-X86Programming-Exp2</a><time datetime="2024-04-03T02:17:59.409Z" title="发表于 2024-04-03 10:17:59">2024-04-03</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By CookedBear</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script defer src="https://gcore.jsdelivr.net/combine/npm/jquery@latest/dist/jquery.min.js,gh/weilining/jsdelivr/jquery/circlemagic/circlemagic.min.js,gh/weilining/jsdelivr@latest/jquery/circlemagic/butterflycirclemagic.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
