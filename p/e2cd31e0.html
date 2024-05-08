@@ -1,0 +1,405 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>BUAA-计算机网络实验-Exp7 | sin</title><meta name="author" content="CookedBear"><meta name="copyright" content="CookedBear"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="本系列是北航计算机学院于 2024 年春季学期开设的核心专业课《计算机网络实验》课程的实验报告记录，实验形式为两人组队实验。由于学习过程中掌握并不牢靠，如有错误请读者不吝赐教！  应用层实验 前半部分为实验的实际操作环节，后半为实验报告内容的填写。  实验内容 DNS 协议分析 HTTP 分析 SMTP 分析 FTP 分析 DHCP 分析  DNS 协议分析实验说明DNS 协议 DNS 是域名系">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BUAA-计算机网络实验-Exp7">
+<meta property="og:url" content="https://cookedbear.github.io/p/e2cd31e0.html">
+<meta property="og:site_name" content="sin">
+<meta property="og:description" content="本系列是北航计算机学院于 2024 年春季学期开设的核心专业课《计算机网络实验》课程的实验报告记录，实验形式为两人组队实验。由于学习过程中掌握并不牢靠，如有错误请读者不吝赐教！  应用层实验 前半部分为实验的实际操作环节，后半为实验报告内容的填写。  实验内容 DNS 协议分析 HTTP 分析 SMTP 分析 FTP 分析 DHCP 分析  DNS 协议分析实验说明DNS 协议 DNS 是域名系">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403251300866.jpg?imageMogr2/format/webp">
+<meta property="article:published_time" content="2024-05-05T10:15:19.389Z">
+<meta property="article:modified_time" content="2024-05-08T13:16:46.842Z">
+<meta property="article:author" content="CookedBear">
+<meta property="article:tag" content="BUAA">
+<meta property="article:tag" content="Elevate">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403251300866.jpg?imageMogr2/format/webp"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://cookedbear.github.io/p/e2cd31e0.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":150},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'BUAA-计算机网络实验-Exp7',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-05-08 21:16:46'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/center-atom.css" ><meta name="generator" content="Hexo 5.4.2"></head><body>
+    <div id='loader'>
+        
+        <div class="loading-left-bg"></div>
+        <div class="loading-right-bg"></div>
+        <div class="spinner-box">
+            <div class="configure-border-1">
+                <div class="configure-core"></div>
+            </div>
+            <div class="configure-border-2">
+                <div class="configure-core"></div>
+            </div>
+            <div class="loading-word">加载中...</div>
+        </div>
+        
+    </div>
+        
+    <script>
+        var endLoading = function () {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+        }
+        window.addEventListener('load',endLoading);
+    </script>
+    <div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305132152908.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">82</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 小工具</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page" target="_blank" rel="noopener" href="http://103.151.216.224:80/"><span> bdpan</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="http://103.151.216.224:81/"><span> 25時生成器</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="http://103.151.216.224:9667/"><span> 程序员备忘录</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403251300866.jpg?imageMogr2/format/webp')"><nav id="nav"><span id="blog-info"><a href="/" title="sin"><span class="site-name">sin</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 小工具</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page" target="_blank" rel="noopener" href="http://103.151.216.224:80/"><span> bdpan</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="http://103.151.216.224:81/"><span> 25時生成器</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="http://103.151.216.224:9667/"><span> 程序员备忘录</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">BUAA-计算机网络实验-Exp7</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-05-05T10:15:19.389Z" title="发表于 2024-05-05 18:15:19">2024-05-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-05-08T13:16:46.842Z" title="更新于 2024-05-08 21:16:46">2024-05-08</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Elevate/">Elevate()</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">4.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>13分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="BUAA-计算机网络实验-Exp7"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<p>本系列是北航计算机学院于 2024 年春季学期开设的核心专业课《计算机网络实验》课程的实验报告记录，实验形式为两人组队实验。由于学习过程中掌握并不牢靠，如有错误请读者不吝赐教！</p>
+</blockquote>
+<h1 id="应用层实验"><a href="#应用层实验" class="headerlink" title="应用层实验"></a>应用层实验</h1><blockquote>
+<p>前半部分为实验的<strong>实际操作</strong>环节，后半为<strong>实验报告</strong>内容的填写。</p>
+</blockquote>
+<h1 id="实验内容"><a href="#实验内容" class="headerlink" title="实验内容"></a>实验内容</h1><ul>
+<li>DNS 协议分析</li>
+<li>HTTP 分析</li>
+<li>SMTP 分析</li>
+<li>FTP 分析</li>
+<li>DHCP 分析</li>
+</ul>
+<h1 id="DNS-协议分析"><a href="#DNS-协议分析" class="headerlink" title="DNS 协议分析"></a>DNS 协议分析</h1><h2 id="实验说明"><a href="#实验说明" class="headerlink" title="实验说明"></a>实验说明</h2><h3 id="DNS-协议"><a href="#DNS-协议" class="headerlink" title="DNS 协议"></a>DNS 协议</h3><blockquote>
+<p>DNS 是域名系统（Domain Name System）的缩写，是一种分层次的基于域的命名方案，主要用于将主机名和电子邮件目标地址映射成 IP 地址。</p>
+</blockquote>
+<ul>
+<li>域名空间、资源记录：构成 DNS 的分布式数据库系统</li>
+<li>域名服务器：维护分布式数据库系统的服务器，答复查询请求</li>
+<li>DNS 解析器：在 DNS 客户机上的一个进程，用于和服务器通信，获取域名解析的结果</li>
+</ul>
+<h3 id="DNS-查询"><a href="#DNS-查询" class="headerlink" title="DNS 查询"></a>DNS 查询</h3><p>DNS 查询通常有两种方法：递归查询和迭代查询。一般采用递归和迭代相结合的查询方法，示例见本小节末尾主机查询 <code>www.buaa.edu.cn</code> IP 地址的流程。</p>
+<ul>
+<li><strong>递归查询</strong>：主机向本地域名服务器请求解析域名时，若没有请求结果则<strong>由本地域名服务器代为查询</strong>，整个过程是递归查询，对于主机来说查询的压力较小</li>
+<li><strong>迭代查询</strong>：本地域名服务器自上至下逐层迭代查询根域名服务器、顶级域名服务器和权限域名服务器，若无目标域名则返回几个下一级的服务器（例如根域名服务器没有就返回几个顶级域名服务器）直至本地域名服务器获得结果，再保存并发送给请求主机，查询压力主要在本地域名服务器上</li>
+</ul>
+<img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202405051839878.png" alt="image-20240505183857797" style="zoom: 80%;" />
+
+<h3 id="DNS-服务器软件"><a href="#DNS-服务器软件" class="headerlink" title="DNS 服务器软件"></a>DNS 服务器软件</h3><p>课程使用的 DNS 服务器软件是 Simple DNS Plus 软件</p>
+<ul>
+<li>查询 DNS 缓存信息：Tools - DNS Cache Snapshot  （根域名服务器在 root/net/root-servers 目录下）</li>
+</ul>
+<p><strong>本地域名服务器配置：</strong></p>
+<ul>
+<li>修改网络连接中<strong>首选 DNS 服务器</strong>的 IP 地址为本机  IP</li>
+<li>运行软件，Tools - Options - General - 勾选 Run as windows service</li>
+<li>DNS requests 选项卡中选中本机 IP 地址，使得本机作为本地域名服务器</li>
+</ul>
+<h2 id="实验内容-1"><a href="#实验内容-1" class="headerlink" title="实验内容"></a>实验内容</h2><ol>
+<li>进行实验组网：配置 PCA ~ PCC 的 IP 地址、子网掩码、网关和首选 DNS 服务器，注意路由器 R1 的 E0/1 端口 IP 地址要根据分配的机器组号查表后设置</li>
+</ol>
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202405051904667.png" alt="image-20240505190403634"></p>
+<ol start="2">
+<li>运行 PCA、PCC 的 Simple DNS Plus 程序，配置 DNS 服务器</li>
+<li>配置路由器的 NAT 功能，确保能够上网</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[R1]acl number 2001     </span><br><span class="line">[R1-acl-2001]rule permit source 10.0.0.0  0.0.0.255</span><br><span class="line">[R1-acl-2001]rule deny source any、</span><br><span class="line">[R1]nat address-group 1</span><br><span class="line">[R1-address-group-1] address 192.168.5.x 192.168.5.x+4</span><br><span class="line"># 这条命令定义了一个包含5个公网地址（5～9）的地址池，地址池名称为1   </span><br><span class="line">[R1]interface e0/1</span><br><span class="line">[R1-Ethernet0/1]nat outbound 2001 address-group 1             </span><br><span class="line"># 在出接口E0/1启用地址转换</span><br><span class="line">[R1]ip route-static 0.0.0.0 0.0.0.0 192.168.5.1</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>清空浏览器历史记录，但不关闭浏览器，命令行清空计算机 DNS <code>ipconfig /flushdns</code></li>
+<li>清空 DNS 服务器缓存：Tools - Clear DNS cache</li>
+<li>在 DNS 服务器和本地计算机上分别进行报文截获，在 PCB、PCD 上访问 <code>www.buaa.edu.cn</code>，观察 DNS 解析的过程。</li>
+</ol>
+<blockquote>
+<p>本次实验发现，与往年有很大不同，本地域名服务器截获的 DNS 报文中无法看到多次的迭代过程，大多数情况是：本地域名服务器收到 DNS 解析请求后，向根域名服务器发送查询请求，根域名服务器直接返回查询结果。无法看到与教材中所说的顶级域名服务器、各级授权域名服务器的多级迭代查询。<br>我们初步的解释是：<br>（1）根域名服务器进行了升级，能够保存了大量常见的 DNS 域名解析结果，尽量按递归方式直接返回查找的结果，避免多级迭代，提高了效率。如下图，我们尝试解析了多个地址，都是根域名服务器直接返回结果。<br>对于这种情况，请大家根据实验结果，如实填写报告。<br>（2）根域名服务器查找不到结果的情况（例如，查找一个不存在的域名），会给本地域名服务器返回顶级域名服务器地址集合。由本地域名服务器向顶级域名服务器发起迭代查询，但顶级域名服务器也改变了，也尽量按递归方式回答。回答不了的，仍然返回顶级域名服务器地址聚合，不再返回下级域名服务器地址。本地域名服务器遍历顶级域名服务器集合仍然没有找到答案，视为无效域名，返回域名解析失败消息。<br>如果有兴趣，同学们可以尝试访问比较生僻的域名，或者 ping 一个不存在的域名，例如：ping <a target="_blank" rel="noopener" href="http://www.buaa.com.cn,可以看到部分迭代过程./">www.buaa.com.cn，可以看到部分迭代过程。</a></p>
+</blockquote>
+<ol start="7">
+<li>报文分析部分可见实验报告部分 3 题</li>
+</ol>
+<h1 id="HTTP-分析"><a href="#HTTP-分析" class="headerlink" title="HTTP 分析"></a>HTTP 分析</h1><h2 id="实验说明-1"><a href="#实验说明-1" class="headerlink" title="实验说明"></a>实验说明</h2><h3 id="HTTP-协议"><a href="#HTTP-协议" class="headerlink" title="HTTP 协议"></a>HTTP 协议</h3><blockquote>
+<p>超文本传送协议（HTTP）是万维网客户程序与万维网服务器程序之间的交互所要严格遵守的协议，使用 TCP 连接，属于应用层协议。</p>
+</blockquote>
+<p><strong>HTTP 的工作流程：</strong></p>
+<ol>
+<li>浏览器分析页面 URL</li>
+<li>请求 DNS 解析目标 IP 地址</li>
+<li>域名服务器解析后返回应答</li>
+<li>浏览器与目标 IP 的服务器的指定端口建立 TCP 连接</li>
+<li>浏览器发起 GET 请求，获取网页内容</li>
+<li>文件传输后关闭 TCP 连接</li>
+</ol>
+<h2 id="实验内容-2"><a href="#实验内容-2" class="headerlink" title="实验内容"></a>实验内容</h2><ol>
+<li>停止 Simple DNS Plus，修改各台 PC 的 DNS 服务器为 202.112.128.51（北航 DNS 服务器，备用服务器是 *.50）</li>
+<li>开启 Wireshark 进行报文截获</li>
+<li>访问 <code>www.buaa.edu.cn</code>，关闭页面</li>
+<li>分析截获的报文内容</li>
+</ol>
+<h1 id="SMTP-分析（电子邮件相关协议分析）"><a href="#SMTP-分析（电子邮件相关协议分析）" class="headerlink" title="SMTP 分析（电子邮件相关协议分析）"></a>SMTP 分析（电子邮件相关协议分析）</h1><h2 id="实验说明-2"><a href="#实验说明-2" class="headerlink" title="实验说明"></a>实验说明</h2><h3 id="电子邮件系统"><a href="#电子邮件系统" class="headerlink" title="电子邮件系统"></a>电子邮件系统</h3><blockquote>
+<p>一个电子邮件系统应具有 3 个主要组成构件：用户代理、邮件服务器以及电子邮件使用的协议</p>
+</blockquote>
+<ul>
+<li>用户代理：用户和电子邮件系统的接口</li>
+<li>邮件服务器：每个 ISP 都有邮件服务器，用于接收和发送邮件</li>
+</ul>
+<p><strong>电子邮件发送接收的过程：</strong></p>
+<ol>
+<li>发信人调用<strong>用户代理</strong>编辑邮件，通过 SMTP 将邮件发送给邮件服务器</li>
+<li>邮件服务器将邮件放入缓存队列</li>
+<li>发送端的 SMTP <strong>客户进程</strong>向接收端的 SMTP <strong>服务器</strong>发起 TCP 连接，发送完毕后关闭连接</li>
+<li>收到邮件后收信人在收信时调用用户代理，使用 POP 协议将自己的邮件从邮件服务器取回</li>
+</ol>
+<p>SMTP 协议只能传送 ASCII 码，MIME 协议定义了传送非 ASCII 码的编码规则。</p>
+<h3 id="SMTP-协议"><a href="#SMTP-协议" class="headerlink" title="SMTP 协议"></a>SMTP 协议</h3><blockquote>
+<p>简单邮件传输协议（SMTP）是电子邮件的发送协议。发送端的客户进程直接向接收端邮件服务器发送，只能传送打印 ASCII 的邮件。</p>
+</blockquote>
+<p><strong>SMTP 协议的工作过程：</strong></p>
+<ol>
+<li>客户端向服务器申请建立 TCP 连接，建立后服务器发出 <strong>220（服务就绪）</strong></li>
+<li>客户端向服务器发送 HELO 命令，同时附上发送方的主机名</li>
+<li>传送从 MAIL 命令开始（包含发信人的地址）</li>
+<li>服务器返回 <strong>250（OK）</strong></li>
+<li>接着客户端发送 RCPT 命令，表示将邮件发给哪些收信人（每收到一个 RCPT 都要返回对应的信息）</li>
+<li>客户端发送 DATA 命令，<strong>服务器返回 354（可以接收）</strong>或 421、500</li>
+<li>客户端发送邮件内容，发送完毕后追加 <code>\r\n</code>，表示邮件内容结束</li>
+<li>服务器检测到邮件结束后发送 <strong>250（OK）</strong></li>
+<li>客户端发送 QUIT 命令，服务器返回 221</li>
+</ol>
+<h3 id="Magic-Winmail-Server-与配置"><a href="#Magic-Winmail-Server-与配置" class="headerlink" title="Magic Winmail Server 与配置"></a>Magic Winmail Server 与配置</h3><h2 id="实验内容-3"><a href="#实验内容-3" class="headerlink" title="实验内容"></a>实验内容</h2><ol>
+<li>如图进行组网配置：添加 PCD 的 IP 地址</li>
+</ol>
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202405061859250.png" alt="image-20240506185704590"></p>
+<ol start="2">
+<li>在 PCB、PCD 上配置邮件服务器，PCA、PCC 上配置用户代理（Foxmail）</li>
+<li>运行 PCB、PCD 的 Winmail 软件，从 PCA、PCC 向自己已有的邮箱发送邮件</li>
+<li>在用户代理截获报文分析向发送端邮件服务器建立连接的过程</li>
+<li>在发送端邮件服务器截获报文分析向接收端邮件服务器建立连接的过程</li>
+<li>配置用户代理的 POP3 服务器地址，开启报文截获，再收取邮件</li>
+<li>分析整个过程中的 POP3 报文，分析与 SMTP 有什么不同</li>
+</ol>
+<h1 id="FTP-分析"><a href="#FTP-分析" class="headerlink" title="FTP 分析"></a>FTP 分析</h1><h2 id="实验说明-3"><a href="#实验说明-3" class="headerlink" title="实验说明"></a>实验说明</h2><h3 id="FTP-协议"><a href="#FTP-协议" class="headerlink" title="FTP 协议"></a>FTP 协议</h3><blockquote>
+<p>文件传输协议（FTP）采用两个 TCP 连接来传输文件。</p>
+</blockquote>
+<ul>
+<li>控制连接：以通常的客户服务器方式建立，服务器默认打开 FTP 端口 21，控制连接进行命令的传输</li>
+<li>数据连接：每当一个文件在客户和服务器之间进行传输时，就创建一个数据连接</li>
+</ul>
+<h2 id="实验内容-4"><a href="#实验内容-4" class="headerlink" title="实验内容"></a>实验内容</h2><ol>
+<li>进行组网配置：配置 PCA、PCB 的 IP 地址与子网掩码</li>
+</ol>
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202405061946641.png" alt="image-20240506194605617"></p>
+<ol start="2">
+<li>在 PCA 上配置一个 FTP Server：<ul>
+<li>设置用户名密码</li>
+<li>更改 FTP Server 的根目录</li>
+<li>配置用户权限</li>
+</ul>
+</li>
+<li>开启报文截获，在 PCB 上互联网访问 FTP 服务器（PCA 地址）并进行登录</li>
+<li>分析报文内容</li>
+<li><strong>FTP使用资源管理器，关闭匿名登陆</strong></li>
+</ol>
+<h1 id="DHCP-分析"><a href="#DHCP-分析" class="headerlink" title="DHCP 分析"></a>DHCP 分析</h1><h2 id="实验说明-4"><a href="#实验说明-4" class="headerlink" title="实验说明"></a>实验说明</h2><blockquote>
+<p>动态主机配置协议（DHCP）是一种能够自动分配 IP 网络地址的通信协议。DHCP 使得中心节点拥有监控、分配 IP 地址的能力，当计算机登录网络时，能够自动获得 IP 地址</p>
+</blockquote>
+<p><strong>客户端与 DHCP 服务器交互的过程：</strong>Discover → Offer → <strong>Request → Ack</strong></p>
+<ol>
+<li>广播发送 DHCP Discover 报文，寻找 DHCP 服务器</li>
+<li>服务器接收到 DHCP Discover 报文后会进行响应，从未分配的 IP 地址中选择一个分配给 DHCP 客户端，返回u一个包含 IP 地址和设置的 DHCP Offer 报文</li>
+<li>DHCP 客户端接收到 Offer 报文后选择第一个 Offer 报文，广播回发 DHCP Request 报文，表示已经接收到 IP 地址</li>
+<li>服务器接收到 Request 报文后，再发送一个 DHCP Ack 报文，发送 IP 地址和其他设置</li>
+<li>DHCP 客户端接收到 Ack 报文后，确定使用该 IP 地址，将其 TCP/IP 与 网卡绑定</li>
+</ol>
+<blockquote>
+<p>当客户端再次连入该网络时，直接发送包含上一次获得 IP 的 DHCP Request 报文，如果服务器允许继续使用该 IP 地址就正常返回 Ack，否则返回 Nack，客户端重新从 Discover 报文开始获取 IP 地址</p>
+</blockquote>
+<h2 id="实验内容-5"><a href="#实验内容-5" class="headerlink" title="实验内容"></a>实验内容</h2><ol>
+<li>进行组网配置：设置各台 PC 为<strong>自动获取 IP 地址</strong></li>
+</ol>
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202405062017233.png" alt="image-20240506201738205"></p>
+<ol start="2">
+<li>进行报文截获</li>
+<li>修复本地连接</li>
+<li>分析截获的报文</li>
+</ol>
+<h2 id="1"><a href="#1" class="headerlink" title="1"></a>1</h2><p>选择本地 DNS 服务器第一次向 Internet 发出的 DNS 请求报文和对应的 DNS 应答报文（Transaction ID 字段应该相同）</p>
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202405062133098.png" alt="image-20240506213343065"></p>
+<h2 id="2"><a href="#2" class="headerlink" title="2"></a>2</h2><p>客户机向本地域名服务 器发送的查询报文 中 Flags  字段中 Recursion  desired  位置 1 表示使用递归查询 ；本地域名服务器向 Internet 中的 DNS  服务器发送的查询报文中 Flags  字段中Recursion desired  置 0 , 表示使用迭代查询。试结合递归查询和迭代查询的特点分析这样做的原因</p>
+<ul>
+<li>使用递归查询的原因是为了简化客户机的查询过程。客户机将繁琐的查询过程交给了本地DNS服务器处理，减少了客户机的负担和复杂性。</li>
+<li>使用迭代查询的原因是为了将查询过程分布到整个DNS系统中，减轻单个DNS服务器的负载压力。虽然本地DNS服务器需要进行多次查询交互过程，但整个DNS系统的负载更为均衡。</li>
+</ul>
+<h2 id="3"><a href="#3" class="headerlink" title="3"></a>3</h2><p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202405062133161.png" alt="image-20240506213322137"></p>
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202405062138607.png" alt="image-20240506213805565"></p>
+<p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202405062136933.png" alt="image-20240506213608907"></p>
+<ul>
+<li>Queries：包括查询类型（例如A记录、MX记录等）和查询类（通常是IN，表示Internet）</li>
+<li>Answers：记录类型（如A、MX、CNAME等）、生存时间（TTL，Time To Live）、记录类（通常是IN）和记录数据（如IP地址）</li>
+<li>Authoritative nameservers：提供了权威名称服务器的信息，表明哪些服务器是对查询域名有最终解释权的</li>
+<li>Additional records：提供权威名称服务器的IP地址或其他辅助信息</li>
+</ul>
+<h2 id="4"><a href="#4" class="headerlink" title="4"></a>4</h2><h3 id="DNS客户端如何和DNS服务器协商是否使用递归查询？"><a href="#DNS客户端如何和DNS服务器协商是否使用递归查询？" class="headerlink" title="DNS客户端如何和DNS服务器协商是否使用递归查询？"></a>DNS客户端如何和DNS服务器协商是否使用递归查询？</h3><p>DNS查询方式的协商主要通过DNS报文中的Flags字段中的Recursion Desired (RD)位来实现。客户端发送RD=1时意味着递归查询，返回时RA=1则说明进行了递归查询，反之则为迭代查询</p>
+<h3 id="对比DNS请求报文，DNS应答报文中多了哪些字段？这些字段传递什么信息？"><a href="#对比DNS请求报文，DNS应答报文中多了哪些字段？这些字段传递什么信息？" class="headerlink" title="对比DNS请求报文，DNS应答报文中多了哪些字段？这些字段传递什么信息？"></a>对比DNS请求报文，DNS应答报文中多了哪些字段？这些字段传递什么信息？</h3><p>DNS请求报文主要包含Header部分和Queries部分。而DNS应答报文相比请求报文，多了以下三个字段：Answers, Authoritative nameservers和Additional records。</p>
+<ul>
+<li><strong>Answers字段</strong>：这个字段包含了查询结果。每个查询结果包含了查询的域名，类型（例如A类型表示返回的是IPv4地址），类别一般是IN，表示Internet，生存时间（TTL），以及资源数据（例如IP地址）。</li>
+<li><strong>Authoritative nameservers字段</strong>：这个字段包含了对查询有权威的DNS服务器的信息。每个权威名称服务器记录包含服务器的域名，类型，类别，生存时间和服务器的资源记录。</li>
+<li><strong>Additional records字段</strong>：这个字段包含了一些额外的有用信息，例如权威名称服务器的IP地址。这样客户端在得到应答后可以直接联系权威名称服务器，而不用再进行额外的查询。</li>
+</ul>
+<p>当一个DNS服务器可以直接提供查询结果时，响应报文中会有Answers字段；当它需要引导客户端到另一个DNS服务器时，会提供Authoritative nameservers字段；当它提供了一些额外的有用信息时，会提供Additional records字段</p>
+<h2 id="5"><a href="#5" class="headerlink" title="5"></a>5</h2><p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202405062143949.png" alt="image-20240506214316903"></p>
+<h2 id="6"><a href="#6" class="headerlink" title="6"></a>6</h2><p>DNS（Domain Name System）主要使用两种传输层协议：UDP（User Datagram Protocol）和TCP（Transmission Control Protocol）。默认情况下，DNS主要使用UDP协议，端口号为53。然而，在某些情况下，DNS也会使用TCP协议，同样在端口53上。</p>
+<ol>
+<li><p>UDP是一种无连接的协议，它不需要像TCP那样在传送数据之前建立连接。这意味着使用UDP可以减少开销，加快数据的传输速度，这对于DNS这种需要快速解析的服务来说非常重要。</p>
+</li>
+<li><p>DNS查询通常是小数据包（通常小于512字节）。UDP适合这种小数据包的传输，因为它不需要进行复杂的连接管理和错误处理，这在大多数情况下可以高效地处理DNS请求和应答。当DNS响应数据超过512字节，即超出了UDP单个数据包的标准大小限制时，就需要使用TCP进行传输。</p>
+</li>
+</ol>
+<h2 id="7"><a href="#7" class="headerlink" title="7"></a>7</h2><table>
+<thead>
+<tr>
+<th>m.root-servers.net</th>
+<th>202.12.27.33, 2001:dc3::35</th>
+<th>WIDE Project（日本，东京）</th>
+</tr>
+</thead>
+</table>
+<p>根域名服务器是DNS查询的起点，没有它们，互联网上的设备无法解析域名。它们存储了所有顶级域名服务器的信息，这些顶级域名服务器进一步指向负责所有二级域名的名称服务器。</p>
+<p>如果ICANN决定终止某个国家的顶级域名，该国家内注册的所有域名将无法被全球解析，这意味着无法通过这些域名访问相关网站和服务。邮件等服务也将无法使用</p>
+<h2 id="8"><a href="#8" class="headerlink" title="8"></a>8</h2><p>雪人计划：主要测试和展示DNS根名称服务完全在IPv6网络上的可行性。共同对 IPv6 根服务器运营、域名系统安全扩展密钥签名和密钥轮转等方面进行测试验证。</p>
+<p>必要性：</p>
+<p>确保DNS根服务器系统完全兼容IPv6，对于未来的互联网成长和扩展至关重要。</p>
+<ol>
+<li><strong>增强的安全性</strong>：IPv6为网络通信提供了更先进的安全特性，例如IPsec（一种网络层安全协议）。在IPv6环境下运行根服务器可以利用这些特性，提升DNS根名称服务的整体安全性。</li>
+<li><strong>改进的性能和可靠性</strong>：通过增加根服务器的数量并分布在全球不同地区，可以提高DNS查询的响应速度和系统的整体可靠性，尤其是对于IPv6网络环境。</li>
+<li><strong>实验和研究</strong>：架设额外的IPv6根服务器为DNS研究社区提供了一个实验平台，可以用来测试新的技术和协议，以及评估DNS架构的新方向。</li>
+</ol>
+<h2 id="9"><a href="#9" class="headerlink" title="9"></a>9</h2><p><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202405062158760.png" alt="image-20240506215817703"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://cookedbear.github.io">CookedBear</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://cookedbear.github.io/p/e2cd31e0.html">https://cookedbear.github.io/p/e2cd31e0.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://cookedbear.github.io" target="_blank">sin</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/BUAA/">BUAA</a><a class="post-meta__tags" href="/tags/Elevate/">Elevate</a></div><div class="post_share"><div class="social-share" data-image="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403251300866.jpg?imageMogr2/format/webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/p/d10e180e.html" title="BUAA-FPGA多核并行计算-Exp4"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403142326098.jpg?imageMogr2/format/webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">BUAA-FPGA多核并行计算-Exp4</div></div></a></div><div class="next-post pull-right"><a href="/p/cc350cc.html" title="BUAA-计算机网络实验-Exp5"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403251300866.jpg?imageMogr2/format/webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">BUAA-计算机网络实验-Exp5</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/p/cc350cc.html" title="BUAA-计算机网络实验-Exp5"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403251300866.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-04-21</div><div class="title">BUAA-计算机网络实验-Exp5</div></div></a></div><div><a href="/p/c98c60d.html" title="BUAA-FPGA多核并行计算-TOP"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403142326098.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-08</div><div class="title">BUAA-FPGA多核并行计算-TOP</div></div></a></div><div><a href="/p/d4de58c7.html" title="BUAA-OO-TOP"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202309112056684.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-14</div><div class="title">BUAA-OO-TOP</div></div></a></div><div><a href="/p/1727.html" title="BUAA-OS-TOP"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202306132108192.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-22</div><div class="title">BUAA-OS-TOP</div></div></a></div><div><a href="/p/d10e180e.html" title="BUAA-FPGA多核并行计算-Exp4"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403142326098.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-08</div><div class="title">BUAA-FPGA多核并行计算-Exp4</div></div></a></div><div><a href="/p/21846bc3.html" title="BUAA-FPGA多核并行计算-Exp3-2"><img class="cover" src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403142326098.jpg?imageMogr2/format/webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-04-17</div><div class="title">BUAA-FPGA多核并行计算-Exp3-2</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202305132152908.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">CookedBear</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">82</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/CookedBear"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/CookedBear" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">ReStart</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%B1%82%E5%AE%9E%E9%AA%8C"><span class="toc-number">1.</span> <span class="toc-text">应用层实验</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E5%86%85%E5%AE%B9"><span class="toc-number">2.</span> <span class="toc-text">实验内容</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DNS-%E5%8D%8F%E8%AE%AE%E5%88%86%E6%9E%90"><span class="toc-number">3.</span> <span class="toc-text">DNS 协议分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E8%AF%B4%E6%98%8E"><span class="toc-number">3.1.</span> <span class="toc-text">实验说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS-%E5%8D%8F%E8%AE%AE"><span class="toc-number">3.1.1.</span> <span class="toc-text">DNS 协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS-%E6%9F%A5%E8%AF%A2"><span class="toc-number">3.1.2.</span> <span class="toc-text">DNS 查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS-%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BD%AF%E4%BB%B6"><span class="toc-number">3.1.3.</span> <span class="toc-text">DNS 服务器软件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E5%86%85%E5%AE%B9-1"><span class="toc-number">3.2.</span> <span class="toc-text">实验内容</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HTTP-%E5%88%86%E6%9E%90"><span class="toc-number">4.</span> <span class="toc-text">HTTP 分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E8%AF%B4%E6%98%8E-1"><span class="toc-number">4.1.</span> <span class="toc-text">实验说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-%E5%8D%8F%E8%AE%AE"><span class="toc-number">4.1.1.</span> <span class="toc-text">HTTP 协议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E5%86%85%E5%AE%B9-2"><span class="toc-number">4.2.</span> <span class="toc-text">实验内容</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SMTP-%E5%88%86%E6%9E%90%EF%BC%88%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6%E7%9B%B8%E5%85%B3%E5%8D%8F%E8%AE%AE%E5%88%86%E6%9E%90%EF%BC%89"><span class="toc-number">5.</span> <span class="toc-text">SMTP 分析（电子邮件相关协议分析）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E8%AF%B4%E6%98%8E-2"><span class="toc-number">5.1.</span> <span class="toc-text">实验说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="toc-number">5.1.1.</span> <span class="toc-text">电子邮件系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SMTP-%E5%8D%8F%E8%AE%AE"><span class="toc-number">5.1.2.</span> <span class="toc-text">SMTP 协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Magic-Winmail-Server-%E4%B8%8E%E9%85%8D%E7%BD%AE"><span class="toc-number">5.1.3.</span> <span class="toc-text">Magic Winmail Server 与配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E5%86%85%E5%AE%B9-3"><span class="toc-number">5.2.</span> <span class="toc-text">实验内容</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FTP-%E5%88%86%E6%9E%90"><span class="toc-number">6.</span> <span class="toc-text">FTP 分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E8%AF%B4%E6%98%8E-3"><span class="toc-number">6.1.</span> <span class="toc-text">实验说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#FTP-%E5%8D%8F%E8%AE%AE"><span class="toc-number">6.1.1.</span> <span class="toc-text">FTP 协议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E5%86%85%E5%AE%B9-4"><span class="toc-number">6.2.</span> <span class="toc-text">实验内容</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DHCP-%E5%88%86%E6%9E%90"><span class="toc-number">7.</span> <span class="toc-text">DHCP 分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E8%AF%B4%E6%98%8E-4"><span class="toc-number">7.1.</span> <span class="toc-text">实验说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E5%86%85%E5%AE%B9-5"><span class="toc-number">7.2.</span> <span class="toc-text">实验内容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1"><span class="toc-number">7.3.</span> <span class="toc-text">1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2"><span class="toc-number">7.4.</span> <span class="toc-text">2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3"><span class="toc-number">7.5.</span> <span class="toc-text">3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4"><span class="toc-number">7.6.</span> <span class="toc-text">4</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%A6%82%E4%BD%95%E5%92%8CDNS%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8D%8F%E5%95%86%E6%98%AF%E5%90%A6%E4%BD%BF%E7%94%A8%E9%80%92%E5%BD%92%E6%9F%A5%E8%AF%A2%EF%BC%9F"><span class="toc-number">7.6.1.</span> <span class="toc-text">DNS客户端如何和DNS服务器协商是否使用递归查询？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E6%AF%94DNS%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87%EF%BC%8CDNS%E5%BA%94%E7%AD%94%E6%8A%A5%E6%96%87%E4%B8%AD%E5%A4%9A%E4%BA%86%E5%93%AA%E4%BA%9B%E5%AD%97%E6%AE%B5%EF%BC%9F%E8%BF%99%E4%BA%9B%E5%AD%97%E6%AE%B5%E4%BC%A0%E9%80%92%E4%BB%80%E4%B9%88%E4%BF%A1%E6%81%AF%EF%BC%9F"><span class="toc-number">7.6.2.</span> <span class="toc-text">对比DNS请求报文，DNS应答报文中多了哪些字段？这些字段传递什么信息？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5"><span class="toc-number">7.7.</span> <span class="toc-text">5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6"><span class="toc-number">7.8.</span> <span class="toc-text">6</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7"><span class="toc-number">7.9.</span> <span class="toc-text">7</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8"><span class="toc-number">7.10.</span> <span class="toc-text">8</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9"><span class="toc-number">7.11.</span> <span class="toc-text">9</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/p/c98c60d.html" title="BUAA-FPGA多核并行计算-TOP"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403142326098.jpg?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BUAA-FPGA多核并行计算-TOP"/></a><div class="content"><a class="title" href="/p/c98c60d.html" title="BUAA-FPGA多核并行计算-TOP">BUAA-FPGA多核并行计算-TOP</a><time datetime="2024-05-08T13:22:19.707Z" title="发表于 2024-05-08 21:22:19">2024-05-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/d10e180e.html" title="BUAA-FPGA多核并行计算-Exp4"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403142326098.jpg?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BUAA-FPGA多核并行计算-Exp4"/></a><div class="content"><a class="title" href="/p/d10e180e.html" title="BUAA-FPGA多核并行计算-Exp4">BUAA-FPGA多核并行计算-Exp4</a><time datetime="2024-05-08T12:20:24.994Z" title="发表于 2024-05-08 20:20:24">2024-05-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/e2cd31e0.html" title="BUAA-计算机网络实验-Exp7"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403251300866.jpg?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BUAA-计算机网络实验-Exp7"/></a><div class="content"><a class="title" href="/p/e2cd31e0.html" title="BUAA-计算机网络实验-Exp7">BUAA-计算机网络实验-Exp7</a><time datetime="2024-05-05T10:15:19.389Z" title="发表于 2024-05-05 18:15:19">2024-05-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/cc350cc.html" title="BUAA-计算机网络实验-Exp5"><img src="https://cookedbear-2003-1307884465.cos.ap-beijing.myqcloud.com/NotePics/202403251300866.jpg?imageMogr2/format/webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BUAA-计算机网络实验-Exp5"/></a><div class="content"><a class="title" href="/p/cc350cc.html" title="BUAA-计算机网络实验-Exp5">BUAA-计算机网络实验-Exp5</a><time datetime="2024-04-21T02:42:30.841Z" title="发表于 2024-04-21 10:42:30">2024-04-21</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By CookedBear</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script defer src="https://gcore.jsdelivr.net/combine/npm/jquery@latest/dist/jquery.min.js,gh/weilining/jsdelivr/jquery/circlemagic/circlemagic.min.js,gh/weilining/jsdelivr@latest/jquery/circlemagic/butterflycirclemagic.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
